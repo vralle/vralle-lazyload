@@ -4,7 +4,7 @@ namespace Vralle\Lazyload\App;
 /**
  * Fired during plugin deactivation
  *
- * @link       https://author.uri
+ * @link       https://github.com/vralle/VRALLE.Lazyload
  * @since      0.1.0
  * @package    Vralle_Lazyload
  * @subpackage Vralle_Lazyload/app

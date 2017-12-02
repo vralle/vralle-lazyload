@@ -14,14 +14,14 @@
 
 <div class="wrap">
     <h2><?php echo get_admin_page_title(); ?></h2>
-    <?php settings_errors(); ?>
+    <?php \settings_errors(); ?>
     <form method="post" action="options.php">
         <?php
         // Do settings group
-        settings_fields(self::PLUGIN_OPTION['group']);
+        \settings_fields(self::PLUGIN_OPTION['group']);
         // Do Page ID (slug)
-        do_settings_sections(self::PLUGIN_OPTION['admin_page']);
-        submit_button();
+        \do_settings_sections(self::PLUGIN_OPTION['admin_page']);
+        \submit_button();
         ?>
     </form>
 </div>
