@@ -4,7 +4,7 @@ namespace Vralle\Lazyload\App;
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://author.uri
+ * @link       https://github.com/vralle/VRALLE.Lazyload
  * @since      0.1.0
  *
  * @package    Vralle_Lazyload
@@ -121,7 +121,7 @@ class Loader
     public function run()
     {
         foreach ($this->filters as $hook) {
-            add_filter(
+            \add_filter(
                 $hook['hook'],
                 array(
                     $hook['component'],
@@ -133,7 +133,7 @@ class Loader
         }
 
         foreach ($this->actions as $hook) {
-            add_action(
+            \add_action(
                 $hook['hook'],
                 array(
                     $hook['component'],

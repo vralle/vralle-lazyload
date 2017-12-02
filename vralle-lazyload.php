@@ -11,19 +11,19 @@ use Vralle\Lazyload\App\Plugin;
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://author.uri
+ * @link              https://github.com/vralle/VRALLE.Lazyload
  * @since             0.1.0
  * @package           Vralle_Lazyload
  *
  * @wordpress-plugin
  * Plugin Name:       VRALLE.Lazyload
- * Plugin URI:        https://plugin.uri
+ * Plugin URI:        https://github.com/vralle/VRALLE.Lazyload
  * Description:       Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
- * Version:           0.5.0
+ * Version:           0.6.0
  * Author:            Vitaliy Ralle
- * Author URI:        https://author.uri
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Author URI:        https://github.com/vralle
+ * License:           MIT
+ * License URI:       LICENSE.txt
  * Text Domain:       vralle-lazyload
  * Domain Path:       /languages
  */
@@ -33,7 +33,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('VRALLE_LAZYLOAD_VERSION', '0.5.0');
+define('VRALLE_LAZYLOAD_VERSION', '0.6.0');
 
 /**
  * The code that runs during plugin activation.

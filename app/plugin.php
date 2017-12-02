@@ -7,7 +7,7 @@ namespace Vralle\Lazyload\App;
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://author.uri
+ * @link       https://github.com/vralle/VRALLE.Lazyload
  * @since      0.1.0
  * @package    Vralle_Lazyload
  * @subpackage Vralle_Lazyload/app
@@ -100,6 +100,8 @@ class Plugin
          */
         require_once $this->plugin_dir_path . 'app/i18n.php';
 
+        require_once $this->plugin_dir_path . 'app/service.php';
+
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
@@ -110,6 +112,8 @@ class Plugin
          * side of the site.
          */
         require_once $this->plugin_dir_path . 'app/lazysizes.php';
+
+        require_once $this->plugin_dir_path . 'app/template-tags.php';
 
         $this->loader = new Loader();
     }
@@ -153,7 +157,9 @@ class Plugin
     private function define_public_hooks()
     {
         $lazysizes = new Lazysizes($this->get_plugin_name(), $this->get_version());
-        $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'do_wp_images_lazy', 99);
+        $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wp_attachment_image_attributes', 99);
+        $this->loader->add_filter('the_content', $lazysizes, 'the_content', 99);
+        $this->loader->add_filter('get_avatar', $lazysizes, 'the_content', 99);
         $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueue_scripts');
     }
 
