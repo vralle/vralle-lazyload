@@ -13,6 +13,10 @@ Implemented:
   - Selecting additional lazysizes.js plugins
   - Template Tags for background images
 
+## Requirements
+
+When writing the code, I used PHP 7.1 and Wordpress 4.9. The plugin has not been tested with other versions of PCP or WordPress.
+
 ## Installation
 
 ```sh
