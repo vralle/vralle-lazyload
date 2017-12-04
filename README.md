@@ -11,7 +11,7 @@ Implemented:
   - Exclude images by CSS-class
   - Settings page
   - Selecting additional lazysizes.js plugins
-  - Template Tags for background
+  - Template Tags for background images
 
 ## Installation
 
@@ -69,8 +69,9 @@ Want to contribute? Great!
 
 ## Todos
 
-  - Enhanced settings
+  - iframe support
   - Widget image support
+  - Enhanced settings
 
 ## Copyright and license
 
