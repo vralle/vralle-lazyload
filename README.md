@@ -15,7 +15,7 @@ Implemented:
 
 ## Requirements
 
-When writing the code, I used PHP 7.1 and Wordpress 4.9. The plugin has not been tested with other versions of PCP or WordPress.
+When writing the code, I used PHP 7.1 and Wordpress 4.9. The plugin has not been tested with other versions of PHP or WordPress.
 
 ## Installation
 
