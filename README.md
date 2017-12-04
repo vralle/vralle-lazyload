@@ -79,6 +79,6 @@ Want to contribute? Great!
 
 ## Copyright and license
 
-Copyright 2017 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt) license.
+Copyright 2017 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt).
 
 **Free Software, Hell Yeah!**
