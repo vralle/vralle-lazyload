@@ -29,8 +29,8 @@ class Settings
             'do_srcset' => '1',
             'data-sizes' => '1',
             'exclude_class' => '',
-            'bgset' => '1',
-            'unveilhooks' => '1',
+            'bgset' => '0',
+            'unveilhooks' => '0',
         )
     );
 
