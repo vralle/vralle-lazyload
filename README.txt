@@ -22,5 +22,15 @@ The plugin is in active development. The current version only works with Wordpre
 
 == Changelog ==
 
+= 0.7.0 =
+* Move vendor from git to npm. lazysizes v.4.0.1
+* Add .pot
+
+= 0.6.0 =
+* Added content image support
+* Added avatar support
+* Added template tag for background images
+* Enhanced settings
+
 = 0.5.0 =
 * Initial stable version.

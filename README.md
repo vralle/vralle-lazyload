@@ -11,30 +11,13 @@ Implemented:
   - Exclude images by CSS-class
   - Settings page
   - Selecting additional lazysizes.js plugins
-  - Template Tags for background images
-
-## Requirements
-
-When writing the code, I used PHP 7.1 and Wordpress 4.9. The plugin has not been tested with other versions of PHP or WordPress.
+  - Template Tags for background
 
 ## Installation
 
 ```sh
-$ git clone --recursive https://github.com/vralle/VRALLE.Lazyload.git wordpress/wp-content/plugins/vralle-lazyload
-```
-This will add the original lazysizes.js repository.
-
-Or you can add lazysizes.js later:
-
-```sh
 $ git clone https://github.com/vralle/VRALLE.Lazyload.git wordpress/wp-content/plugins/vralle-lazyload
-$ cd .\vralle-lazyload\
-$ git submodule init
-$ git submodule update
 ```
-
-Read more: [https://git-scm.com/book/en/v2/Git-Tools-Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
-
 Then:
 * Activate The Plugin
 * Check the settings on the plugin settings page
@@ -58,7 +41,9 @@ How this works can be found in the file app\template-tags.php
 
 ## Changelog
 
-
+- 0.7.0:
+  - Move vendor from git to npm. lazysizes v.4.0.1
+  - Add .pot
 - 0.6.0:
   - Added content image support
   - Added avatar support
@@ -73,12 +58,11 @@ Want to contribute? Great!
 
 ## Todos
 
-  - iframe support
-  - Widget image support
   - Enhanced settings
+  - Widget image support
 
 ## Copyright and license
 
-Copyright 2017 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt).
+Copyright 2017 the Authors. This project is licensed under the terms of the MIT [MIT License](LICENSE.txt) license.
 
 **Free Software, Hell Yeah!**

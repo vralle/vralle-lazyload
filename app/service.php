@@ -2,10 +2,7 @@
 namespace Vralle\Lazyload\App;
 
 /**
- * Define the internationalization functionality
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
+ * Define the tag regex
  *
  * @link       https://github.com/vralle/VRALLE.Lazyload
  * @since      0.6.0
@@ -16,7 +13,7 @@ namespace Vralle\Lazyload\App;
 class Service
 {
     /**
-     * Retrieve the html tag regular expression for searching.
+     * Retrieve the html tag regular expression. Overweight, but makes the search bullet-proof.
      *
      * The regular expression contains 1 sub matche to help with parsing.
      *
@@ -27,7 +24,7 @@ class Service
      * @param array $tagnames Optional.
      * @return string The html tag search regular expression
      */
-    static function get_tag_regex($tag = 'img')
+    public static function get_tag_regex($tag = 'img')
     {
         return
         '<\s*'                              // Opening bracket

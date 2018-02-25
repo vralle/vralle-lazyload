@@ -1,5 +1,4 @@
-<?php
-namespace Vralle\Lazyload\App;
+<?php namespace Vralle\Lazyload\App;
 
 /**
  * The public-facing functionality of the plugin.
@@ -9,7 +8,6 @@ namespace Vralle\Lazyload\App;
  *
  * @package    Vralle_Lazyload
  * @subpackage Vralle_Lazyload/app
- * @author     Vitaliy Ralle <email4vit@gmail.com>
  */
 class Lazysizes
 {
@@ -54,7 +52,7 @@ class Lazysizes
     {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        $this->debug_suffix = (\defined('SCRIPT_DEBUG')) ? '.js' : '.min.js';
+        $this->debug_suffix = \SCRIPT_DEBUG ? '' : '.min';
         $this->options = \get_option(Settings::PLUGIN_OPTION['id'], Settings::PLUGIN_OPTION['default']);
         $this->lazysizes_dir_url = \trailingslashit(\plugin_dir_url(dirname(__FILE__)) . 'vendor/lazysizes');
     }
@@ -251,7 +249,7 @@ class Lazysizes
          */
         \wp_register_script(
             $this->plugin_name . '_lazysizes',
-            $this->lazysizes_dir_url . 'lazysizes' . $this->debug_suffix,
+            $this->lazysizes_dir_url . 'lazysizes' . $this->debug_suffix . '.js',
             array(),
             $this->version,
             true
@@ -265,7 +263,7 @@ class Lazysizes
             foreach ($plugins as $plugin) {
                 \wp_enqueue_script(
                     $this->plugin_name . '_ls.' . $plugin,
-                    $this->lazysizes_dir_url . 'plugins/' . $plugin . '/ls.' . $plugin . $this->debug_suffix,
+                    $this->lazysizes_dir_url . 'plugins/' . $plugin . '/ls.' . $plugin . $this->debug_suffix . '.js',
                     array($this->plugin_name . '_lazysizes'),
                     $this->version,
                     true
