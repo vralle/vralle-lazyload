@@ -1,7 +1,5 @@
 <?php
-use Vralle\Lazyload\App\Activator;
-use Vralle\Lazyload\App\Deactivator;
-use Vralle\Lazyload\App\Plugin;
+use Vralle\Lazyload\App;
 
 /**
  * The plugin bootstrap file
@@ -19,7 +17,7 @@ use Vralle\Lazyload\App\Plugin;
  * Plugin Name:       VRALLE.Lazyload
  * Plugin URI:        https://github.com/vralle/VRALLE.Lazyload
  * Description:       Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
- * Version:           0.6.0
+ * Version:           0.7.0
  * Author:            Vitaliy Ralle
  * Author URI:        https://github.com/vralle
  * License:           MIT
@@ -33,7 +31,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('VRALLE_LAZYLOAD_VERSION', '0.6.0');
+define('VRALLE_LAZYLOAD_VERSION', '0.7.0');
 
 /**
  * The code that runs during plugin activation.
@@ -42,7 +40,7 @@ define('VRALLE_LAZYLOAD_VERSION', '0.6.0');
 function activate_vralle_lazyload()
 {
     require_once plugin_dir_path(__FILE__) . 'app/activator.php';
-    Activator::activate();
+    app\Activator::activate();
 }
 
 /**
@@ -52,7 +50,7 @@ function activate_vralle_lazyload()
 function deactivate_vralle_lazyload()
 {
     require_once plugin_dir_path(__FILE__) . 'app/deactivator.php';
-    Deactivator::deactivate();
+    App\Deactivator::deactivate();
 }
 
 register_activation_hook(__FILE__, 'activate_vralle_lazyload');
@@ -62,7 +60,7 @@ register_deactivation_hook(__FILE__, 'deactivate_vralle_lazyload');
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path(__FILE__) . 'app/plugin.php';
+require_once plugin_dir_path(__FILE__) . 'app/plugin.php';
 
 /**
  * Begins execution of the plugin.
@@ -75,7 +73,7 @@ require plugin_dir_path(__FILE__) . 'app/plugin.php';
  */
 function run_vralle_lazyload()
 {
-    $plugin = new Plugin();
+    $plugin = new App\Plugin();
     $plugin->run();
 }
 run_vralle_lazyload();

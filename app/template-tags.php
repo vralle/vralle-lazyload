@@ -8,7 +8,6 @@
  * @since      0.6.0
  * @package    Vralle_Lazyload
  * @subpackage Vralle_Lazyload/app
- * @author     Vitaliy Ralle <email4vit@gmail.com>
  */
 
 /**
