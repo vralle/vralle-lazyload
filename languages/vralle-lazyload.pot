@@ -2,9 +2,9 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: VRALLE.Lazyload 0.7.0\n"
+"Project-Id-Version: VRALLE.Lazyload 0.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
-"POT-Creation-Date: 2018-02-25 16:57:15+00:00\n"
+"POT-Creation-Date: 2018-03-06 11:20:58+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,109 +13,117 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: node-wp-i18n 1.0.5\n"
 
-#: app/settings.php:121
+#: app/settings.php:152
 msgid "Settings Description"
 msgstr ""
 
-#: app/settings.php:136
+#: app/settings.php:167
 msgid "Lazy loading of images"
 msgstr ""
 
-#: app/settings.php:141
+#: app/settings.php:172
 msgid "Section Description"
 msgstr ""
 
-#: app/settings.php:158 app/settings.php:172
+#: app/settings.php:189
 msgid "Apply to Wordpress images"
 msgstr ""
 
-#: app/settings.php:176
+#: app/settings.php:202
 msgid ""
 "Uses lazy loading of images, which are displayed through the WordPress "
 "engine. For example, the Post Thumbnails or Featured Image."
 msgstr ""
 
-#: app/settings.php:188
+#: app/settings.php:214
+msgid "Apply to Custom Header images"
+msgstr ""
+
+#: app/settings.php:227
+msgid "Uses lazy loading of custom header images"
+msgstr ""
+
+#: app/settings.php:239
 msgid "Apply to content images"
 msgstr ""
 
-#: app/settings.php:202
-msgid "Lazy loading the Wordpress images"
-msgstr ""
-
-#: app/settings.php:206
+#: app/settings.php:252
 msgid ""
 "If the plugin finds the image code in the content, lazy loading will be "
 "added to the output."
 msgstr ""
 
-#: app/settings.php:218 app/settings.php:232
+#: app/settings.php:264
 msgid "Apply to Avatar"
 msgstr ""
 
-#: app/settings.php:244 app/settings.php:257
+#: app/settings.php:277
+msgid "Lazy loading the WP Avatar"
+msgstr ""
+
+#: app/settings.php:289
 msgid "Lazy loading the non-responsive images"
 msgstr ""
 
-#: app/settings.php:261
+#: app/settings.php:302
 msgid "Non-responsive images do not have the attribute srcset"
 msgstr ""
 
-#: app/settings.php:273 app/settings.php:286
+#: app/settings.php:314
 msgid "Lazy loading the responsive images"
 msgstr ""
 
-#: app/settings.php:290
-msgid "responsive images have the srcset attribute"
+#: app/settings.php:327
+msgid "Responsive images have the srcset attribute"
 msgstr ""
 
-#: app/settings.php:302 app/settings.php:315
+#: app/settings.php:339
 msgid "Calculate the sizes using the lazysizes"
 msgstr ""
 
-#: app/settings.php:319
+#: app/settings.php:352
 msgid ""
 "This will replace the values of the \"sizes\" attribute specified by "
 "Wordpress"
 msgstr ""
 
-#: app/settings.php:331 app/settings.php:344
+#: app/settings.php:364 app/settings.php:377
 msgid "Exclude Images by CSS Class"
 msgstr ""
 
-#: app/settings.php:348
+#: app/settings.php:381
 msgid ""
 "CSS Classes of images, that need to be excluded from lazy loading. Space "
 "separated"
 msgstr ""
 
-#: app/settings.php:363
+#: app/settings.php:396
 msgid "Developer settings"
 msgstr ""
 
-#: app/settings.php:368
+#: app/settings.php:401
 msgid ""
 "The settings below require editing the template code. Use these settings "
 "only if you understand what you are doing. By default, these settings are "
 "not used."
 msgstr ""
 
-#: app/settings.php:384 app/settings.php:398
+#: app/settings.php:417
 msgid "lazysizes bgset extension - responsive background images"
 msgstr ""
 
-#: app/settings.php:402
+#: app/settings.php:431
 msgid ""
 "This simple and small plugin allows you to define multiple background "
 "images with a width descriptor, similar to how img[srcset] works as also "
 "art directed images using media queries, similar to how picture works."
 msgstr ""
 
-#: app/settings.php:414 app/settings.php:428
+#: app/settings.php:443
 msgid "lazysizes unveilhooks extension"
 msgstr ""
 
-#: app/settings.php:432
+#: app/settings.php:457
 msgid ""
 "The unveilhooks plugin extends lazySizes to also unveil / lazyload "
 "scripts/widgets, background images, styles and video/audio elements"

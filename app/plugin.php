@@ -99,6 +99,9 @@ class Plugin
          */
         require_once $this->plugin_dir_path . 'app/i18n.php';
 
+        /**
+         * Retrieve the HTML tags regular expression for searching.
+         */
         require_once $this->plugin_dir_path . 'app/service.php';
 
         /**
@@ -112,6 +115,9 @@ class Plugin
          */
         require_once $this->plugin_dir_path . 'app/lazysizes.php';
 
+        /**
+         * Custom template tags
+         */
         require_once $this->plugin_dir_path . 'app/template-tags.php';
 
         $this->loader = new Loader();
@@ -120,7 +126,7 @@ class Plugin
     /**
      * Define the locale for this plugin for internationalization.
      *
-     * Uses the Vralle_Lazyload_i18n class in order to set the domain and to register the hook
+     * Uses the i18n class in order to set the domain and to register the hook
      * with WordPress.
      *
      * @since    0.1.0
@@ -156,9 +162,10 @@ class Plugin
     private function define_public_hooks()
     {
         $lazysizes = new Lazysizes($this->get_plugin_name(), $this->get_version());
-        $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wp_attachment_image_attributes', 99);
+        $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wp_get_attachment_image_attributes', 99);
+        $this->loader->add_filter('get_header_image_tag', $lazysizes, 'get_header_image_tag', 99);
         $this->loader->add_filter('the_content', $lazysizes, 'the_content', 99);
-        $this->loader->add_filter('get_avatar', $lazysizes, 'the_content', 99);
+        $this->loader->add_filter('get_avatar', $lazysizes, 'get_avatar', 99);
         $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueue_scripts');
     }
 

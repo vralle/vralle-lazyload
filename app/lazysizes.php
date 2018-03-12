@@ -16,7 +16,6 @@ class Lazysizes
     private $options;
     private $lazysizes_dir_url;
 
-
     /**
      * The ID of this plugin.
      *
@@ -53,20 +52,39 @@ class Lazysizes
         $this->plugin_name = $plugin_name;
         $this->version = $version;
         $this->debug_suffix = \SCRIPT_DEBUG ? '' : '.min';
-        $this->options = \get_option(Settings::PLUGIN_OPTION['id'], Settings::PLUGIN_OPTION['default']);
+        $this->options = \get_option(Settings::PLUGIN_OPTION['id'], $this->get_default());
         $this->lazysizes_dir_url = \trailingslashit(\plugin_dir_url(dirname(__FILE__)) . 'vendor/lazysizes');
     }
 
     /**
-     * Callback for Filter of attachment images.
-     * @since    0.1.0
+     * Get default option values
      *
-     * @param  array $attr_arr List Attributes of the image.
-     * @return array List of attachment image attributes
+     * @since 0.7.1
+     * @return array default option values
      */
-    public function wp_attachment_image_attributes($attr_arr)
+    private function get_default()
     {
-        if (!\absint($this->options['wp_images'])) {
+        $default = Settings::PLUGIN_OPTION['default'];
+        $values = array();
+        foreach ($default as $key => $data) {
+            if (isset($data['value'])) {
+                $values[$key] = $data['value'];
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * Filter the list of attachment image attributes.
+     * @link https://developer.wordpress.org/reference/hooks/wp_get_attachment_image_attributes/
+     *
+     * @since 2.8.0
+     *
+     * @param array        $attr_arr   Attributes for the image markup.
+     */
+    public function wp_get_attachment_image_attributes($attr_arr)
+    {
+        if ('1' !== $this->options['wp_images']) {
             return $attr_arr;
         }
 
@@ -74,52 +92,84 @@ class Lazysizes
             return $attr_arr;
         }
 
-        $attr_arr = $this->attr_handler($attr_arr);
+        $new_attr = $this->attr_handler($attr_arr);
 
-        return \apply_filters('vralle_lazyload_img_attr_output', $attr_arr);
+        if ($new_attr) {
+            $attr_arr = $new_attr;
+        }
+
+        return $attr_arr;
     }
 
 
-
     /**
-     * Filters the content.
+     * Filter the markup of header images.
+     * @link https://developer.wordpress.org/reference/hooks/get_header_image_tag/
      *
-     * @since    0.6.0
-     * @param   string $content
-     * @return  string $content
+     * @since 0.7.1
+     *
+     * @param string $html      The HTML image tag markup being filtered.
+     * @return string           The HTML image tag markup being filtered.
      */
-    public function the_content($content)
+    public function get_header_image_tag($html)
     {
-        if ($this->is_exit()) {
-            return $content;
+        if ('1' !== $this->options['custom_header']) {
+            return $html;
         }
 
-        $pattern = Service::get_tag_regex('img');
+        if ($this->is_exit()) {
+            return $html;
+        }
 
-        return \preg_replace_callback(
-            "/$pattern/i",
-            function ($m) {
-                // The wordpress handler is used. This may seem redundant, but it is reliable and verified
-                // @link https://developer.wordpress.org/reference/functions/shortcode_parse_atts/
-                $parced = \shortcode_parse_atts($m[1]);
+        $html = $this->content_handler($html);
 
-                $attr_arr = $this->attr_handler($parced);
-                if ($parced['class'] == $attr_arr['class']) {
-                    return $m[0];
-                }
-                $attr_arr = \apply_filters('vralle_lazyload_img_attr_output', $attr_arr);
-                if (!empty($attr_arr)) {
-                    $attr = '';
-                    foreach ($attr_arr as $key => $value) {
-                        $attr .= sprintf(' %s="%s"', $key, $value);
-                    }
-                    $tag = \str_replace($m[1], $attr, $m[0]);
-                    return $tag;
-                }
-                return $m[0];
-            },
-            $content
-        );
+        return $html;
+    }
+
+    /**
+     * Filter the avatar to retrieve.
+     * @link https://developer.wordpress.org/reference/hooks/get_avatar/
+     *
+     * @since 0.7.1
+     *
+     * @param string $html      <img> tag for the user's avatar.
+     */
+    public function get_avatar($html)
+    {
+        if ('1' !== $this->options['avatar']) {
+            return $html;
+        }
+
+        if ($this->is_exit()) {
+            return $html;
+        }
+
+        $html = $this->content_handler($html);
+
+        return $html;
+    }
+
+    /**
+     * Filter the post content.
+     * @link https://developer.wordpress.org/reference/hooks/the_content/
+     *
+     * @since    0.6.0
+     * @param   string $html Content of the current post.
+     * @return  string       Content of the current post.
+     */
+    public function the_content($html)
+    {
+        if ($this->is_exit()) {
+            return $html;
+        }
+
+        if ('1' !== $this->options['content_images']) {
+            return $html;
+        }
+
+        $html = $this->content_handler($html);
+
+        return $html;
     }
 
     /**
@@ -152,58 +202,87 @@ class Lazysizes
         return false;
     }
 
+    private function content_handler($html)
+    {
+        $pattern = Service::get_tag_regex('img');
+
+        return \preg_replace_callback(
+            "/$pattern/i",
+            function ($m) {
+                /**
+                 * The wordpress handler is used. This may seem redundant, but it is reliable and verified
+                 * @link https://developer.wordpress.org/reference/functions/shortcode_parse_atts/
+                 */
+                $parced = \shortcode_parse_atts($m[1]);
+
+                $attr_arr = $this->attr_handler($parced);
+
+                if ($attr_arr) {
+                    $attr = '';
+                    foreach ($attr_arr as $key => $value) {
+                        $attr .= sprintf(' %s="%s"', $key, $value);
+                    }
+                    $m[0] = \str_replace($m[1], $attr, $m[0]);
+                }
+
+                return $m[0];
+            },
+            $html
+        );
+    }
+
     /**
      * Image attribute handler
      * @since    0.6.0
-     * @param  array     $attr_arr List of image attributes and their values.
-     * @return array    List of image attributes and their values,
-     *                   where the necessary attributes for the loader are added.
+     * @param  array  $attr_arr List of image attributes and their values.
+     * @return array            List of image attributes and their values,
+     *                          where the necessary attributes for the loader are added
+     *                          or false, if exclude
      */
-    public function attr_handler($attr_arr)
+    private function attr_handler($attr_arr)
     {
-        if (empty($attr_arr)) {
-            return $attr_arr;
-        }
+        $lazy_class = apply_filters('vralle_lazyload_lazy_class', self::LAZY_CLASS);
+        $image_placeholder = apply_filters('vralle_lazyload_image_placeholder', self::IMG_PLACEHOLDER);
+        $classes_arr = array();
+        $have_src = false;
+        $exlude_class_arr = \array_map('trim', \explode(' ', $this->options['exclude_class']));
 
+        // Exit by CSS class
         if (isset($attr_arr['class'])) {
             $classes_arr = explode(' ', $attr_arr['class']);
 
-            if (\in_array(self::LAZY_CLASS, $classes_arr)) {
-                return $attr_arr;
+            if (!empty(\array_intersect($exlude_class_arr, $classes_arr))) {
+                return false;
             }
 
-
-            if (!empty($this->options['exclude_class'])) {
-                $exlude_class_arr = \array_map('trim', \explode(' ', $this->options['exclude_class']));
-                if (!empty(\array_intersect($exlude_class_arr, $classes_arr))) {
-                    return $attr_arr;
-                }
+            if (false !== \array_search($lazy_class, $classes_arr)) {
+                return false;
             }
-
-            $classes_arr[] = self::LAZY_CLASS;
-            $attr_arr['class'] = \implode(' ', $classes_arr);
-        } else {
-            $attr_arr['class'] = self::LAZY_CLASS;
         }
 
-        if (isset($attr_arr['src'])) {
-            if (isset($attr_arr['srcset'])) {
-                if (isset($this->options['do_srcset']) && !!\absint($this->options['do_srcset'])) {
-                    $attr_arr['data-srcset'] = $attr_arr['srcset'];
-                    $attr_arr['srcset'] = \apply_filters('vralle_lazyload_placeholder_image', self::IMG_PLACEHOLDER);
-                }
-                if (isset($this->options['data-sizes']) && !!\absint($this->options['data-sizes'])) {
+        if (isset($attr_arr['srcset'])) {
+            if ('1' === $this->options['do_srcset']) {
+                $attr_arr['data-srcset'] = $attr_arr['srcset'];
+                $attr_arr['srcset'] = $image_placeholder;
+                $have_src = true;
+
+                if ('1' === $this->options['data-sizes']) {
                     $attr_arr['data-sizes'] = 'auto';
                     unset($attr_arr['sizes']);
                 }
-            } else {
-                if (isset($this->options['do_src']) && !!\absint($this->options['do_src'])) {
-                    $attr_arr['data-src'] = $attr_arr['src'];
-                    $attr_arr['src'] = \apply_filters('vralle_lazyload_placeholder_image', self::IMG_PLACEHOLDER);
-                    // remove sizes
-                    unset($attr_arr['sizes']);
-                }
             }
+        } elseif (isset($attr_arr['src'])) {
+            if ('1' === $this->options['do_src']) {
+                $attr_arr['data-src'] = $attr_arr['src'];
+                $attr_arr['src'] = $image_placeholder;
+                $have_src = true;
+            }
+        }
+
+        // Do class, only if attributes have src or srcset
+        if ($have_src) {
+            $classes_arr[] = $lazy_class;
+            $attr_arr['class'] = implode(' ', $classes_arr);
         }
 
         return $attr_arr;
@@ -221,7 +300,7 @@ class Lazysizes
         $plugins = Settings::LS_PLUGINS;
 
         foreach ($this->options as $key => $value) {
-            if (false !== \array_key_exists($key, $plugins) && $value > 0) {
+            if (false !== \array_search($key, $plugins) && '1' === $value) {
                 $is_valid[] = $key;
             }
         }
