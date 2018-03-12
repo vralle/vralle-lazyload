@@ -49,6 +49,10 @@ class Settings
                 'type' => 'checkbox',
                 'value' => '1',
             ),
+            'display-block' =>  array(
+                'type' => 'checkbox',
+                'value' => '0',
+            ),
             'data-expand' =>  array(
                 'type' => 'number',
                 'value' => '0',
@@ -373,6 +377,31 @@ class Settings
                 'id' => 'data-sizes',
                 'label' => __(
                     'This will replace the values of the "sizes" attribute specified by Wordpress',
+                    'vralle-lazyload'
+                )
+            )
+        );
+
+        // Calculate the sizes
+        \add_settings_field(
+            // Field ID
+            'display-block',
+            // Field Title
+            \esc_html__(
+                'Display block',
+                'vralle-lazyload'
+            ),
+            // Callback for render Input
+            array($this, 'input_checkbox_callback'),
+            // Page ID
+            self::PLUGIN_OPTION['admin_page'],
+            // Section ID
+            self::PLUGIN_OPTION['section_imgs'],
+            // Args for callback
+            array(
+                'id' => 'display-block',
+                'label' => __(
+                    'Specify browsers to show images as blocks. This can help avoid changing the height of the page and calculate the correct size of responsive images',
                     'vralle-lazyload'
                 )
             )

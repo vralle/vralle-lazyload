@@ -302,11 +302,14 @@ class Lazysizes
             }
         }
 
-        // Do lazyloaded, only if attributes have src or srcset
+        // Do lazyloaded, only if the image have src or srcset
         if ($have_src) {
             $classes_arr[] = $lazy_class;
+            if ($this->options['display-block']) {
+                $classes_arr[] = 'lazysizes-display-block';
+            }
             $attr_arr['class'] = implode(' ', $classes_arr);
-            if ('0' != $this->options['data-expand']) {
+            if ($this->options['data-expand']) {
                 $attr_arr['data-expand'] = $this->options['data-expand'];
             }
         }
@@ -341,6 +344,14 @@ class Lazysizes
      */
     public function enqueue_scripts()
     {
+        if ($this->options['display-block']) {
+            $style = '.lazysizes-display-block {display: block; width: 100%; }';
+            // The WP Core trick.
+            // See https://core.trac.wordpress.org/browser/tags/4.7/src/wp-includes/script-loader.php#L187
+            wp_register_style('vr-lazyload', false);
+            wp_enqueue_style('vr-lazyload');
+            wp_add_inline_style('vr-lazyload', $style);
+        }
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -376,14 +387,20 @@ class Lazysizes
             }
         }
 
-        $lazySizesConfig = 'window.lazySizesConfig = window.lazySizesConfig || {};';
-        if ($this->options['loadmode']) {
+        $lazySizesConfig = '';
+        // Skip default value
+        if (intval($this->options['loadmode']) !== 2) {
             $lazySizesConfig .= 'window.lazySizesConfig.loadMode=' . intval($this->options['loadmode']) . ';';
         }
+
         if ($this->options['preloadafterload']) {
             $lazySizesConfig .= 'window.lazySizesConfig.preloadAfterLoad=true;';
         }
 
-        wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
+        // Config if only need
+        if (!empty($lazySizesConfig)) {
+            $lazySizesConfig = 'window.lazySizesConfig = window.lazySizesConfig || {};' . $lazySizesConfig;
+            wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
+        }
     }
 }
