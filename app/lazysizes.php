@@ -52,7 +52,7 @@ class Lazysizes
         $this->plugin_name = $plugin_name;
         $this->version = $version;
         $this->debug_suffix = \SCRIPT_DEBUG ? '' : '.min';
-        $this->options = \get_option(Settings::PLUGIN_OPTION['id'], $this->get_default());
+        $this->options = $this->get_option();
         $this->lazysizes_dir_url = \trailingslashit(\plugin_dir_url(dirname(__FILE__)) . 'vendor/lazysizes');
     }
 
@@ -69,6 +69,29 @@ class Lazysizes
         foreach ($default as $key => $data) {
             if (isset($data['value'])) {
                 $values[$key] = $data['value'];
+            } else {
+                $values[$key] = '';
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * Get option and their values
+     *
+     * @since 0.7.2
+     * @return array option values
+     */
+    private function get_option()
+    {
+        $default = $this->get_default();
+        $options = \get_option(Settings::PLUGIN_OPTION['id'], $default);
+        $values = array();
+        foreach ($default as $key => $value) {
+            if (array_key_exists($key, $options)) {
+                $values[$key] = $options[$key];
+            } else {
+                $values[$key] = $default[$key];
             }
         }
         return $values;
@@ -279,10 +302,13 @@ class Lazysizes
             }
         }
 
-        // Do class, only if attributes have src or srcset
+        // Do lazyloaded, only if attributes have src or srcset
         if ($have_src) {
             $classes_arr[] = $lazy_class;
             $attr_arr['class'] = implode(' ', $classes_arr);
+            if ('0' != $this->options['data-expand']) {
+                $attr_arr['data-expand'] = $this->options['data-expand'];
+            }
         }
 
         return $attr_arr;
@@ -349,5 +375,15 @@ class Lazysizes
                 );
             }
         }
+
+        $lazySizesConfig = 'window.lazySizesConfig = window.lazySizesConfig || {};';
+        if ($this->options['loadmode']) {
+            $lazySizesConfig .= 'window.lazySizesConfig.loadMode=' . intval($this->options['loadmode']) . ';';
+        }
+        if ($this->options['preloadafterload']) {
+            $lazySizesConfig .= 'window.lazySizesConfig.preloadAfterLoad=true;';
+        }
+
+        wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
     }
 }

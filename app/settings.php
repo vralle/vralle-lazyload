@@ -49,6 +49,18 @@ class Settings
                 'type' => 'checkbox',
                 'value' => '1',
             ),
+            'data-expand' =>  array(
+                'type' => 'number',
+                'value' => '0',
+            ),
+            'loadmode' =>  array(
+                'type' => 'number',
+                'value' => '2',
+            ),
+            'preloadafterload' =>  array(
+                'type' => 'checkbox',
+                'value' => '0',
+            ),
             'exclude_class' =>  array(
                 'type' => 'text',
                 'value' => '',
@@ -131,7 +143,17 @@ class Settings
      */
     public function create_admin_page()
     {
-        $this->options = \get_option(self::PLUGIN_OPTION['id'], $this->get_default());
+        $default = $this->get_default();
+        $options = \get_option(self::PLUGIN_OPTION['id'], $default);
+        $values = array();
+        foreach ($default as $key => $value) {
+            if (array_key_exists($key, $options)) {
+                $values[$key] = $options[$key];
+            } else {
+                $values[$key] = $default[$key];
+            }
+        }
+        $this->options = $values;
         include_once(dirname(__FILE__) . '/views/settings_page.php');
     }
 
@@ -356,6 +378,89 @@ class Settings
             )
         );
 
+        // Expand
+        \add_settings_field(
+            // Field ID
+            'data-expand',
+            // Field Title
+            \esc_html__(
+                'Expand',
+                'vralle-lazyload'
+            ),
+            // Callback for render Input
+            array($this, 'input_number_callback'),
+            // Page ID
+            self::PLUGIN_OPTION['admin_page'],
+            // Section ID
+            self::PLUGIN_OPTION['section_imgs'],
+            // Args for callback
+            array(
+                'id' => 'data-expand',
+                'title' => __(
+                    'Expand',
+                    'vralle-lazyload'
+                ),
+                'description' => __(
+                    'Normally lazysizes will expand the viewport area to lazy preload images/iframes which might become visible soon. 0 sets default values.',
+                    'vralle-lazyload'
+                )
+            )
+        );
+
+        // loadMode
+        \add_settings_field(
+            // Field ID
+            'loadmode',
+            // Field Title
+            \esc_html__(
+                'loadMode',
+                'vralle-lazyload'
+            ),
+            // Callback for render Input
+            array($this, 'input_number_callback'),
+            // Page ID
+            self::PLUGIN_OPTION['admin_page'],
+            // Section ID
+            self::PLUGIN_OPTION['section_imgs'],
+            // Args for callback
+            array(
+                'id' => 'loadmode',
+                'title' => __(
+                    'loadMode',
+                    'vralle-lazyload'
+                ),
+                'description' => __(
+                    '(default: 2): The loadMode can be used to constrain the allowed loading mode. Possible values are 0 = don\'t load anything, 1 = only load visible elements, 2 = load also very near view elements (expand option) and 3 = load also not so near view elements (expand * expFactor option). This value is automatically set to 3 after onload. Change this value to 1 if you (also) optimize for the onload event or change it to 3 if your onload event is already heavily delayed.',
+                    'vralle-lazyload'
+                )
+            )
+        );
+
+        // Calculate the sizes
+        \add_settings_field(
+            // Field ID
+            'preloadafterload',
+            // Field Title
+            \esc_html__(
+                'preloadAfterLoad',
+                'vralle-lazyload'
+            ),
+            // Callback for render Input
+            array($this, 'input_checkbox_callback'),
+            // Page ID
+            self::PLUGIN_OPTION['admin_page'],
+            // Section ID
+            self::PLUGIN_OPTION['section_imgs'],
+            // Args for callback
+            array(
+                'id' => 'preloadafterload',
+                'label' => __(
+                    '(default: none): Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked.)',
+                    'vralle-lazyload'
+                )
+            )
+        );
+
         // Exlude class
         \add_settings_field(
             // Field ID
@@ -492,6 +597,25 @@ class Settings
         echo $output;
     }
 
+    public function input_number_callback($args)
+    {
+        $output = \sprintf(
+            // Render the output
+            '<input class="small-text" type="number" id="%1$s" name="%2$s[%1$s]" value="%3$s" />',
+            \esc_attr($args['id']),
+            \esc_attr(self::PLUGIN_OPTION['id']),
+            (isset($this->options[$args['id']])) ? $this->options[$args['id']] : ''
+        );
+        if (isset($args['description'])) {
+            $output .= sprintf(
+                '<p class="description">%s</p>',
+                \esc_attr($args['description'])
+            );
+        }
+
+        echo $output;
+    }
+
     public function input_text_callback($args)
     {
         $output = \sprintf(
@@ -519,6 +643,16 @@ class Settings
         foreach ($default as $key => $data) {
             if ('checkbox' == $data['type']) {
                 $is_valid[$key] = (isset($input_values[$key]) && '1' === $input_values[$key]) ? '1' : '';
+            } elseif ('number' == $data['type']) {
+                if ('loadmode' == $key) {
+                    if (3 > intval($input_values[$key]) && -1 < intval($input_values[$key])) {
+                        $is_valid[$key] = intval($input_values[$key]);
+                    } else {
+                        $this->add_error($key, __('loadMode can take the values 0, 1, 2 or 3', 'vralle-lazyload'));
+                    }
+                } else {
+                    $is_valid[$key] = intval($input_values[$key]);
+                }
             } else {
                 $is_valid[$key] = esc_attr($input_values[$key]);
             }
@@ -540,6 +674,8 @@ class Settings
         foreach ($default as $key => $data) {
             if (isset($data['value'])) {
                 $values[$key] = $data['value'];
+            } else {
+                $values[$key] = '';
             }
         }
         return $values;

@@ -1,6 +1,6 @@
 {
   "name": "vralle-lazyload",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js",
   "private": true,
   "author": "vralle",
@@ -9,7 +9,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "vendor": "shx cp node_modules/lazysizes/lazysizes.js vendor/lazysizes/  && shx cp node_modules/lazysizes/lazysizes.min.js vendor/lazysizes && shx cp -R node_modules/lazysizes/plugins/ vendor/lazysizes/plugins/",
+    "vendor": "shx cp node_modules/lazysizes/lazysizes.js vendor/lazysizes/  && shx cp node_modules/lazysizes/lazysizes.min.js vendor/lazysizes && shx cp -R node_modules/lazysizes/plugins/ vendor/lazysizes/",
     "makepot": "wpi18n makepot",
     "dist": "npm-run-all --parallel vendor makepot",
     "test": "echo \"Error: no test specified\" && exit 1"
