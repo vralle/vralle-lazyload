@@ -8,7 +8,6 @@ namespace Vralle\Lazyload\App;
  * @since      0.6.0
  * @package    Vralle_Lazyload
  * @subpackage Vralle_Lazyload/app
- * @author     Vitaliy Ralle <email4vit@gmail.com>
  */
 class Service
 {
@@ -21,7 +20,7 @@ class Service
      *
      * @since 0.6.0
      *
-     * @param array $tagnames Optional.
+     * @param  string $tagnames Optional.
      * @return string The html tag search regular expression
      */
     public static function get_tag_regex($tag = 'img')

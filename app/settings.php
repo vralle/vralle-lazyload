@@ -18,24 +18,55 @@ class Settings
         'admin_page' => 'vralle-lazyload',
         'id' => 'vralle_lazyload',
         'group' => 'vralle_lazyload_wp_images',
-        'section' => 'wp_images_section',
+        'section_imgs' => 'wp_images_section',
         'section_dev' => 'dev_section',
         'default' => array(
-            'wp_images' => '1',
-            'content_images' => '1',
-            'avatar' => '1',
-            'do_src' => '1',
-            'do_srcset' => '1',
-            'data-sizes' => '1',
-            'exclude_class' => '',
-            'bgset' => '0',
-            'unveilhooks' => '0',
-        )
+            'wp_images' => array(
+                'type' => 'checkbox',
+                'value' => '1',
+            ),
+            'custom_header' => array(
+                'type' => 'checkbox',
+                'value' => '',
+            ),
+            'content_images' => array(
+                'type' => 'checkbox',
+                'value' => '1',
+            ),
+            'avatar' =>  array(
+                'type' => 'checkbox',
+                'value' => '1',
+            ),
+            'do_src' =>  array(
+                'type' => 'checkbox',
+                'value' => '1',
+            ),
+            'do_srcset' =>  array(
+                'type' => 'checkbox',
+                'value' => '1',
+            ),
+            'data-sizes' =>  array(
+                'type' => 'checkbox',
+                'value' => '1',
+            ),
+            'exclude_class' =>  array(
+                'type' => 'text',
+                'value' => '',
+            ),
+            'bgset' =>  array(
+                'type' => 'checkbox',
+                'value' => '0',
+            ),
+            'unveilhooks' =>  array(
+                'type' => 'checkbox',
+                'value' => '0',
+            ),
+        ),
     );
 
     const LS_PLUGINS = array(
-        'bgset' => array(),
-        'unveilhooks' => array()
+        'bgset',
+        'unveilhooks',
     );
 
     private $options;
@@ -100,7 +131,7 @@ class Settings
      */
     public function create_admin_page()
     {
-        $this->options = \get_option(self::PLUGIN_OPTION['id']);
+        $this->options = \get_option(self::PLUGIN_OPTION['id'], $this->get_default());
         include_once(dirname(__FILE__) . '/views/settings_page.php');
     }
 
@@ -122,7 +153,7 @@ class Settings
                 // A callback function that sanitizes the option's value.
                 'sanitize_callback' => array($this, 'sanitize_options'),
                 // Default value when calling get_option().
-                'default' => self::PLUGIN_OPTION['default']
+                'default' => $this->get_default(),
             )
         );
 
@@ -131,7 +162,7 @@ class Settings
          */
         \add_settings_section(
             // Section ID
-            self::PLUGIN_OPTION['section'],
+            self::PLUGIN_OPTION['section_imgs'],
             // Section Title
             \esc_html__('Lazy loading of images', 'vralle-lazyload'),
             // Callback for Subheader
@@ -164,17 +195,37 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
-            // Args for callback
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'wp_images',
-                'title' => \esc_html__(
-                    'Apply to Wordpress images',
+                'label' => __(
+                    'Uses lazy loading of images, which are displayed through the WordPress engine. For example, the Post Thumbnails or Featured Image.',
                     'vralle-lazyload'
                 ),
-                'description' => \esc_html__(
-                    'Uses lazy loading of images, which are displayed through the WordPress engine. For example, the Post Thumbnails or Featured Image.',
+            )
+        );
+
+        // Wordpress Images
+        \add_settings_field(
+            // Field ID
+            'custom_header',
+            // Field Title
+            \esc_html__(
+                'Apply to Custom Header images',
+                'vralle-lazyload'
+            ),
+            // Callback for render Input
+            array($this, 'input_checkbox_callback'),
+            // Page ID
+            self::PLUGIN_OPTION['admin_page'],
+            // Section ID
+            self::PLUGIN_OPTION['section_imgs'],
+            // Args for callback
+            array(
+                'id' => 'custom_header',
+                'label' => __(
+                    'Uses lazy loading of custom header images',
                     'vralle-lazyload'
                 ),
             )
@@ -194,16 +245,11 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
-            // Args for callback
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'content_images',
-                'title' => \esc_html__(
-                    'Lazy loading the Wordpress images',
-                    'vralle-lazyload'
-                ),
-                'description' => \esc_html__(
+                'label' => __(
                     'If the plugin finds the image code in the content, lazy loading will be added to the output.',
                     'vralle-lazyload'
                 )
@@ -224,15 +270,14 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
-            // Args for callback
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'avatar',
-                'title' => \esc_html__(
-                    'Apply to Avatar',
+                'label' => __(
+                    'Lazy loading the WP Avatar',
                     'vralle-lazyload'
-                ),
+                )
             )
         );
 
@@ -250,15 +295,11 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'do_src',
-                'title' => \esc_html__(
-                    'Lazy loading the non-responsive images',
-                    'vralle-lazyload'
-                ),
-                'description' => \esc_html__(
+                'label' => __(
                     'Non-responsive images do not have the attribute srcset',
                     'vralle-lazyload'
                 ),
@@ -279,16 +320,12 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'do_srcset',
-                'title' => \esc_html__(
-                    'Lazy loading the responsive images',
-                    'vralle-lazyload'
-                ),
-                'description' => \esc_html__(
-                    'responsive images have the srcset attribute',
+                'label' => __(
+                    'Responsive images have the srcset attribute',
                     'vralle-lazyload'
                 ),
             )
@@ -308,15 +345,11 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'data-sizes',
-                'title' => \esc_html__(
-                    'Calculate the sizes using the lazysizes',
-                    'vralle-lazyload'
-                ),
-                'description' => \esc_html__(
+                'label' => __(
                     'This will replace the values of the "sizes" attribute specified by Wordpress',
                     'vralle-lazyload'
                 )
@@ -329,7 +362,7 @@ class Settings
             'exclude_class',
             // Field Title
             \esc_html__(
-                'Exclude Images by CSS Class',
+                'Exclude the images by CSS classes',
                 'vralle-lazyload'
             ),
             // Callback for render Input
@@ -337,16 +370,16 @@ class Settings
             // Page ID
             self::PLUGIN_OPTION['admin_page'],
             // Section ID
-            self::PLUGIN_OPTION['section'],
+            self::PLUGIN_OPTION['section_imgs'],
             // Args for callback
             array(
                 'id' => 'exclude_class',
-                'title' => \esc_html__(
+                'title' => __(
                     'Exclude Images by CSS Class',
                     'vralle-lazyload'
                 ),
-                'description' => \esc_html__(
-                    'CSS Classes of images, that need to be excluded from lazy loading. Space separated',
+                'description' => __(
+                    'CSS classes of images, that need to be excluded from lazy loading. Space separated',
                     'vralle-lazyload'
                 ),
             )
@@ -395,11 +428,7 @@ class Settings
             // Args for callback
             array(
                 'id' => 'bgset',
-                'title' => \esc_html__(
-                    'lazysizes bgset extension - responsive background images',
-                    'vralle-lazyload'
-                ),
-                'description' => \esc_html__(
+                'label' => __(
                     'This simple and small plugin allows you to define multiple background images with a width descriptor, similar to how img[srcset] works as also art directed images using media queries, similar to how picture works.',
                     'vralle-lazyload'
                 )
@@ -425,11 +454,7 @@ class Settings
             // Args for callback
             array(
                 'id' => 'unveilhooks',
-                'title' => \esc_html__(
-                    'lazysizes unveilhooks extension',
-                    'vralle-lazyload'
-                ),
-                'description' => \esc_html__(
+                'label' => __(
                     'The unveilhooks plugin extends lazySizes to also unveil / lazyload scripts/widgets, background images, styles and video/audio elements',
                     'vralle-lazyload'
                 )
@@ -443,23 +468,22 @@ class Settings
         if (isset($args['title'])) {
             $output .= \sprintf(
                 '<legend class="screen-reader-text"><span>%s</span></legend>',
-                $args['title']
+                \esc_attr($args['title'])
             );
         }
 
-
         $output .= sprintf(
             '<label for="%1$s"><input type="checkbox" id="%1$s" name="%2$s[%1$s]" value="1" %3$s> %4$s</label>',
-            $args['id'],
-            self::PLUGIN_OPTION['id'],
-            \checked(1, isset($this->options[$args['id']]) ? \absint($this->options[$args['id']]) : 0, false),
-            (isset($args['label_text'])) ? $args['label_text'] : ''
+            \esc_attr($args['id']),
+            \esc_attr(self::PLUGIN_OPTION['id']),
+            \checked('1', $this->options[$args['id']], false),
+            (isset($args['label'])) ? \esc_attr($args['label']) : ''
         );
 
         if (isset($args['description'])) {
             $output .= \sprintf(
                 '<p class="description">%s</p>',
-                $args['description']
+                \esc_attr($args['description'])
             );
         }
 
@@ -473,14 +497,14 @@ class Settings
         $output = \sprintf(
             // Render the output
             '<input class="regular-text" type="text" id="%1$s" name="%2$s[%1$s]" value="%3$s" />',
-            $args['id'],
-            self::PLUGIN_OPTION['id'],
+            \esc_attr($args['id']),
+            \esc_attr(self::PLUGIN_OPTION['id']),
             (isset($this->options[$args['id']])) ? $this->options[$args['id']] : ''
         );
         if (isset($args['description'])) {
             $output .= sprintf(
                 '<p class="description">%s</p>',
-                $args['description']
+                \esc_attr($args['description'])
             );
         }
 
@@ -489,29 +513,42 @@ class Settings
 
     public function sanitize_options($input_values)
     {
-        $input_values = (array)$input_values;
         $default = self::PLUGIN_OPTION['default'];
         $is_valid = array();
 
-        foreach ($default as $key => $default) {
-            if (\array_key_exists($key, $input_values)) {
-                if (\gettype($input_values[$key]) !== \gettype($default)) {
-                    $this->add_error($key, 'Data type error. The type of data sent by the form in the ' . $key . ' differs from the type declared in the default values');
-                }
-                $is_valid[$key] = $input_values[$key];
+        foreach ($default as $key => $data) {
+            if ('checkbox' == $data['type']) {
+                $is_valid[$key] = (isset($input_values[$key]) && '1' === $input_values[$key]) ? '1' : '';
             } else {
-                $is_valid[$key] = $default;
+                $is_valid[$key] = esc_attr($input_values[$key]);
             }
         }
 
         return $is_valid;
-        // return array_map('absint', $is_valid);
+    }
+
+    /**
+     * Get default option values
+     *
+     * @since 0.7.1
+     * @return array default option values
+     */
+    private function get_default()
+    {
+        $default = self::PLUGIN_OPTION['default'];
+        $values = array();
+        foreach ($default as $key => $data) {
+            if (isset($data['value'])) {
+                $values[$key] = $data['value'];
+            }
+        }
+        return $values;
     }
 
     /**
      * Use this to show messages to users about settings validation problems, missing settings or anything else.
-     * @param [type] $key     Slug-name to identify the error. Used as part of 'id' attribute in HTML output.
-     * @param [type] $message The formatted message text to display (will be shown inside styled <div> and <p> tags).
+     * @param string $key     Slug-name to identify the error. Used as part of 'id' attribute in HTML output.
+     * @param string $message The formatted message text to display (will be shown inside styled <div> and <p> tags).
      */
     private function add_error($key, $message)
     {
