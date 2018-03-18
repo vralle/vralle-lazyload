@@ -14,18 +14,6 @@ namespace Vralle\Lazyload\App;
  */
 class Plugin
 {
-    private $plugin_dir_path;
-
-    /**
-     * The loader that's responsible for maintaining and registering all hooks that power
-     * the plugin.
-     *
-     * @since    0.1.0
-     * @access   protected
-     * @var      Loader    $loader    Maintains and registers all hooks for the plugin.
-     */
-    protected $loader;
-
     /**
      * The unique identifier of this plugin.
      *
@@ -34,6 +22,15 @@ class Plugin
      * @var      string    $plugin_name    The string used to uniquely identify this plugin.
      */
     protected $plugin_name;
+
+    /**
+     * The name of a plugin bootstrap file
+     *
+     * @since    0.8.0
+     * @access   protected
+     * @var      string    $plugin_basename    The name of a plugin bootstrap file
+     */
+    protected $plugin_basename;
 
     /**
      * The current version of the plugin.
@@ -45,6 +42,18 @@ class Plugin
     protected $version;
 
     /**
+     * The loader that's responsible for maintaining and registering all hooks that power
+     * the plugin.
+     *
+     * @since    0.1.0
+     * @access   protected
+     * @var      Loader    $loader    Maintains and registers all hooks for the plugin.
+     */
+    protected $loader;
+
+    protected $options;
+
+    /**
      * Define the core functionality of the plugin.
      *
      * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -53,72 +62,68 @@ class Plugin
      *
      * @since    0.1.0
      */
-    public function __construct()
+    public function __construct($plugin_basename)
     {
         if (defined('VRALLE_LAZYLOAD_VERSION')) {
             $this->version = VRALLE_LAZYLOAD_VERSION;
         } else {
             $this->version = '1.0.0';
         }
-        $this->plugin_name = 'vralle-lazyload';
-        $this->plugin_dir_path = \plugin_dir_path(dirname(__FILE__));
 
-        $this->load_dependencies();
-        $this->set_locale();
-        $this->define_admin_hooks();
-        $this->define_public_hooks();
+        $this->plugin_basename = $plugin_basename;
+        $this->plugin_name = 'vralle_lazyload';
+
+        $this->loadDependencies();
+        $this->setLocale();
+        $this->setupSettings();
+        $this->adminHooks();
+        $this->publicHooks();
     }
 
     /**
      * Load the required dependencies for this plugin.
      *
-     * Include the following files that make up the plugin:
-     *
-     * - Loader. Orchestrates the hooks of the plugin.
-     * - i18n. Defines internationalization functionality.
-     * - Admin_Setup. Defines all hooks for the admin area.
-     * - Frontend_Setup. Defines all hooks for the public side of the site.
-     *
-     * Create an instance of the loader which will be used to register the hooks
-     * with WordPress.
-     *
-     * @since    0.1.0
+     * @since    0.8.0
      * @access   private
      */
-    private function load_dependencies()
+    private function loadDependencies()
     {
+        $plugin_dir_path = \plugin_dir_path(dirname(__FILE__));
+
         /**
          * The class responsible for orchestrating the actions and filters of the
          * core plugin.
          */
-        require_once $this->plugin_dir_path . 'app/loader.php';
+        require_once $plugin_dir_path . 'app/loader.php';
+
+        require_once $plugin_dir_path . 'app/options.php';
 
         /**
          * The class responsible for defining internationalization functionality
          * of the plugin.
          */
-        require_once $this->plugin_dir_path . 'app/i18n.php';
-
-        /**
-         * Retrieve the HTML tags regular expression for searching.
-         */
-        require_once $this->plugin_dir_path . 'app/service.php';
+        require_once $plugin_dir_path . 'app/i18n.php';
 
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once $this->plugin_dir_path . 'app/settings.php';
+        require_once $plugin_dir_path . 'app/admin.php';
+
+        /**
+         * Retrieve the HTML tags regular expression for searching.
+         */
+        require_once $plugin_dir_path . 'app/util.php';
 
         /**
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
          */
-        require_once $this->plugin_dir_path . 'app/lazysizes.php';
+        require_once $plugin_dir_path . 'app/lazysizes.php';
 
         /**
          * Custom template tags
          */
-        require_once $this->plugin_dir_path . 'app/template-tags.php';
+        require_once $plugin_dir_path . 'app/template-tags.php';
 
         $this->loader = new Loader();
     }
@@ -129,44 +134,167 @@ class Plugin
      * Uses the i18n class in order to set the domain and to register the hook
      * with WordPress.
      *
-     * @since    0.1.0
+     * @since    0.8.0
      * @access   private
      */
-    private function set_locale()
+    private function setLocale()
     {
         $plugin_i18n = new i18n();
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+    }
+
+    private function setupSettings()
+    {
+        $plugin_settings = array(
+            array(
+                'uid'           => 'wp_images',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Image attachments', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading of images displayed by Wordpress methods', 'vralle-lazyload'),
+                'description'   => \__('For example, the Post Thumbnails and Featured Images.', 'vralle-lazyload'),
+                'section'       => 'images',
+            ),
+            array(
+                'uid'           => 'custom_header',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Custom Header', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading of images in the Custom Header', 'vralle-lazyload'),
+                'section'       => 'images',
+            ),
+            array(
+                'uid'           => 'content_images',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Post content', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading of images in the Post Content.', 'vralle-lazyload'),
+                'section'       => 'images',
+            ),
+            array(
+                'uid'           => 'avatar',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Avatar', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading the Avatars.', 'vralle-lazyload'),
+                'section'       => 'images',
+            ),
+            array(
+                'uid'           => 'do_src',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Traditional images', 'vralle-lazyload'),
+                'label'         => \sprintf(
+                    \__('Lazy loading of images without the attribute "%s".', 'vralle-lazyload'),
+                    'srcset'
+                ),
+                'section'       => 'responsive',
+            ),
+            array(
+                'uid'           => 'do_srcset',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Responsive images', 'vralle-lazyload'),
+                'label'         => \sprintf(
+                    \__('Lazy loading images with the attribute "%s".', 'vralle-lazyload'),
+                    'srcset'
+                ),
+                'section'       => 'responsive',
+            ),
+            array(
+                'uid'           => 'data-sizes',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => 'Sizes',
+                'label'         => \__('Calculate sizes automatically.', 'vralle-lazyload'),
+                'description'   => \__('This will replace the data of sizes attribute.', 'vralle-lazyload'),
+                'section'       => 'responsive',
+            ),
+            array(
+                'uid'           => 'exclude_class',
+                'type'          => 'text',
+                'default'       => '',
+                'title'         => \__('CSS Class', 'vralle-lazyload'),
+                'label'         => \__('CSS-classes of images that need to be excluded from lazy loading.', 'vralle-lazyload'),
+                'description'   => \__('Space separated', 'vralle-lazyload'),
+                'class'         => 'regular-text',
+                'section'       => 'exclude',
+            ),
+            array(
+                'uid'           => 'data-expand',
+                'type'          => 'number',
+                'default'       => '0',
+                'title'         => \__('Expand', 'vralle-lazyload'),
+                'label'         => sprintf(
+                    \__('The "%s" option', 'vralle-lazyload'),
+                    'expand'
+                ),
+                'description'   => \__('Normally lazysizes will expand the viewport area to lazy preload images/iframes which might become visible soon. Default "0"', 'vralle-lazyload'),
+                'section'       => 'fine_tuning',
+            ),
+            array(
+                'uid'            => 'loadmode',
+                'type'          => 'number',
+                'default'       => '2',
+                'min'           => '0',
+                'max'           => '3',
+                'step'          => '1',
+                'title'         => 'loadMode',
+                'label'         => \sprintf(
+                    \__('The "%s" option', 'vralle-lazyload'),
+                    'loadMode'
+                ),
+                'description'   => \__('Possible values are 0 = don\'t load anything, 1 = only load visible elements, 2 = load also very near view elements (expand option) and 3 = load also not so near view elements (expand * expFactor option). This value is automatically set to 3 after onload. Change this value to 1 if you (also) optimize for the onload event or change it to 3 if your onload event is already heavily delayed. Default: 2', 'vralle-lazyload'),
+                'section'       => 'fine_tuning',
+            ),
+            array(
+                'uid'           => 'preloadafterload',
+                'type'          => 'checkbox',
+                'default'       => '0',
+                'title'         => 'preloadafterload',
+                'label'         => \__('Load all elements after the window onload event', 'vralle-lazyload'),
+                'description'   => \__('Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default "no"', 'vralle-lazyload'),
+                'section'       => 'fine_tuning',
+            )
+        );
+
+        $options = new Options($this->getPluginName(), $plugin_settings);
+
+        $this->options = $options;
     }
 
     /**
      * Register all of the hooks related to the admin area functionality
      * of the plugin.
      *
-     * @since    0.1.0
+     * @since    0.8.0
      * @access   private
      */
-    private function define_admin_hooks()
+    private function adminHooks()
     {
-        $settings = new Settings($this->get_plugin_name(), $this->get_version());
-        $this->loader->add_action('admin_menu', $settings, 'register_settings_page');
-        $this->loader->add_action('admin_init', $settings, 'define_fields_config');
+        $admin = new Admin($this->getPluginName(), $this->getOptions());
+        $this->loader->add_action('admin_menu', $admin, 'addAdminPage');
+        $this->loader->add_action('plugin_action_links_' . $this->plugin_basename, $admin, 'addSettingsLink');
+        $this->loader->add_action('admin_menu', $admin, 'registerSetting');
+        $this->loader->add_action('admin_init', $admin, 'addSettingSections');
+        $this->loader->add_action('admin_init', $admin, 'addSettingFields');
     }
 
     /**
      * Register all of the hooks related to the public-facing functionality
      * of the plugin.
      *
-     * @since    0.1.0
+     * @since    0.8.0
      * @access   private
      */
-    private function define_public_hooks()
+    private function publicHooks()
     {
-        $lazysizes = new Lazysizes($this->get_plugin_name(), $this->get_version());
-        $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wp_get_attachment_image_attributes', 99);
-        $this->loader->add_filter('get_header_image_tag', $lazysizes, 'get_header_image_tag', 99);
-        $this->loader->add_filter('the_content', $lazysizes, 'the_content', 99);
-        $this->loader->add_filter('get_avatar', $lazysizes, 'get_avatar', 99);
-        $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueue_scripts');
+        $lazysizes = new Lazysizes($this->getPluginName(), $this->getVersion(), $this->getOptions());
+        $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wpGetAttachmentImageAttributes', 99);
+        $this->loader->add_filter('get_header_image_tag', $lazysizes, 'getHeaderImageTag', 99);
+        $this->loader->add_filter('the_content', $lazysizes, 'theContent', 99);
+        $this->loader->add_filter('get_avatar', $lazysizes, 'getAvatar', 99);
+        $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueueScripts');
     }
 
     /**
@@ -183,33 +311,27 @@ class Plugin
      * The name of the plugin used to uniquely identify it within the context of
      * WordPress and to define internationalization functionality.
      *
-     * @since     0.1.0
+     * @since     0.8.0
      * @return    string    The name of the plugin.
      */
-    public function get_plugin_name()
+    public function getPluginName()
     {
         return $this->plugin_name;
     }
 
     /**
-     * The reference to the class that orchestrates the hooks with the plugin.
-     *
-     * @since     0.1.0
-     * @return    Loader    Orchestrates the hooks of the plugin.
-     */
-    public function get_loader()
-    {
-        return $this->loader;
-    }
-
-    /**
      * Retrieve the version number of the plugin.
      *
-     * @since     0.1.0
+     * @since     0.8.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version()
+    public function getVersion()
     {
         return $this->version;
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
     }
 }

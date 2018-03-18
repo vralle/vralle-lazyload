@@ -11,11 +11,6 @@
  */
 class Lazysizes
 {
-    const LAZY_CLASS = 'lazyload';
-    const IMG_PLACEHOLDER  = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    private $options;
-    private $lazysizes_dir_url;
-
     /**
      * The ID of this plugin.
      *
@@ -35,87 +30,78 @@ class Lazysizes
     private $version;
 
     /**
-     * If we're debugging mode, define the
-     * suffix for the file to load the proper version.
-    */
-    private $debug_suffix;
+     * Marker class for all elements which should be lazy loaded
+     * @var string
+     */
+    private $lazy_class;
+
+    /**
+     * The image, that will be displayed instead of the original
+     * @var string
+     */
+    private $img_placeholder;
+
+    /**
+     * @var Options
+     */
+    private $options;
 
     /**
      * Initialize the class and set its properties.
      *
-     * @since    0.1.0
-     * @param      string    $plugin_name       The name of the plugin.
-     * @param      string    $version    The version of this plugin.
+     * @since   0.1.0
+     * @param   string    $plugin_name  The name of the plugin.
+     * @param   string    $version      The version of this plugin.
      */
-    public function __construct($plugin_name, $version)
+    public function __construct($plugin_name, $version, Options $options)
     {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        $this->debug_suffix = \SCRIPT_DEBUG ? '' : '.min';
-        $this->options = $this->get_option();
-        $this->lazysizes_dir_url = \trailingslashit(\plugin_dir_url(dirname(__FILE__)) . 'vendor/lazysizes');
+        $this->options = $options->get();
+        $this->getLazyClass();
+        $this->getImgPlaceholder();
     }
 
     /**
-     * Get default option values
-     *
-     * @since 0.7.1
-     * @return array default option values
+     * Create CSS Marker class for all elements which should be lazy loaded
+     * @return string
      */
-    private function get_default()
+    private function getLazyClass()
     {
-        $default = Settings::PLUGIN_OPTION['default'];
-        $values = array();
-        foreach ($default as $key => $data) {
-            if (isset($data['value'])) {
-                $values[$key] = $data['value'];
-            } else {
-                $values[$key] = '';
-            }
-        }
-        return $values;
+        /**
+         * @since 0.8.0
+         */
+        $this->lazy_class = \apply_filters('vralle_lazyload_lazy_class', 'lazyload');
     }
 
     /**
-     * Get option and their values
-     *
-     * @since 0.7.2
-     * @return array option values
+     * Create The image, that will be displayed instead of the original
+     * @since 0.8.0
      */
-    private function get_option()
+    private function getImgPlaceholder()
     {
-        $default = $this->get_default();
-        $options = \get_option(Settings::PLUGIN_OPTION['id'], $default);
-        $values = array();
-        foreach ($default as $key => $value) {
-            if (array_key_exists($key, $options)) {
-                $values[$key] = $options[$key];
-            } else {
-                $values[$key] = $default[$key];
-            }
-        }
-        return $values;
+        $this->img_placeholder = \apply_filters('vralle_lazyload_image_placeholder', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
     }
 
     /**
      * Filter the list of attachment image attributes.
-     * @link https://developer.wordpress.org/reference/hooks/wp_get_attachment_image_attributes/
+     * @link https://developer.wordpress.org/reference/hooks/wpGetAttachmentImageAttributes/
      *
-     * @since 2.8.0
+     * @since 0.8.0
      *
      * @param array        $attr_arr   Attributes for the image markup.
      */
-    public function wp_get_attachment_image_attributes($attr_arr)
+    public function wpGetAttachmentImageAttributes($attr_arr)
     {
-        if ('1' !== $this->options['wp_images']) {
+        if (1 !== intval($this->options['wp_images'])) {
             return $attr_arr;
         }
 
-        if ($this->is_exit()) {
+        if ($this->isExit()) {
             return $attr_arr;
         }
 
-        $new_attr = $this->attr_handler($attr_arr);
+        $new_attr = $this->attrHandler($attr_arr);
 
         if ($new_attr) {
             $attr_arr = $new_attr;
@@ -127,70 +113,70 @@ class Lazysizes
 
     /**
      * Filter the markup of header images.
-     * @link https://developer.wordpress.org/reference/hooks/get_header_image_tag/
+     * @link https://developer.wordpress.org/reference/hooks/getHeaderImageTag/
      *
-     * @since 0.7.1
+     * @since 0.8.0
      *
      * @param string $html      The HTML image tag markup being filtered.
      * @return string           The HTML image tag markup being filtered.
      */
-    public function get_header_image_tag($html)
+    public function getHeaderImageTag($html)
     {
-        if ('1' !== $this->options['custom_header']) {
+        if (1 !== intval($this->options['custom_header'])) {
             return $html;
         }
 
-        if ($this->is_exit()) {
+        if ($this->isExit()) {
             return $html;
         }
 
-        $html = $this->content_handler($html);
+        $html = $this->contentHandler($html);
 
         return $html;
     }
 
     /**
      * Filter the avatar to retrieve.
-     * @link https://developer.wordpress.org/reference/hooks/get_avatar/
+     * @link https://developer.wordpress.org/reference/hooks/getAvatar/
      *
-     * @since 0.7.1
+     * @since 0.8.0
      *
      * @param string $html      <img> tag for the user's avatar.
      */
-    public function get_avatar($html)
+    public function getAvatar($html)
     {
-        if ('1' !== $this->options['avatar']) {
+        if (1 !== intval($this->options['avatar'])) {
             return $html;
         }
 
-        if ($this->is_exit()) {
+        if ($this->isExit()) {
             return $html;
         }
 
-        $html = $this->content_handler($html);
+        $html = $this->contentHandler($html);
 
         return $html;
     }
 
     /**
      * Filter the post content.
-     * @link https://developer.wordpress.org/reference/hooks/the_content/
+     * @link https://developer.wordpress.org/reference/hooks/theContent/
      *
-     * @since    0.6.0
+     * @since    0.8.0
      * @param   string $html Content of the current post.
      * @return  string       Content of the current post.
      */
-    public function the_content($html)
+    public function theContent($html)
     {
-        if ($this->is_exit()) {
+        if ($this->isExit()) {
             return $html;
         }
 
-        if ('1' !== $this->options['content_images']) {
+        if (1 !== intval($this->options['content_images'])) {
             return $html;
         }
 
-        $html = $this->content_handler($html);
+        $html = $this->contentHandler($html);
 
         return $html;
     }
@@ -200,20 +186,24 @@ class Lazysizes
      * @since 0.1.0
      * @return boolean
      */
-    private function is_exit()
+    private function isExit()
     {
+        // Admin menu
         if (\is_admin()) {
             return true;
         }
 
+        // Feed
         if (\is_feed()) {
             return true;
         }
 
+        // Preview mode
         if (\is_preview()) {
             return true;
         }
 
+        // Print
         if (1 === \intval(\get_query_var('print'))) {
             return true;
         }
@@ -222,12 +212,35 @@ class Lazysizes
             return true;
         }
 
+        /**
+         * Exit filter
+         * @since 0.8.0
+         * @var boolean
+         */
+        if (!\apply_filters('do_vralle_lazyload', true)) {
+            return true;
+        }
+
+        // On an AMP version of the posts
+        if (\defined('AMP_QUERY_VAR') && \function_exists('is_amp_endpoint') && \is_amp_endpoint()) {
+            return true;
+        }
+
         return false;
     }
 
-    private function content_handler($html)
+    /**
+     * Looking for html image tags and processing
+     * @since 0.8.0
+     *
+     * @param  string $html content
+     * @return string       html content
+     */
+    private function contentHandler($html)
     {
-        $pattern = Service::get_tag_regex('img');
+
+        $util = new Util();
+        $pattern = $util->getTagRegex();
 
         return \preg_replace_callback(
             "/$pattern/i",
@@ -238,12 +251,12 @@ class Lazysizes
                  */
                 $parced = \shortcode_parse_atts($m[1]);
 
-                $attr_arr = $this->attr_handler($parced);
+                $attr_arr = $this->attrHandler($parced);
 
                 if ($attr_arr) {
                     $attr = '';
                     foreach ($attr_arr as $key => $value) {
-                        $attr .= sprintf(' %s="%s"', $key, $value);
+                        $attr .= \sprintf(' %s="%s"', $key, $value);
                     }
                     $m[0] = \str_replace($m[1], $attr, $m[0]);
                 }
@@ -256,23 +269,24 @@ class Lazysizes
 
     /**
      * Image attribute handler
-     * @since    0.6.0
+     * @since    0.8.0
+     *
      * @param  array  $attr_arr List of image attributes and their values.
-     * @return array            List of image attributes and their values,
+     * @return mixed            Array List of image attributes and their values,
      *                          where the necessary attributes for the loader are added
      *                          or false, if exclude
      */
-    private function attr_handler($attr_arr)
+    private function attrHandler($attr_arr)
     {
-        $lazy_class = apply_filters('vralle_lazyload_lazy_class', self::LAZY_CLASS);
-        $image_placeholder = apply_filters('vralle_lazyload_image_placeholder', self::IMG_PLACEHOLDER);
+        $lazy_class = $this->lazy_class;
+        $img_placeholder = $this->img_placeholder;
         $classes_arr = array();
         $have_src = false;
         $exlude_class_arr = \array_map('trim', \explode(' ', $this->options['exclude_class']));
 
         // Exit by CSS class
         if (isset($attr_arr['class'])) {
-            $classes_arr = explode(' ', $attr_arr['class']);
+            $classes_arr = \explode(' ', $attr_arr['class']);
 
             if (!empty(\array_intersect($exlude_class_arr, $classes_arr))) {
                 return false;
@@ -284,20 +298,20 @@ class Lazysizes
         }
 
         if (isset($attr_arr['srcset'])) {
-            if ('1' === $this->options['do_srcset']) {
+            if (1 === intval($this->options['do_srcset'])) {
                 $attr_arr['data-srcset'] = $attr_arr['srcset'];
-                $attr_arr['srcset'] = $image_placeholder;
+                $attr_arr['srcset'] = $img_placeholder;
                 $have_src = true;
 
-                if ('1' === $this->options['data-sizes']) {
+                if (1 === intval($this->options['data-sizes'])) {
                     $attr_arr['data-sizes'] = 'auto';
                     unset($attr_arr['sizes']);
                 }
             }
         } elseif (isset($attr_arr['src'])) {
-            if ('1' === $this->options['do_src']) {
+            if (1 === intval($this->options['do_src'])) {
                 $attr_arr['data-src'] = $attr_arr['src'];
-                $attr_arr['src'] = $image_placeholder;
+                $attr_arr['src'] = $img_placeholder;
                 $have_src = true;
             }
         }
@@ -305,10 +319,7 @@ class Lazysizes
         // Do lazyloaded, only if the image have src or srcset
         if ($have_src) {
             $classes_arr[] = $lazy_class;
-            if ($this->options['display-block']) {
-                $classes_arr[] = 'lazysizes-display-block';
-            }
-            $attr_arr['class'] = implode(' ', $classes_arr);
+            $attr_arr['class'] = \implode(' ', $classes_arr);
             if ($this->options['data-expand']) {
                 $attr_arr['data-expand'] = $this->options['data-expand'];
             }
@@ -319,67 +330,47 @@ class Lazysizes
 
     /**
      * Create a list of lazysize.js plug-ins for the call
-     * @since    0.6.0
-     * @return array List of plugins
+     * @since   0.8.0
+     * @return  mixed array List of plugins or false, if empty
      */
-    private function get_plugins_list()
+    private function getPluginsList()
     {
-        $is_valid = array();
+        $plugins = \apply_filters('lazysizes_plugins', array());
 
-        $plugins = Settings::LS_PLUGINS;
-
-        foreach ($this->options as $key => $value) {
-            if (false !== \array_search($key, $plugins) && '1' === $value) {
-                $is_valid[] = $key;
-            }
+        if (!is_array($plugins) || empty($plugins)) {
+            return false;
         }
 
-        return $is_valid;
+        return $plugins;
     }
 
     /**
      * Register the JavaScript for the public-facing side of the site.
      *
-     * @since    0.1.0
+     * @since    0.8.0
      */
-    public function enqueue_scripts()
+    public function enqueueScripts()
     {
-        if ($this->options['display-block']) {
-            $style = '.lazysizes-display-block {display: block; width: 100%; }';
-            // The WP Core trick.
-            // See https://core.trac.wordpress.org/browser/tags/4.7/src/wp-includes/script-loader.php#L187
-            wp_register_style('vr-lazyload', false);
-            wp_enqueue_style('vr-lazyload');
-            wp_add_inline_style('vr-lazyload', $style);
-        }
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
+        $debug_suffix = (\defined('SCRIPT_DEBUG') && \SCRIPT_DEBUG) ? '' : '.min';
+        $lazysizes_dir_url = \trailingslashit(\plugin_dir_url(\dirname(__FILE__)) . 'vendor/lazysizes');
+
         \wp_register_script(
             $this->plugin_name . '_lazysizes',
-            $this->lazysizes_dir_url . 'lazysizes' . $this->debug_suffix . '.js',
+            $lazysizes_dir_url . 'lazysizes' . $debug_suffix . '.js',
             array(),
             $this->version,
             true
         );
 
-        $plugins = $this->get_plugins_list();
+        $plugins = $this->getPluginsList();
 
-        if (empty($plugins)) {
+        if (!$plugins) {
             \wp_enqueue_script($this->plugin_name . '_lazysizes');
         } else {
             foreach ($plugins as $plugin) {
                 \wp_enqueue_script(
                     $this->plugin_name . '_ls.' . $plugin,
-                    $this->lazysizes_dir_url . 'plugins/' . $plugin . '/ls.' . $plugin . $this->debug_suffix . '.js',
+                    $lazysizes_dir_url . 'plugins/' . $plugin . '/ls.' . $plugin . $debug_suffix . '.js',
                     array($this->plugin_name . '_lazysizes'),
                     $this->version,
                     true
@@ -389,18 +380,18 @@ class Lazysizes
 
         $lazySizesConfig = '';
         // Skip default value
-        if (intval($this->options['loadmode']) !== 2) {
-            $lazySizesConfig .= 'window.lazySizesConfig.loadMode=' . intval($this->options['loadmode']) . ';';
+        if (2 !== intval($this->options['loadmode'])) {
+            $lazySizesConfig .= 'window.lazySizesConfig.loadMode=' . \intval($this->options['loadmode']) . ';';
         }
 
-        if ($this->options['preloadafterload']) {
+        if (1 === intval($this->options['preloadafterload'])) {
             $lazySizesConfig .= 'window.lazySizesConfig.preloadAfterLoad=true;';
         }
 
         // Config if only need
         if (!empty($lazySizesConfig)) {
             $lazySizesConfig = 'window.lazySizesConfig = window.lazySizesConfig || {};' . $lazySizesConfig;
-            wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
+            \wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
         }
     }
 }

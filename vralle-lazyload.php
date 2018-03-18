@@ -17,7 +17,7 @@ use Vralle\Lazyload\App;
  * Plugin Name:       VRALLE.Lazyload
  * Plugin URI:        https://github.com/vralle/VRALLE.Lazyload
  * Description:       Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
- * Version:           0.7.3
+ * Version:           0.8.0
  * Author:            Vitaliy Ralle
  * Author URI:        https://github.com/vralle
  * License:           MIT
@@ -31,7 +31,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('VRALLE_LAZYLOAD_VERSION', '0.7.3');
+define('VRALLE_LAZYLOAD_VERSION', '0.8.0');
 
 /**
  * The code that runs during plugin activation.
@@ -73,7 +73,7 @@ require_once plugin_dir_path(__FILE__) . 'app/plugin.php';
  */
 function run_vralle_lazyload()
 {
-    $plugin = new App\Plugin();
+    $plugin = new App\Plugin(plugin_basename(__FILE__));
     $plugin->run();
 }
 run_vralle_lazyload();

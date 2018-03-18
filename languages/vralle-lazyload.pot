@@ -2,9 +2,9 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: VRALLE.Lazyload 0.7.3\n"
+"Project-Id-Version: VRALLE.Lazyload 0.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
-"POT-Creation-Date: 2018-03-12 13:15:13+00:00\n"
+"POT-Creation-Date: 2018-03-18 10:47:25+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,175 +13,124 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: node-wp-i18n 1.0.5\n"
 
-#: app/settings.php:178
-msgid "Settings Description"
+#: app/admin.php:71
+msgid "Settings"
 msgstr ""
 
-#: app/settings.php:193
-msgid "Lazy loading of images"
+#: app/admin.php:130 app/plugin.php:197
+msgid "Responsive images"
 msgstr ""
 
-#: app/settings.php:198
-msgid "Section Description"
+#: app/admin.php:134
+msgid "Exclude"
 msgstr ""
 
-#: app/settings.php:215
-msgid "Apply to Wordpress images"
+#: app/admin.php:138
+msgid "Fine tuning"
 msgstr ""
 
-#: app/settings.php:228
-msgid ""
-"Uses lazy loading of images, which are displayed through the WordPress "
-"engine. For example, the Post Thumbnails or Featured Image."
+#: app/plugin.php:153
+msgid "Image attachments"
 msgstr ""
 
-#: app/settings.php:240
-msgid "Apply to Custom Header images"
+#: app/plugin.php:154
+msgid "Lazy loading of images displayed by Wordpress methods"
 msgstr ""
 
-#: app/settings.php:253
-msgid "Uses lazy loading of custom header images"
+#: app/plugin.php:155
+msgid "For example, the Post Thumbnails and Featured Images."
 msgstr ""
 
-#: app/settings.php:265
-msgid "Apply to content images"
+#: app/plugin.php:162
+msgid "Custom Header"
 msgstr ""
 
-#: app/settings.php:278
-msgid ""
-"If the plugin finds the image code in the content, lazy loading will be "
-"added to the output."
+#: app/plugin.php:163
+msgid "Lazy loading of images in the Custom Header"
 msgstr ""
 
-#: app/settings.php:290
-msgid "Apply to Avatar"
+#: app/plugin.php:170
+msgid "Post content"
 msgstr ""
 
-#: app/settings.php:303
-msgid "Lazy loading the WP Avatar"
+#: app/plugin.php:171
+msgid "Lazy loading of images in the Post Content."
 msgstr ""
 
-#: app/settings.php:315
-msgid "Lazy loading the non-responsive images"
+#: app/plugin.php:178
+msgid "Avatar"
 msgstr ""
 
-#: app/settings.php:328
-msgid "Non-responsive images do not have the attribute srcset"
+#: app/plugin.php:179
+msgid "Lazy loading the Avatars."
 msgstr ""
 
-#: app/settings.php:340
-msgid "Lazy loading the responsive images"
+#: app/plugin.php:186
+msgid "Traditional images"
 msgstr ""
 
-#: app/settings.php:353
-msgid "Responsive images have the srcset attribute"
+#: app/plugin.php:188
+msgid "Lazy loading of images without the attribute \"%s\"."
 msgstr ""
 
-#: app/settings.php:365
-msgid "Calculate the sizes using the lazysizes"
+#: app/plugin.php:199
+msgid "Lazy loading images with the attribute \"%s\"."
 msgstr ""
 
-#: app/settings.php:378
-msgid ""
-"This will replace the values of the \"sizes\" attribute specified by "
-"Wordpress"
+#: app/plugin.php:209
+msgid "Calculate sizes automatically."
 msgstr ""
 
-#: app/settings.php:390
-msgid "Display block"
+#: app/plugin.php:210
+msgid "This will replace the data of sizes attribute."
 msgstr ""
 
-#: app/settings.php:403
-msgid ""
-"Specify browsers to show images as blocks. This can help avoid changing the "
-"height of the page and calculate the correct size of responsive images"
+#: app/plugin.php:217
+msgid "CSS Class"
 msgstr ""
 
-#: app/settings.php:415 app/settings.php:428
+#: app/plugin.php:218
+msgid "CSS-classes of images that need to be excluded from lazy loading."
+msgstr ""
+
+#: app/plugin.php:220
+msgid "Space separated"
+msgstr ""
+
+#: app/plugin.php:228
 msgid "Expand"
 msgstr ""
 
-#: app/settings.php:432
+#: app/plugin.php:230 app/plugin.php:245
+msgid "The \"%s\" option"
+msgstr ""
+
+#: app/plugin.php:233
 msgid ""
 "Normally lazysizes will expand the viewport area to lazy preload "
-"images/iframes which might become visible soon. 0 sets default values."
+"images/iframes which might become visible soon. Default \"0\""
 msgstr ""
 
-#: app/settings.php:444 app/settings.php:457
-msgid "loadMode"
-msgstr ""
-
-#: app/settings.php:461
+#: app/plugin.php:248
 msgid ""
-"(default: 2): The loadMode can be used to constrain the allowed loading "
-"mode. Possible values are 0 = don't load anything, 1 = only load visible "
+"Possible values are 0 = don't load anything, 1 = only load visible "
 "elements, 2 = load also very near view elements (expand option) and 3 = "
 "load also not so near view elements (expand * expFactor option). This value "
 "is automatically set to 3 after onload. Change this value to 1 if you "
 "(also) optimize for the onload event or change it to 3 if your onload event "
-"is already heavily delayed."
+"is already heavily delayed. Default: 2"
 msgstr ""
 
-#: app/settings.php:473
-msgid "preloadAfterLoad"
+#: app/plugin.php:256
+msgid "Load all elements after the window onload event"
 msgstr ""
 
-#: app/settings.php:486
+#: app/plugin.php:257
 msgid ""
-"(default: none): Whether lazysizes should load all elements after the "
-"window onload event. Note: lazySizes will then still download those "
-"not-in-view images inside of a lazy queue, so that other downloads after "
-"onload are not blocked.)"
-msgstr ""
-
-#: app/settings.php:498
-msgid "Exclude the images by CSS classes"
-msgstr ""
-
-#: app/settings.php:511
-msgid "Exclude Images by CSS Class"
-msgstr ""
-
-#: app/settings.php:515
-msgid ""
-"CSS classes of images, that need to be excluded from lazy loading. Space "
-"separated"
-msgstr ""
-
-#: app/settings.php:530
-msgid "Developer settings"
-msgstr ""
-
-#: app/settings.php:535
-msgid ""
-"The settings below require editing the template code. Use these settings "
-"only if you understand what you are doing. By default, these settings are "
-"not used."
-msgstr ""
-
-#: app/settings.php:551
-msgid "lazysizes bgset extension - responsive background images"
-msgstr ""
-
-#: app/settings.php:565
-msgid ""
-"This simple and small plugin allows you to define multiple background "
-"images with a width descriptor, similar to how img[srcset] works as also "
-"art directed images using media queries, similar to how picture works."
-msgstr ""
-
-#: app/settings.php:577
-msgid "lazysizes unveilhooks extension"
-msgstr ""
-
-#: app/settings.php:591
-msgid ""
-"The unveilhooks plugin extends lazySizes to also unveil / lazyload "
-"scripts/widgets, background images, styles and video/audio elements"
-msgstr ""
-
-#: app/settings.php:680
-msgid "loadMode can take the values 0, 1, 2 or 3"
+"Whether lazysizes should load all elements after the window onload event. "
+"Note: lazySizes will then still download those not-in-view images inside of "
+"a lazy queue, so that other downloads after onload are not blocked. Default "
+"\"no\""
 msgstr ""
 
 #. Plugin Name of the plugin/theme

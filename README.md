@@ -4,10 +4,11 @@ The plugin uses [lazysizes.js](https://github.com/aFarkas/lazysizes) - High perf
 The plugin is in active development.
 
 Implemented:
-  - Wordpress image support
+  - Image attachments support
   - Content image support
+  - Support images in the Custom Header
   - Avatar support
-  - Responsive image support
+  - Responsive images support
   - Exclude images by CSS-class
   - Settings page
   - Selecting additional lazysizes.js plugins
@@ -15,13 +16,44 @@ Implemented:
 
 ## Installation
 
-```sh
-$ git clone https://github.com/vralle/VRALLE.Lazyload.git wordpress/wp-content/plugins/vralle-lazyload
-```
-Then:
-* Activate The Plugin
+* Upload the complete `vralle-lazyload` folder to the `wordpress/wp-content/plugins/` directory
+* Activate the plugin through the 'Plugins' menu in WordPress
 * Check the settings on the plugin settings page
 
+## How to
+
+### Image that replaces the original
+```
+add_filter('vralle_lazyload_image_placeholder', $my_image);
+```
+`$my_image` - url or base64 image string,
+default: 1px*1px `data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`
+
+### Exclude images
+
+By CSS-class on the plugin settings page.
+
+Or add filter:
+```
+add_filter('do_vralle_lazyload', 'my_handler');
+function my_handler()
+{
+  if (is_category(1)) {
+    return false;
+  }
+
+  return true;
+}
+```
+
+### Load plugins
+```
+add_filter('lazysizes_plugins', $plugin_list);
+```
+`$plugin_list` - array list of plugin names
+
+
+### Background images
 To work with background images, you can use the `vr_get_image_attr(thumbnail_id, size)`, but you need to edit the template code.
 Example:
 ```
@@ -37,10 +69,15 @@ Example:
   <?php endif; ?>
 ```
 How this works can be found in the file app\template-tags.php
-
+Do not forget to add the required plugin.
 
 ## Changelog
 
+- 0.8.0:
+  - Now PSR-2
+  - lazysizes v.4.0.2
+  - updated settings page
+  - loading plug-ins through a filter only
 - 0.7.0:
   - Move vendor from git to npm. lazysizes v.4.0.1
   - Add .pot
@@ -50,7 +87,7 @@ How this works can be found in the file app\template-tags.php
   - Added template tag for background images
   - Enhanced settings
 - 0.5.0:
-  - Initial stable version. Only Wordpress image support
+  - Initial stable version. Only Wordpress images support
 
 ## Development
 
@@ -63,6 +100,6 @@ Want to contribute? Great!
 
 ## Copyright and license
 
-Copyright 2017 the Authors. This project is licensed under the terms of the MIT [MIT License](LICENSE.txt) license.
+Copyright 2017-2018 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt) license.
 
 **Free Software, Hell Yeah!**

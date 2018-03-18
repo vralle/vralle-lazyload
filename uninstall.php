@@ -29,3 +29,9 @@
 if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
+
+/**
+ * Delete the plugin option
+ * @since 0.8.0
+ */
+delete_option('vralle_lazyload');

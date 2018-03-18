@@ -1,13 +1,10 @@
 === VRALLE.Lazyload ===
-Contributors: vit-1
-Donate link: https://author.uri
+Contributors: Vitaliy Ralle
 Tags: lazy load, lazy loading, images, iframes, optimize, performance
 Requires at least: 4.9
-Tested up to: 4.9
-Requires PHP: 7.1
-Stable tag: 0.5.0
-License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Requires PHP: 7.0
+Stable tag: 0.8.0
+Tested up to: 4.9.4
 
 Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
 
@@ -19,8 +16,15 @@ The plugin is in active development. The current version only works with Wordpre
 
 1. Upload `vralle-lazyload` to the Wordpress plugins directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Check the settings on the plugin settings page
 
 == Changelog ==
+
+= 0.8.0 =
+  * Now PSR-2
+  * lazysizes v.4.0.2
+  * updated settings page
+  * loading plug-ins through a filter only
 
 = 0.7.0 =
 * Move vendor from git to npm. lazysizes v.4.0.1
@@ -33,4 +37,4 @@ The plugin is in active development. The current version only works with Wordpre
 * Enhanced settings
 
 = 0.5.0 =
-* Initial stable version.
+* Initial.
