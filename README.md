@@ -33,7 +33,7 @@ default: 1px*1px `data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEA
 
 By CSS-class on the plugin settings page.
 
-Or add filter:
+And/or add filter:
 ```
 add_filter('do_vralle_lazyload', 'my_handler');
 function my_handler()
@@ -52,6 +52,16 @@ add_filter('lazysizes_plugins', $plugin_list);
 ```
 `$plugin_list` - array list of plugin names
 
+Example:
+```
+add_filter('lazysizes_plugins', 'lazySizesPlugins');
+function lazySizesPlugins()
+{
+    return array(
+        'bgset',
+    );
+}
+```
 
 ### Background images
 To work with background images, you can use the `vr_get_image_attr(thumbnail_id, size)`, but you need to edit the template code.
@@ -73,30 +83,29 @@ Do not forget to add the required plugin.
 
 ## Changelog
 
+- current:
+  - Added iframes support
 - 0.8.0:
-  - Now PSR-2
   - lazysizes v.4.0.2
   - updated settings page
   - loading plug-ins through a filter only
+  - Now PSR-2
 - 0.7.0:
   - Move vendor from git to npm. lazysizes v.4.0.1
   - Add .pot
 - 0.6.0:
-  - Added content image support
+  - Added content images support
   - Added avatar support
   - Added template tag for background images
   - Enhanced settings
 - 0.5.0:
-  - Initial stable version. Only Wordpress images support
+  - Initial
 
 ## Development
 
 Want to contribute? Great!
 
 ## Todos
-
-  - Enhanced settings
-  - Widget image support
 
 ## Copyright and license
 

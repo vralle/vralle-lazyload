@@ -16,19 +16,21 @@ class Util
      *
      * The regular expression contains 1 sub matche to help with parsing.
      *
-     * 0 - The tag, inclide attribute list
-     * 1 - The tag attribute list
+     * 1 - The tag name
+     * 2 - The tag attributes
      *
      * @since 0.8.0
      *
      * @param  string $tagnames Optional.
      * @return string The html tag search regular expression
      */
-    public function getTagRegex($tag = 'img')
+    public function getTagRegex($tags = null)
     {
+        $tags = join('|', array_map('preg_quote', $tags));
+
         return
         '<\s*'                              // Opening bracket
-        . "$tag"                            // Tag name
+        . "($tags)"                           // Tag name
         . '(?![\\w-])'                      // Not followed by word character or hyphen
         . '('                               // 1: Unroll the loop: Inside the opening tag
         .     '[^>\\/]*'                    // Not a closing tag or forward slash

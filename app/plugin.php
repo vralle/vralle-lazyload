@@ -76,8 +76,11 @@ class Plugin
         $this->loadDependencies();
         $this->setLocale();
         $this->setupSettings();
-        $this->adminHooks();
-        $this->publicHooks();
+        if (is_admin()) {
+            $this->adminHooks();
+        } else {
+            $this->publicHooks();
+        }
     }
 
     /**
@@ -107,7 +110,9 @@ class Plugin
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once $plugin_dir_path . 'app/admin.php';
+        if (is_admin()) {
+            require_once $plugin_dir_path . 'app/admin.php';
+        }
 
         /**
          * Retrieve the HTML tags regular expression for searching.
@@ -177,6 +182,14 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Avatar', 'vralle-lazyload'),
                 'label'         => \__('Lazy loading the Avatars.', 'vralle-lazyload'),
+                'section'       => 'images',
+            ),
+            array(
+                'uid'           => 'content_iframes',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Iframes', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading the iframes.', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -294,7 +307,7 @@ class Plugin
         $this->loader->add_filter('get_header_image_tag', $lazysizes, 'getHeaderImageTag', 99);
         $this->loader->add_filter('the_content', $lazysizes, 'theContent', 99);
         $this->loader->add_filter('get_avatar', $lazysizes, 'getAvatar', 99);
-        $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueueScripts');
+        $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueueScripts', 1);
     }
 
     /**

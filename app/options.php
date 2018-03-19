@@ -50,7 +50,7 @@ class Options
     public function setupOption()
     {
         $default = $this->getDefault();
-        $current = \get_option($this->plugin_name);
+        $current = \get_option($this->plugin_name, $default);
         $option = array();
         foreach ($default as $key => $value) {
             if (isset($current[$key])) {

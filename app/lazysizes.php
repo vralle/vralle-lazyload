@@ -13,8 +13,8 @@ class Lazysizes
 {
     /**
      * The ID of this plugin.
-     *
      * @since    0.1.0
+     *
      * @access   private
      * @var      string    $plugin_name    The ID of this plugin.
      */
@@ -22,8 +22,8 @@ class Lazysizes
 
     /**
      * The version of this plugin.
-     *
      * @since    0.1.0
+     *
      * @access   private
      * @var      string    $version    The current version of this plugin.
      */
@@ -85,11 +85,11 @@ class Lazysizes
 
     /**
      * Filter the list of attachment image attributes.
-     * @link https://developer.wordpress.org/reference/hooks/wpGetAttachmentImageAttributes/
-     *
+     * @link https://developer.wordpress.org/reference/hooks/wp_get_attachment_image_attributes/
      * @since 0.8.0
      *
-     * @param array        $attr_arr   Attributes for the image markup.
+     * @param   array   $attr_arr   Attributes for the image markup.
+     * @return  array   List of attachment image attributes.
      */
     public function wpGetAttachmentImageAttributes($attr_arr)
     {
@@ -113,12 +113,11 @@ class Lazysizes
 
     /**
      * Filter the markup of header images.
-     * @link https://developer.wordpress.org/reference/hooks/getHeaderImageTag/
-     *
+     * @link https://developer.wordpress.org/reference/hooks/get_header_image_tag/
      * @since 0.8.0
      *
-     * @param string $html      The HTML image tag markup being filtered.
-     * @return string           The HTML image tag markup being filtered.
+     * @param string    $html   The HTML image tag markup being filtered.
+     * @return string   HTML image element markup.
      */
     public function getHeaderImageTag($html)
     {
@@ -137,11 +136,11 @@ class Lazysizes
 
     /**
      * Filter the avatar to retrieve.
-     * @link https://developer.wordpress.org/reference/hooks/getAvatar/
-     *
+     * @link https://developer.wordpress.org/reference/hooks/get_avatar/
      * @since 0.8.0
      *
-     * @param string $html      <img> tag for the user's avatar.
+     * @param   string  $html   HTML for the user's avatar.
+     * @return  string  HTML image element markup.
      */
     public function getAvatar($html)
     {
@@ -160,11 +159,11 @@ class Lazysizes
 
     /**
      * Filter the post content.
-     * @link https://developer.wordpress.org/reference/hooks/theContent/
-     *
+     * @link https://developer.wordpress.org/reference/hooks/the_content/
      * @since    0.8.0
-     * @param   string $html Content of the current post.
-     * @return  string       Content of the current post.
+     *
+     * @param   string  $html   Content of the current post.
+     * @return  string  Content of the current post.
      */
     public function theContent($html)
     {
@@ -172,11 +171,21 @@ class Lazysizes
             return $html;
         }
 
-        if (1 !== intval($this->options['content_images'])) {
+        $tags = array();
+
+        if (1 == intval($this->options['content_images'])) {
+            $tags[] = 'img';
+        }
+
+        if (1 == intval($this->options['content_iframes'])) {
+            $tags[] = 'iframe';
+        }
+
+        if (empty($tags)) {
             return $html;
         }
 
-        $html = $this->contentHandler($html);
+        $html = $this->contentHandler($html, $tags);
 
         return $html;
     }
@@ -221,7 +230,10 @@ class Lazysizes
             return true;
         }
 
-        // On an AMP version of the posts
+        /**
+         * On an AMP version of the posts
+         * @since 0.8.0
+         */
         if (\defined('AMP_QUERY_VAR') && \function_exists('is_amp_endpoint') && \is_amp_endpoint()) {
             return true;
         }
@@ -233,32 +245,40 @@ class Lazysizes
      * Looking for html image tags and processing
      * @since 0.8.0
      *
-     * @param  string $html content
-     * @return string       html content
+     * @param   string  $html Content.
+     * @param   array   $tags List tag names for looking.
+     * @return  string  Content.
      */
-    private function contentHandler($html)
+    private function contentHandler($html = '', $tags = array('img'))
     {
 
         $util = new Util();
-        $pattern = $util->getTagRegex();
+        $pattern = $util->getTagRegex($tags);
 
         return \preg_replace_callback(
             "/$pattern/i",
             function ($m) {
+                $tag = $m[1];
+                $attrs = $m[2];
                 /**
                  * The wordpress handler is used. This may seem redundant, but it is reliable and verified
                  * @link https://developer.wordpress.org/reference/functions/shortcode_parse_atts/
                  */
-                $parced = \shortcode_parse_atts($m[1]);
+                $parced = \shortcode_parse_atts($attrs);
 
-                $attr_arr = $this->attrHandler($parced);
+                $attr_arr = $this->attrHandler($parced, $tag);
 
                 if ($attr_arr) {
                     $attr = '';
                     foreach ($attr_arr as $key => $value) {
-                        $attr .= \sprintf(' %s="%s"', $key, $value);
+                        // xss test ok
+                        if (is_int($key)) {
+                            $attr .= ' ' . esc_attr($value);
+                        } else {
+                            $attr .= \sprintf(' %s="%s"', $key, esc_attr($value));
+                        }
                     }
-                    $m[0] = \str_replace($m[1], $attr, $m[0]);
+                    $m[0] = \str_replace($attrs, $attr, $m[0]);
                 }
 
                 return $m[0];
@@ -271,12 +291,14 @@ class Lazysizes
      * Image attribute handler
      * @since    0.8.0
      *
-     * @param  array  $attr_arr List of image attributes and their values.
-     * @return mixed            Array List of image attributes and their values,
-     *                          where the necessary attributes for the loader are added
-     *                          or false, if exclude
+     * @param  array    $attr_arr   List of image attributes and their values.
+     * @param  string   $tag        current tag
+     *
+     * @return mixed    Array List of image attributes and their values,
+     *                  where the necessary attributes for the loader are added
+     *                  or false, if exclude
      */
-    private function attrHandler($attr_arr)
+    private function attrHandler($attr_arr = array(), $tag = 'img')
     {
         $lazy_class = $this->lazy_class;
         $img_placeholder = $this->img_placeholder;
@@ -309,9 +331,14 @@ class Lazysizes
                 }
             }
         } elseif (isset($attr_arr['src'])) {
-            if (1 === intval($this->options['do_src'])) {
-                $attr_arr['data-src'] = $attr_arr['src'];
-                $attr_arr['src'] = $img_placeholder;
+            if (1 === intval($this->options['do_src']) || 'iframe' === $tag) {
+                // xss test ok
+                $attr_arr['data-src'] = esc_url($attr_arr['src']);
+                if ('iframe' === $tag) {
+                    $attr_arr['src'] = '';
+                } else {
+                    $attr_arr['src'] = $img_placeholder;
+                }
                 $have_src = true;
             }
         }
@@ -329,8 +356,9 @@ class Lazysizes
     }
 
     /**
-     * Create a list of lazysize.js plug-ins for the call
+     * Create a list of lazysize.js plug-ins
      * @since   0.8.0
+     *
      * @return  mixed array List of plugins or false, if empty
      */
     private function getPluginsList()
@@ -346,7 +374,6 @@ class Lazysizes
 
     /**
      * Register the JavaScript for the public-facing side of the site.
-     *
      * @since    0.8.0
      */
     public function enqueueScripts()
