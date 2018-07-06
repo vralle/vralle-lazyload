@@ -335,10 +335,13 @@ class Lazysizes
                 // xss test ok
                 $attr_arr['data-src'] = esc_url($attr_arr['src']);
                 if ('iframe' === $tag) {
-                    $attr_arr['src'] = '';
+                    // set valid src for iframe
+                    $attr_arr['src'] = 'about:blank';
                 } else {
                     $attr_arr['src'] = $img_placeholder;
                 }
+                // Cleanup Dry Tags
+                unset($attr_arr['sizes']);
                 $have_src = true;
             }
         }
