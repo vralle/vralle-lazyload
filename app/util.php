@@ -29,10 +29,9 @@ class Util
         $tags = join('|', array_map('preg_quote', $tags));
 
         return
-        '<\s*'                              // Opening bracket
-        . "($tags)"                           // Tag name
-        . '(?![\\w-])'                      // Not followed by word character or hyphen
-        . '('                               // 1: Unroll the loop: Inside the opening tag
+        '<\s*'                              // Opening tag
+        . "($tags)"                         // Tag name
+        . '('
         .     '[^>\\/]*'                    // Not a closing tag or forward slash
         .     '(?:'
         .         '\\/(?!>)'                // A forward slash not followed by a closing tag
