@@ -1,164 +1,156 @@
-# Copyright (C) 2018 Vitaliy Ralle
-# This file is distributed under the MIT.
+# Copyright (C) 2018 VRALLE.Lazyload
+# This file is distributed under the same license as the VRALLE.Lazyload package.
 msgid ""
 msgstr ""
 "Project-Id-Version: VRALLE.Lazyload 0.8.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
-"POT-Creation-Date: 2018-03-19 20:04:07+00:00\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: node-wp-i18n 1.0.5\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-07-06T13:46:12+03:00\n"
+"PO-Revision-Date: 2018-07-06T13:46:12+03:00\n"
+"X-Domain: vralle-lazyload\n"
 
-#: app/admin.php:71
-msgid "Settings"
-msgstr ""
-
-#: app/admin.php:130 app/plugin.php:210
-msgid "Responsive images"
-msgstr ""
-
-#: app/admin.php:134
-msgid "Exclude"
-msgstr ""
-
-#: app/admin.php:138
-msgid "Fine tuning"
-msgstr ""
-
-#: app/plugin.php:158
-msgid "Image attachments"
-msgstr ""
-
-#: app/plugin.php:159
-msgid "Lazy loading of images displayed by Wordpress methods"
-msgstr ""
-
-#: app/plugin.php:160
-msgid "For example, the Post Thumbnails and Featured Images."
-msgstr ""
-
-#: app/plugin.php:167
-msgid "Custom Header"
-msgstr ""
-
-#: app/plugin.php:168
-msgid "Lazy loading of images in the Custom Header"
-msgstr ""
-
-#: app/plugin.php:175
-msgid "Post content"
-msgstr ""
-
-#: app/plugin.php:176
-msgid "Lazy loading of images in the Post Content."
-msgstr ""
-
-#: app/plugin.php:183
-msgid "Avatar"
-msgstr ""
-
-#: app/plugin.php:184
-msgid "Lazy loading the Avatars."
-msgstr ""
-
-#: app/plugin.php:191
-msgid "Iframes"
-msgstr ""
-
-#: app/plugin.php:192
-msgid "Lazy loading the iframes."
-msgstr ""
-
-#: app/plugin.php:199
-msgid "Traditional images"
-msgstr ""
-
-#: app/plugin.php:201
-msgid "Lazy loading of images without the attribute \"%s\"."
-msgstr ""
-
-#: app/plugin.php:212
-msgid "Lazy loading images with the attribute \"%s\"."
-msgstr ""
-
-#: app/plugin.php:222
-msgid "Calculate sizes automatically."
-msgstr ""
-
-#: app/plugin.php:223
-msgid "This will replace the data of sizes attribute."
-msgstr ""
-
-#: app/plugin.php:230
-msgid "CSS Class"
-msgstr ""
-
-#: app/plugin.php:231
-msgid "CSS-classes of images that need to be excluded from lazy loading."
-msgstr ""
-
-#: app/plugin.php:232
-msgid "Space separated"
-msgstr ""
-
-#: app/plugin.php:240
-msgid "Expand"
-msgstr ""
-
-#: app/plugin.php:242 app/plugin.php:257
-msgid "The \"%s\" option"
-msgstr ""
-
-#: app/plugin.php:245
-msgid ""
-"Normally lazysizes will expand the viewport area to lazy preload "
-"images/iframes which might become visible soon. Default \"0\""
-msgstr ""
-
-#: app/plugin.php:260
-msgid ""
-"Possible values are 0 = don't load anything, 1 = only load visible "
-"elements, 2 = load also very near view elements (expand option) and 3 = "
-"load also not so near view elements (expand * expFactor option). This value "
-"is automatically set to 3 after onload. Change this value to 1 if you "
-"(also) optimize for the onload event or change it to 3 if your onload event "
-"is already heavily delayed. Default: 2"
-msgstr ""
-
-#: app/plugin.php:268
-msgid "Load all elements after the window onload event"
-msgstr ""
-
-#: app/plugin.php:269
-msgid ""
-"Whether lazysizes should load all elements after the window onload event. "
-"Note: lazySizes will then still download those not-in-view images inside of "
-"a lazy queue, so that other downloads after onload are not blocked. Default "
-"\"no\""
-msgstr ""
-
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
 msgid "VRALLE.Lazyload"
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://github.com/vralle/VRALLE.Lazyload"
+#. Plugin URI of the plugin
+msgid "https://github.com/vralle/vralle-lazyload"
 msgstr ""
 
-#. Description of the plugin/theme
-msgid ""
-"Lazy loading images to speed up loading pages and reduce the load on the "
-"server. Images are loaded when they get to the screen. Uses lazysizes.js"
+#. Description of the plugin
+msgid "Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js"
 msgstr ""
 
-#. Author of the plugin/theme
+#. Author of the plugin
 msgid "Vitaliy Ralle"
 msgstr ""
 
-#. Author URI of the plugin/theme
+#. Author URI of the plugin
 msgid "https://github.com/vralle"
+msgstr ""
+
+#: \app\admin.php:71
+msgid "Settings"
+msgstr ""
+
+#: \app\admin.php:126
+msgid "Options for lazy loading images"
+msgstr ""
+
+#: \app\admin.php:130
+#: \app\plugin.php:210
+msgid "Responsive images"
+msgstr ""
+
+#: \app\admin.php:134
+msgid "Exclude"
+msgstr ""
+
+#: \app\admin.php:138
+msgid "Fine tuning"
+msgstr ""
+
+#: \app\plugin.php:158
+msgid "Image attachments"
+msgstr ""
+
+#: \app\plugin.php:159
+msgid "Lazy loading of images displayed by Wordpress methods"
+msgstr ""
+
+#: \app\plugin.php:160
+msgid "For example, the Post Thumbnails and Featured Images."
+msgstr ""
+
+#: \app\plugin.php:167
+msgid "Custom Header"
+msgstr ""
+
+#: \app\plugin.php:168
+msgid "Lazy loading of images in the Custom Header"
+msgstr ""
+
+#: \app\plugin.php:175
+msgid "Post content"
+msgstr ""
+
+#: \app\plugin.php:176
+msgid "Lazy loading of images in the Post Content."
+msgstr ""
+
+#: \app\plugin.php:183
+msgid "Avatar"
+msgstr ""
+
+#: \app\plugin.php:184
+msgid "Lazy loading the Avatars."
+msgstr ""
+
+#: \app\plugin.php:191
+msgid "Iframes"
+msgstr ""
+
+#: \app\plugin.php:192
+msgid "Lazy loading the iframes."
+msgstr ""
+
+#: \app\plugin.php:199
+msgid "Traditional images"
+msgstr ""
+
+#: \app\plugin.php:201
+msgid "Lazy loading of images without the attribute \"%s\"."
+msgstr ""
+
+#: \app\plugin.php:212
+msgid "Lazy loading images with the attribute \"%s\"."
+msgstr ""
+
+#: \app\plugin.php:222
+msgid "Calculate sizes automatically."
+msgstr ""
+
+#: \app\plugin.php:223
+msgid "This will replace the data of sizes attribute."
+msgstr ""
+
+#: \app\plugin.php:230
+msgid "CSS Class"
+msgstr ""
+
+#: \app\plugin.php:231
+msgid "CSS-classes of images that need to be excluded from lazy loading."
+msgstr ""
+
+#: \app\plugin.php:232
+msgid "Space separated"
+msgstr ""
+
+#: \app\plugin.php:240
+msgid "Expand"
+msgstr ""
+
+#: \app\plugin.php:242
+#: \app\plugin.php:257
+msgid "The \"%s\" option"
+msgstr ""
+
+#: \app\plugin.php:245
+msgid "Normally lazysizes will expand the viewport area to lazy preload images/iframes which might become visible soon. Default \"0\""
+msgstr ""
+
+#: \app\plugin.php:260
+msgid "Possible values are 0 = don't load anything, 1 = only load visible elements, 2 = load also very near view elements (expand option) and 3 = load also not so near view elements (expand * expFactor option). This value is automatically set to 3 after onload. Change this value to 1 if you (also) optimize for the onload event or change it to 3 if your onload event is already heavily delayed. Default: 2"
+msgstr ""
+
+#: \app\plugin.php:268
+msgid "Load all elements after the window onload event"
+msgstr ""
+
+#: \app\plugin.php:269
+msgid "Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default \"no\""
 msgstr ""

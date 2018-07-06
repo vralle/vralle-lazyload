@@ -123,7 +123,7 @@ class Admin
         $sections = array(
             array(
                 'id' => 'images',
-                'title' => 'Выбор изображений для ленивой загрузки',
+                'title' => \__('Options for lazy loading images', 'vralle-lazyload'),
             ),
             array(
                 'id' => 'responsive',
