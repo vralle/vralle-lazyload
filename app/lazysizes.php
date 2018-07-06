@@ -273,9 +273,9 @@ class Lazysizes
                     foreach ($attr_arr as $key => $value) {
                         // xss test ok
                         if (is_int($key)) {
-                            $attr .= ' ' . esc_attr($value);
+                            $attr .= ' ' . \esc_attr($value);
                         } else {
-                            $attr .= \sprintf(' %s="%s"', $key, esc_attr($value));
+                            $attr .= \sprintf(' %s="%s"', $key, \esc_attr($value));
                         }
                     }
                     $m[0] = \str_replace($attrs, $attr, $m[0]);
@@ -333,7 +333,7 @@ class Lazysizes
         } elseif (isset($attr_arr['src'])) {
             if (1 === intval($this->options['do_src']) || 'iframe' === $tag) {
                 // xss test ok
-                $attr_arr['data-src'] = esc_url($attr_arr['src']);
+                $attr_arr['data-src'] = \esc_url($attr_arr['src']);
                 if ('iframe' === $tag) {
                     // set valid src for iframe
                     $attr_arr['src'] = 'about:blank';

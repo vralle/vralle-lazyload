@@ -26,7 +26,7 @@ class Util
      */
     public function getTagRegex($tags = null)
     {
-        $tags = join('|', array_map('preg_quote', $tags));
+        $tags = \join('|', array_map('preg_quote', $tags));
 
         return
         '<\s*'                              // Opening tag

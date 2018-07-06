@@ -67,9 +67,9 @@ class Admin
      */
     public function addSettingsLink($links)
     {
-        $settings_url  = menu_page_url($this->plugin_name, false);
-        $settings_link = "<a href='$settings_url'>" . esc_html__('Settings', 'vralle-lazyload') . "</a>";
-        array_unshift($links, $settings_link);
+        $settings_url  = \menu_page_url($this->plugin_name, false);
+        $settings_link = "<a href='$settings_url'>" . \esc_html__('Settings', 'vralle-lazyload') . "</a>";
+        \array_unshift($links, $settings_link);
 
         return $links;
     }
