@@ -9,13 +9,13 @@ use Vralle\Lazyload\App;
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://github.com/vralle/VRALLE.Lazyload
+ * @link              https://github.com/vralle/vralle-lazyload
  * @since             0.1.0
  * @package           Vralle_Lazyload
  *
  * @wordpress-plugin
  * Plugin Name:       VRALLE.Lazyload
- * Plugin URI:        https://github.com/vralle/VRALLE.Lazyload
+ * Plugin URI:        https://github.com/vralle/vralle-lazyload
  * Description:       Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
  * Version:           0.8.1
  * Author:            Vitaliy Ralle
