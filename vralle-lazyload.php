@@ -15,7 +15,6 @@ use Vralle\Lazyload\App;
  *
  * @wordpress-plugin
  * Plugin Name:       VRALLE.Lazyload
- * Plugin URI:        https://github.com/vralle/vralle-lazyload
  * Description:       Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
  * Version:           0.8.1
  * Author:            Vitaliy Ralle
@@ -24,6 +23,7 @@ use Vralle\Lazyload\App;
  * License URI:       LICENSE.txt
  * Text Domain:       vralle-lazyload
  * Domain Path:       /languages
+ * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload
  */
 
 // If this file is called directly, abort.

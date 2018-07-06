@@ -1,7 +1,10 @@
 # Vralle.Lazyload
 The plugin uses [lazysizes.js](https://github.com/aFarkas/lazysizes) - High performance and SEO friendly lazy loader for images, iframes and more.
 
-The plugin is in active development.
+* Tags: media, images, iframe, lazyload, performance, speed
+* Tested up to: 4.9.7
+* Stable tag: master
+* License: [MIT License](LICENSE.txt)
 
 Implemented:
   - Image attachments support
@@ -14,11 +17,13 @@ Implemented:
   - Selecting additional lazysizes.js plugins
   - Template Tags for background
 
+The plugin is in active development.
+
 ## Installation
 
-* Upload the complete `vralle-lazyload` folder to the `wordpress/wp-content/plugins/` directory
-* Activate the plugin through the 'Plugins' menu in WordPress
-* Check the settings on the plugin settings page
+1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). We rely on this plugin for updating Vralle.Lazyload directly from this git repo.
+2. Install Vralle.Lazyload by downloading the latest zip [here](). Both github-updater and Vralle.Lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
+3. Access the Vralle.Lazyload menu option under Tools.
 
 ## How to
 
