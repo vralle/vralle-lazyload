@@ -12,9 +12,10 @@ Implemented:
   - Support images in the Custom Header
   - Avatar support
   - Responsive images support
+  - iframe support
   - Exclude images by CSS-class
-  - Settings page
-  - Selecting additional lazysizes.js plugins
+  - Options page
+  - Selecting additional lazysizes.js extensions
   - Template Tags for background
 
 The plugin is in active development.
@@ -36,9 +37,9 @@ default: 1px*1px `data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEA
 
 ### Exclude images
 
-By CSS-class on the plugin settings page.
+By CSS-class - the plugin options page.
 
-And/or add filter:
+And/or filter `do_vralle_lazyload`:
 ```
 add_filter('do_vralle_lazyload', 'my_handler');
 function my_handler()
@@ -51,7 +52,7 @@ function my_handler()
 }
 ```
 
-### Load plugins
+### Load lazySizes extensions
 ```
 add_filter('lazysizes_plugins', $plugin_list);
 ```
@@ -59,12 +60,11 @@ add_filter('lazysizes_plugins', $plugin_list);
 
 Example:
 ```
-add_filter('lazysizes_plugins', 'lazySizesPlugins');
-function lazySizesPlugins()
+add_filter('lazysizes_plugins', 'my_lazysizes_plugins_list');
+function my_lazysizes_plugins_list($plugins)
 {
-    return array(
-        'bgset',
-    );
+    $plugins[] = 'bgset';
+    return $plugins;
 }
 ```
 
@@ -89,20 +89,25 @@ Do not forget to add the required plugin.
 ## Changelog
 
 - current:
+  - lazySizes v4.0.4
+  - Internationalization fix
+  - Performance optimization
+  - Expansion of security - more escaping for admin page and options
+  - Added parent-fit extension settings
   - Added iframes support
 - 0.8.0:
-  - lazysizes v.4.0.2
-  - updated settings page
-  - loading plug-ins through a filter only
+  - lazysizes v4.0.2
+  - updated options page
+  - loading extensions through a filter only
   - Now PSR-2
 - 0.7.0:
-  - Move vendor from git to npm. lazysizes v.4.0.1
-  - Add .pot
+  - Move vendor from git to npm. lazysizes v4.0.1
+  - Added .pot
 - 0.6.0:
   - Added content images support
   - Added avatar support
   - Added template tag for background images
-  - Enhanced settings
+  - Enhanced options
 - 0.5.0:
   - Initial
 
@@ -114,6 +119,6 @@ Want to contribute? Great!
 
 ## Copyright and license
 
-Copyright 2017-2018 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt) license.
+Copyright 2017-2018 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt).
 
 **Free Software, Hell Yeah!**

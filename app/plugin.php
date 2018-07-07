@@ -156,8 +156,8 @@ class Plugin
                 'type'          => 'checkbox',
                 'default'       => '1',
                 'title'         => \__('Image attachments', 'vralle-lazyload'),
-                'label'         => \__('Lazy loading of images displayed by Wordpress methods', 'vralle-lazyload'),
-                'description'   => \__('For example, the Post Thumbnails and Featured Images.', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading of images displayed by Wordpress methods.', 'vralle-lazyload'),
+                'description'   => \__('For example, the Post Thumbnails and Featured Images. Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -165,7 +165,8 @@ class Plugin
                 'type'          => 'checkbox',
                 'default'       => '1',
                 'title'         => \__('Custom Header', 'vralle-lazyload'),
-                'label'         => \__('Lazy loading of images in the Custom Header', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading of images in the Custom Header.', 'vralle-lazyload'),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -174,6 +175,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Post content', 'vralle-lazyload'),
                 'label'         => \__('Lazy loading of images in the Post Content.', 'vralle-lazyload'),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -182,6 +184,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Avatar', 'vralle-lazyload'),
                 'label'         => \__('Lazy loading the Avatars.', 'vralle-lazyload'),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -190,6 +193,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Iframes', 'vralle-lazyload'),
                 'label'         => \__('Lazy loading the iframes.', 'vralle-lazyload'),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -201,6 +205,7 @@ class Plugin
                     \__('Lazy loading of images without the attribute "%s".', 'vralle-lazyload'),
                     'srcset'
                 ),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'responsive',
             ),
             array(
@@ -212,6 +217,7 @@ class Plugin
                     \__('Lazy loading images with the attribute "%s".', 'vralle-lazyload'),
                     'srcset'
                 ),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'responsive',
             ),
             array(
@@ -220,7 +226,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => 'Sizes',
                 'label'         => \__('Calculate sizes automatically.', 'vralle-lazyload'),
-                'description'   => \__('This will replace the data of sizes attribute.', 'vralle-lazyload'),
+                'description'   => \__('This will replace the data of sizes attribute. Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'responsive',
             ),
             array(
@@ -237,16 +243,16 @@ class Plugin
                 'uid'           => 'data-expand',
                 'type'          => 'number',
                 'default'       => '0',
-                'title'         => \__('Expand', 'vralle-lazyload'),
-                'label'         => sprintf(
-                    \__('The "%s" option', 'vralle-lazyload'),
+                'title'         => 'Expand',
+                'label'         => \sprintf(
+                    \__('The "%s" option.', 'vralle-lazyload'),
                     'expand'
                 ),
-                'description'   => \__('Normally lazysizes will expand the viewport area to lazy preload images/iframes which might become visible soon. Default "0"', 'vralle-lazyload'),
+                'description'   => \__('Normally lazysizes will expand the viewport area to lazy preload images/iframes which might become visible soon. Default "0".', 'vralle-lazyload'),
                 'section'       => 'fine_tuning',
             ),
             array(
-                'uid'            => 'loadmode',
+                'uid'           => 'loadmode',
                 'type'          => 'number',
                 'default'       => '2',
                 'min'           => '0',
@@ -254,10 +260,10 @@ class Plugin
                 'step'          => '1',
                 'title'         => 'loadMode',
                 'label'         => \sprintf(
-                    \__('The "%s" option', 'vralle-lazyload'),
+                    \__('The "%s" option.', 'vralle-lazyload'),
                     'loadMode'
                 ),
-                'description'   => \__('Possible values are 0 = don\'t load anything, 1 = only load visible elements, 2 = load also very near view elements (expand option) and 3 = load also not so near view elements (expand * expFactor option). This value is automatically set to 3 after onload. Change this value to 1 if you (also) optimize for the onload event or change it to 3 if your onload event is already heavily delayed. Default: 2', 'vralle-lazyload'),
+                'description'   => \__('Possible values are 0 = don\'t load anything, 1 = only load visible elements, 2 = load also very near view elements (expand option) and 3 = load also not so near view elements (expand * expFactor option). This value is automatically set to 3 after onload. Change this value to 1 if you (also) optimize for the onload event or change it to 3 if your onload event is already heavily delayed. Default: 2.', 'vralle-lazyload'),
                 'section'       => 'fine_tuning',
             ),
             array(
@@ -265,10 +271,44 @@ class Plugin
                 'type'          => 'checkbox',
                 'default'       => '0',
                 'title'         => 'preloadafterload',
-                'label'         => \__('Load all elements after the window onload event', 'vralle-lazyload'),
-                'description'   => \__('Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default "no"', 'vralle-lazyload'),
+                'label'         => \__('Load all elements after the window onload event.', 'vralle-lazyload'),
+                'description'   => \__('Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default "No".', 'vralle-lazyload'),
                 'section'       => 'fine_tuning',
-            )
+            ),
+            array(
+                'uid'           => 'parent-fit',
+                'type'          => 'checkbox',
+                'default'       => '0',
+                'title'         => 'parent-fit',
+                'label'         => \sprintf(
+                    \__('Load %s extension. Requires "%s".', 'vralle-lazyload'),
+                    'parent-fit',
+                    'Sizes'
+                ),
+                'description'   => \__('The parent fit plugin extends the data-sizes="auto" feature to also calculate the right sizes for object-fit: contain|cover image elements as also height ( and width) constrained image elements in general. Default "No".', 'vralle-lazyload'),
+                'section'       => 'extensions',
+            ),
+            array(
+                'uid'           => 'object-fit',
+                'type'          => 'select',
+                'default'       => 'contain',
+                'options'           => array(
+                    'contain'           => 'contain',
+                    'cover'             => 'cover',
+                    'width'             => 'width',
+                ),
+                'title'         => \__('object-fit', 'vralle-lazyload'),
+                'label'         => \sprintf(
+                    \__('Select object-fit type. Requires "%s".', 'vralle-lazyload'),
+                    'parent-fit'
+                ),
+                'description'   => \sprintf(
+                    \__('Read more: %s. Default "%s".', 'vralle-lazyload'),
+                    '<a href="https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/parent-fit">https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/parent-fit</a>',
+                    'contain'
+                ),
+                'section'       => 'extensions',
+            ),
         );
 
         $options = new Options($this->getPluginName(), $plugin_settings);

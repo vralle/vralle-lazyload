@@ -51,14 +51,21 @@ class Options
     {
         $default = $this->getDefault();
         $current = \get_option($this->plugin_name, $default);
+        $support = array(
+            'exclude_class',
+            'data-expand',
+            'loadmode',
+            'object-fit',
+        );
         $option = array();
         foreach ($default as $key => $value) {
             if (isset($current[$key])) {
                 $option[$key] = $current[$key];
-            } else {
-                $option[$key] = '';
+            } elseif (false !== \array_search($key, $support)) {
+                $option[$key] = $value;
             }
         }
+
         return $option;
     }
 

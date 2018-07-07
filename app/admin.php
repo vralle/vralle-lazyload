@@ -123,20 +123,24 @@ class Admin
         $sections = array(
             array(
                 'id' => 'images',
-                'title' => \__('Options for lazy loading images', 'vralle-lazyload'),
+                'title' => \esc_html__('Lazy loading', 'vralle-lazyload'),
             ),
             array(
                 'id' => 'responsive',
-                'title' => \__('Responsive images', 'vralle-lazyload'),
+                'title' => \esc_html__('Responsive images', 'vralle-lazyload'),
             ),
             array(
                 'id' => 'exclude',
-                'title' => \__('Exclude', 'vralle-lazyload'),
+                'title' => \esc_html__('Exclude', 'vralle-lazyload'),
             ),
             array(
                 'id' => 'fine_tuning',
-                'title' => \__('Fine tuning', 'vralle-lazyload'),
-            )
+                'title' => \esc_html__('Fine tuning', 'vralle-lazyload'),
+            ),
+            array(
+                'id' => 'extensions',
+                'title' => \esc_html__('Extensions', 'vralle-lazyload'),
+            ),
         );
 
         foreach ($sections as $section) {
@@ -199,20 +203,18 @@ class Admin
     {
         $options = $this->options->get();
 
-        $value = $options[$arguments['uid']];
-
         $output = '';
 
         switch ($arguments['type']) {
             case 'text':
                 $output .= \sprintf(
-                    '<input name="%1$s[%2$s]" id="%1$s[%2$s]" class="%3$s" type="%4$s" placeholder="%5$s" value="%6$s" />',
-                    $this->plugin_name,
-                    $arguments['uid'],
+                    '<input name="%1$s[%2$s]" id="%1$s[%2$s]" class="%3$s" type="%4$s" placeholder="%5$s" value="%6$s" maxlength="120" />',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
                     isset($arguments['class']) ? \esc_attr($arguments['class']) : '',
-                    $arguments['type'],
+                    \esc_attr($arguments['type']),
                     isset($arguments['placeholder']) ? \esc_attr($arguments['placeholder']) : '',
-                    $value
+                    esc_attr($options[$arguments['uid']])
                 );
                 break;
             case 'number':
@@ -221,48 +223,87 @@ class Admin
                 }
 
                 $output .= \sprintf(
-                    '<input name="%1$s[%2$s]" id="%1$s[%2$s]" type="number" placeholder="%3$s" min="%4$s" max="%5$s" step="%6$s" value="%7$s" />',
-                    $this->plugin_name,
-                    $arguments['uid'],
+                    '<input name="%1$s[%2$s]" id="%1$s[%2$s]" type="number" placeholder="%3$s"%4$s%5$s step="%6$s" value="%7$s" maxlength="12" />',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
                     isset($arguments['placeholder']) ? \esc_attr($arguments['placeholder']) : '',
-                    isset($arguments['min']) ? \esc_attr($arguments['min']) : '',
-                    isset($arguments['max']) ? \esc_attr($arguments['max']) : '',
+                    isset($arguments['min']) ? ' min="' . \esc_attr($arguments['min']) . '"' : '',
+                    isset($arguments['max']) ? ' max="' . \esc_attr($arguments['max']) . '"': '',
                     \esc_attr($arguments['step']),
-                    $value
+                    esc_attr($options[$arguments['uid']])
                 );
                 break;
             case 'checkbox':
+                $disable = '';
+                if ('parent-fit' == $arguments['uid']) {
+                    $disable = \disabled('', isset($options['data-sizes']), false);
+                }
                 $output .= \sprintf(
-                    '<input type="checkbox" id="%1$s[%2$s]" name="%1$s[%2$s]" value="1" %3$s>',
-                    $this->plugin_name,
-                    $arguments['uid'],
-                    \checked('1', $value, false)
+                    '<input type="checkbox" id="%1$s[%2$s]" name="%1$s[%2$s]" value="1" %3$s%4$s>',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    \checked(isset($options[$arguments['uid']]), true, false),
+                    $disable
                 );
+
+                break;
+
+            case 'select':
+                $disable = '';
+                if ('object-fit' == $arguments['uid']) {
+                    if (!isset($options['data-sizes']) || !isset($options['parent-fit'])) {
+                        $disable = ' disabled="disabled"';
+                    }
+                }
+                $output .= \sprintf(
+                    '<select name="%1$s[%2$s]" id="%1$s[%2$s]"%3$s>',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    $disable
+                );
+                foreach ($arguments['options'] as $key => $text) {
+                    $output .= \sprintf(
+                        '<option value="%s"%s>%s</option>',
+                        \esc_attr($key),
+                        \selected($key, $options[$arguments['uid']], false),
+                        \esc_attr($text)
+                    );
+                }
+                $output .= '</select>';
 
                 break;
         }
 
         if (isset($arguments['label'])) {
-            $output = \sprintf(
-                '<label for="%1$s[%2$s]">%3$s %4$s</label>',
-                $this->plugin_name,
-                $arguments['uid'],
-                $output,
-                $arguments['label']
-            );
+            if ('select' == $arguments['type']) {
+                $output .= \sprintf(
+                    ' <label for="%1$s[%2$s]">%3$s</label>',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    \esc_attr($arguments['label'])
+                );
+            } else {
+                $output = \sprintf(
+                    '<label for="%1$s[%2$s]">%3$s %4$s</label>',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    $output,
+                    \esc_attr($arguments['label'])
+                );
+            }
         }
 
         if (isset($arguments['description'])) {
             $output .= \sprintf(
                 '<p class="description">%s</p>',
-                $arguments['description']
+                \wp_kses($arguments['description'], 'default')
             );
         }
 
         if (isset($arguments['label']) || isset($arguments['description'])) {
             $output = \sprintf(
                 '<fieldset><legend class="screen-reader-text"><span>%s</span></legend>%s</fieldset>',
-                $arguments['title'],
+                esc_attr($arguments['title']),
                 $output
             );
         }

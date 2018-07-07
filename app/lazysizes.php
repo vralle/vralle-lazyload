@@ -93,7 +93,7 @@ class Lazysizes
      */
     public function wpGetAttachmentImageAttributes($attr_arr)
     {
-        if (1 !== intval($this->options['wp_images'])) {
+        if (!isset($this->options['wp_images'])) {
             return $attr_arr;
         }
 
@@ -121,7 +121,7 @@ class Lazysizes
      */
     public function getHeaderImageTag($html)
     {
-        if (1 !== intval($this->options['custom_header'])) {
+        if (!isset($this->options['custom_header'])) {
             return $html;
         }
 
@@ -144,7 +144,7 @@ class Lazysizes
      */
     public function getAvatar($html)
     {
-        if (1 !== intval($this->options['avatar'])) {
+        if (!isset($this->options['avatar'])) {
             return $html;
         }
 
@@ -173,11 +173,11 @@ class Lazysizes
 
         $tags = array();
 
-        if (1 == intval($this->options['content_images'])) {
+        if (isset($this->options['content_images'])) {
             $tags[] = 'img';
         }
 
-        if (1 == intval($this->options['content_iframes'])) {
+        if (isset($this->options['content_iframes'])) {
             $tags[] = 'iframe';
         }
 
@@ -271,7 +271,6 @@ class Lazysizes
                 if ($attr_arr) {
                     $attr = '';
                     foreach ($attr_arr as $key => $value) {
-                        // xss test ok
                         if (is_int($key)) {
                             $attr .= ' ' . \esc_attr($value);
                         } else {
@@ -320,20 +319,19 @@ class Lazysizes
         }
 
         if (isset($attr_arr['srcset'])) {
-            if (1 === intval($this->options['do_srcset'])) {
+            if (isset($this->options['do_srcset'])) {
                 $attr_arr['data-srcset'] = $attr_arr['srcset'];
                 $attr_arr['srcset'] = $img_placeholder;
                 $have_src = true;
 
-                if (1 === intval($this->options['data-sizes'])) {
+                if (isset($this->options['data-sizes'])) {
                     $attr_arr['data-sizes'] = 'auto';
                     unset($attr_arr['sizes']);
                 }
             }
         } elseif (isset($attr_arr['src'])) {
-            if (1 === intval($this->options['do_src']) || 'iframe' === $tag) {
-                // xss test ok
-                $attr_arr['data-src'] = \esc_url($attr_arr['src']);
+            if (isset($this->options['do_src']) || 'iframe' === $tag) {
+                $attr_arr['data-src'] = $attr_arr['src'];
                 if ('iframe' === $tag) {
                     // set valid src for iframe
                     $attr_arr['src'] = 'about:blank';
@@ -350,8 +348,11 @@ class Lazysizes
         if ($have_src) {
             $classes_arr[] = $lazy_class;
             $attr_arr['class'] = \implode(' ', $classes_arr);
-            if ($this->options['data-expand']) {
+            if (0 != $this->options['data-expand']) {
                 $attr_arr['data-expand'] = $this->options['data-expand'];
+            }
+            if (isset($this->options['parent-fit'])) {
+                $attr_arr['data-parent-fit'] = $this->options['object-fit'];
             }
         }
 
@@ -366,8 +367,17 @@ class Lazysizes
      */
     private function getPluginsList()
     {
-        $plugins = \apply_filters('lazysizes_plugins', array());
-
+        // Extensions list from options for possible load
+        $list_of_extensions = array(
+            'parent-fit',
+        );
+        $plugins = array();
+        foreach ($list_of_extensions as $extension) {
+            if (isset($this->options[$extension])) {
+                $plugins[] = $extension;
+            }
+        }
+        $plugins = \apply_filters('lazysizes_plugins', $plugins);
         if (!is_array($plugins) || empty($plugins)) {
             return false;
         }
@@ -414,7 +424,7 @@ class Lazysizes
             $lazySizesConfig .= 'window.lazySizesConfig.loadMode=' . \intval($this->options['loadmode']) . ';';
         }
 
-        if (1 === intval($this->options['preloadafterload'])) {
+        if (isset($this->options['preloadafterload'])) {
             $lazySizesConfig .= 'window.lazySizesConfig.preloadAfterLoad=true;';
         }
 
