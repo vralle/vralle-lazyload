@@ -269,7 +269,7 @@ class Plugin
             array(
                 'uid'           => 'preloadafterload',
                 'type'          => 'checkbox',
-                'default'       => '0',
+                'default'       => null,
                 'title'         => 'preloadafterload',
                 'label'         => \__('Load all elements after the window onload event.', 'vralle-lazyload'),
                 'description'   => \__('Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default "No".', 'vralle-lazyload'),
@@ -278,7 +278,7 @@ class Plugin
             array(
                 'uid'           => 'parent-fit',
                 'type'          => 'checkbox',
-                'default'       => '0',
+                'default'       => null,
                 'title'         => 'parent-fit',
                 'label'         => \sprintf(
                     \__('Load %s extension. Requires "%s".', 'vralle-lazyload'),
