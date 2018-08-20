@@ -51,6 +51,7 @@ class Options
     {
         $default = $this->getDefault();
         $current = \get_option($this->plugin_name, $default);
+        // Where default values are needed
         $support = array(
             'exclude_class',
             'data-expand',
@@ -61,7 +62,8 @@ class Options
         foreach ($default as $key => $value) {
             if (isset($current[$key])) {
                 $option[$key] = $current[$key];
-            } elseif (false !== \array_search($key, $support)) {
+            } elseif (in_array($key, $support)) {
+                // Set default value
                 $option[$key] = $value;
             }
         }
