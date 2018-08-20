@@ -316,7 +316,7 @@ class Lazysizes
                 return false;
             }
 
-            if (false !== \array_search($lazy_class, $classes_arr)) {
+            if (in_array($lazy_class, $classes_arr)) {
                 return false;
             }
         }
