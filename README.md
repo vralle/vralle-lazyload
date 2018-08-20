@@ -1,8 +1,8 @@
-# Vralle.Lazyload
-The plugin uses [lazysizes.js](https://github.com/aFarkas/lazysizes) - High performance and SEO friendly lazy loader for images, iframes and more.
+# vralle.lazyload
+Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 
-* Tags: media, images, iframe, lazyload, performance, speed
-* Tested up to: 4.9.7
+* Tags: media, images, lazyload, performance, speed
+* Tested up to: 4.9.8
 * Stable tag: master
 * License: [MIT License](LICENSE.txt)
 
@@ -12,18 +12,16 @@ Implemented:
   - Support images in the Custom Header
   - Avatar support
   - Responsive images support
-  - iframe support
+  - iframe, embed, object, video tags support
   - Exclude images by CSS-class
   - Options page
   - Selecting additional lazysizes.js extensions
   - Template Tags for background
 
-The plugin is in active development.
-
 ## Installation
 
-1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). We rely on this plugin for updating Vralle.Lazyload directly from this git repo.
-2. Install Vralle.Lazyload by downloading the latest zip [here](). Both github-updater and Vralle.Lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
+1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/afragen/github-updater/releases). We rely on this plugin for updating Vralle.Lazyload directly from this git repo.
+2. Install Vralle.Lazyload by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). Both github-updater and Vralle.Lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
 3. Access the Vralle.Lazyload menu option under Tools.
 
 ## How to
@@ -88,20 +86,20 @@ Do not forget to add the required plugin.
 
 ## Changelog
 
-- current:
-  - lazySizes v4.0.4
-  - Internationalization fix
-  - Performance optimization
-  - Expansion of security - more escaping for admin page and options
+- 0.8.2:
+  - lazySizes v4.1.0
   - Added parent-fit extension settings
-  - Added iframes support
+  - iframe, embed, object, video tags added to the handler
+  - Expansion of security - more escaping for admin page and options
+  - Performance optimization
+  - Internationalization fix
 - 0.8.0:
-  - lazysizes v4.0.2
+  - lazySizes v4.0.2
   - updated options page
   - loading extensions through a filter only
   - Now PSR-2
 - 0.7.0:
-  - Move vendor from git to npm. lazysizes v4.0.1
+  - Move vendor from git to npm. lazySizes v4.0.1
   - Added .pot
 - 0.6.0:
   - Added content images support

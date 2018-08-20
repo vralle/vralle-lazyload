@@ -1,6 +1,6 @@
 {
   "name": "vralle-lazyload",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js",
   "private": true,
   "author": "vralle",

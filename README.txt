@@ -1,16 +1,15 @@
 === VRALLE.Lazyload ===
-Contributors: Vitaliy Ralle
-Tags: lazy load, lazy loading, images, iframes, optimize, performance
+Contributors: V.Ralle
+Tags: media, images, lazyload, performance, speed
 Requires at least: 4.9
 Requires PHP: 7.0
-Stable tag: 0.8.0
-Tested up to: 4.9.4
+Stable tag: 0.8.2
+Tested up to: 4.9.8
 
-Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js
+Brings lazySizes.js to WordPress.
 
 == Description ==
-VRALLE.Lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes and much more.
-The plugin is in active development. The current version only works with Wordpress images, but already has several settings, including the ability to exclude images by  CSS classes.
+vralle.lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes and much more.
 
 == Installation ==
 
@@ -20,14 +19,22 @@ The plugin is in active development. The current version only works with Wordpre
 
 == Changelog ==
 
+= 0.8.2 =
+  * lazySizes v4.1.0
+  * Added parent-fit extension settings
+  * iframe, embed, object, video tags added to the handler
+  * Expansion of security - more escaping for admin page and options
+  * Performance optimization
+  * Internationalization fix
+
 = 0.8.0 =
   * Now PSR-2
-  * lazysizes v.4.0.2
+  * lazysizes v4.0.2
   * updated settings page
   * loading plug-ins through a filter only
 
 = 0.7.0 =
-* Move vendor from git to npm. lazysizes v.4.0.1
+* Move vendor from git to npm. lazysizes v4.0.1
 * Add .pot
 
 = 0.6.0 =
