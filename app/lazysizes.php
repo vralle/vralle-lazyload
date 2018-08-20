@@ -179,6 +179,9 @@ class Lazysizes
 
         if (isset($this->options['content_iframes'])) {
             $tags[] = 'iframe';
+            $tags[] = 'embed';
+            $tags[] = 'object';
+            $tags[] = 'video';
         }
 
         if (empty($tags)) {

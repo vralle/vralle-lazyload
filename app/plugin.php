@@ -192,7 +192,7 @@ class Plugin
                 'type'          => 'checkbox',
                 'default'       => '1',
                 'title'         => \__('Iframes', 'vralle-lazyload'),
-                'label'         => \__('Lazy loading the iframes.', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading the iframes, embeds, objects, video', 'vralle-lazyload'),
                 'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
