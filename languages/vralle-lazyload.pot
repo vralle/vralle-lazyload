@@ -1,182 +1,184 @@
-# Copyright (C) 2018 Vitaliy Ralle
-# This file is distributed under the same license as the VRALLE.Lazyload plugin.
+# Copyright (C) 2018 V.Ralle
+# This file is distributed under the same license as the vralle.lazyload plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: VRALLE.Lazyload 0.8.2\n"
+"Project-Id-Version: vralle.lazyload 0.9.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-08-20T23:49:41+03:00\n"
-"PO-Revision-Date: 2018-08-20T23:49:41+03:00\n"
+"POT-Creation-Date: 2018-08-22T17:23:08+03:00\n"
+"PO-Revision-Date: 2018-08-22T17:23:08+03:00\n"
 "X-Generator: WP-CLI 2.0.0\n"
 "X-Domain: vralle-lazyload\n"
 
 #. Plugin Name of the plugin
-msgid "VRALLE.Lazyload"
+msgid "vralle.lazyload"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/vralle/vralle-lazyload"
 msgstr ""
 
 #. Description of the plugin
-msgid "Lazy loading images to speed up loading pages and reduce the load on the server. Images are loaded when they get to the screen. Uses lazysizes.js"
+msgid "Brings lazySizes.js to WordPress"
 msgstr ""
 
 #. Author of the plugin
-msgid "Vitaliy Ralle"
+msgid "V.Ralle"
 msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/vralle"
 msgstr ""
 
-#: \app\admin.php:71
+#: \app\admin.php:69
 msgid "Settings"
 msgstr ""
 
-#: \app\admin.php:126
+#: \app\admin.php:106
 msgid "Lazy loading"
 msgstr ""
 
-#: \app\admin.php:130
-#: \app\plugin.php:215
+#: \app\admin.php:110
+#: \app\plugin.php:178
 msgid "Responsive images"
 msgstr ""
 
-#: \app\admin.php:134
+#: \app\admin.php:114
 msgid "Exclude"
 msgstr ""
 
-#: \app\admin.php:138
+#: \app\admin.php:118
 msgid "Fine tuning"
 msgstr ""
 
-#: \app\admin.php:142
+#: \app\admin.php:122
 msgid "Extensions"
 msgstr ""
 
-#: \app\plugin.php:158
+#: \app\plugin.php:129
 msgid "Image attachments"
 msgstr ""
 
-#: \app\plugin.php:159
+#: \app\plugin.php:130
 msgid "Lazy loading of images displayed by Wordpress methods."
 msgstr ""
 
-#: \app\plugin.php:160
-msgid "For example, the Post Thumbnails and Featured Images. Default \"Yes\"."
+#: \app\plugin.php:131
+msgid "For example, the Post Thumbnails, Featured Images and Logo in Custom Header. Default \"Yes\"."
 msgstr ""
 
-#: \app\plugin.php:167
-msgid "Custom Header"
-msgstr ""
-
-#: \app\plugin.php:168
-msgid "Lazy loading of images in the Custom Header."
-msgstr ""
-
-#: \app\plugin.php:169
-#: \app\plugin.php:178
-#: \app\plugin.php:187
-#: \app\plugin.php:196
-#: \app\plugin.php:208
-#: \app\plugin.php:220
-msgid "Default \"Yes\"."
-msgstr ""
-
-#: \app\plugin.php:176
+#: \app\plugin.php:138
 msgid "Post content"
 msgstr ""
 
-#: \app\plugin.php:177
+#: \app\plugin.php:139
 msgid "Lazy loading of images in the Post Content."
 msgstr ""
 
-#: \app\plugin.php:185
+#: \app\plugin.php:140
+#: \app\plugin.php:149
+#: \app\plugin.php:158
+#: \app\plugin.php:171
+#: \app\plugin.php:184
+msgid "Default \"Yes\"."
+msgstr ""
+
+#: \app\plugin.php:147
 msgid "Avatar"
 msgstr ""
 
-#: \app\plugin.php:186
+#: \app\plugin.php:148
 msgid "Lazy loading the Avatars."
 msgstr ""
 
-#: \app\plugin.php:194
-msgid "Iframes"
+#: \app\plugin.php:156
+msgid "Embedded"
 msgstr ""
 
-#: \app\plugin.php:195
-msgid "Lazy loading the iframes, embeds, objects, video"
+#: \app\plugin.php:157
+msgid "Lazy loading the embedded, like iframe, embed, object and video"
 msgstr ""
 
-#: \app\plugin.php:203
+#: \app\plugin.php:165
 msgid "Traditional images"
 msgstr ""
 
-#: \app\plugin.php:205
+#. translators: %s: srcset
+#: \app\plugin.php:168
 msgid "Lazy loading of images without the attribute \"%s\"."
 msgstr ""
 
-#: \app\plugin.php:217
+#. translators: %s: srcset
+#: \app\plugin.php:181
 msgid "Lazy loading images with the attribute \"%s\"."
 msgstr ""
 
-#: \app\plugin.php:228
+#: \app\plugin.php:192
 msgid "Calculate sizes automatically."
 msgstr ""
 
-#: \app\plugin.php:229
+#: \app\plugin.php:193
 msgid "This will replace the data of sizes attribute. Default \"Yes\"."
 msgstr ""
 
-#: \app\plugin.php:236
+#: \app\plugin.php:200
 msgid "CSS Class"
 msgstr ""
 
-#: \app\plugin.php:237
-msgid "CSS-classes of images that need to be excluded from lazy loading."
+#: \app\plugin.php:201
+msgid "The name of CSS-class for images that need to be excluded from lazy loading."
 msgstr ""
 
-#: \app\plugin.php:238
+#: \app\plugin.php:202
 msgid "Space separated"
 msgstr ""
 
-#: \app\plugin.php:248
-#: \app\plugin.php:263
+#. translators: %s: expand
+#. translators: %s: loadMode
+#: \app\plugin.php:213
+#: \app\plugin.php:229
 msgid "The \"%s\" option."
 msgstr ""
 
-#: \app\plugin.php:251
+#: \app\plugin.php:216
 msgid "Normally lazysizes will expand the viewport area to lazy preload images/iframes which might become visible soon. Default \"0\"."
 msgstr ""
 
-#: \app\plugin.php:266
+#: \app\plugin.php:232
 msgid "Possible values are 0 = don't load anything, 1 = only load visible elements, 2 = load also very near view elements (expand option) and 3 = load also not so near view elements (expand * expFactor option). This value is automatically set to 3 after onload. Change this value to 1 if you (also) optimize for the onload event or change it to 3 if your onload event is already heavily delayed. Default: 2."
 msgstr ""
 
-#: \app\plugin.php:274
+#: \app\plugin.php:240
 msgid "Load all elements after the window onload event."
 msgstr ""
 
-#: \app\plugin.php:275
+#: \app\plugin.php:241
 msgid "Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default \"No\"."
 msgstr ""
 
-#: \app\plugin.php:284
-msgid "Load %s extension. Requires \"%s\"."
+#. translators: 1: parent-fit, 2: Sizes
+#: \app\plugin.php:251
+msgid "Load %1$s extension. Requires \"%2$s\"."
 msgstr ""
 
-#: \app\plugin.php:288
+#: \app\plugin.php:255
 msgid "The parent fit plugin extends the data-sizes=\"auto\" feature to also calculate the right sizes for object-fit: contain|cover image elements as also height ( and width) constrained image elements in general. Default \"No\"."
 msgstr ""
 
-#: \app\plugin.php:300
+#: \app\plugin.php:267
 msgid "object-fit"
 msgstr ""
 
-#: \app\plugin.php:302
+#. translators: %s: parent-fit
+#: \app\plugin.php:270
 msgid "Select object-fit type. Requires \"%s\"."
 msgstr ""
 
-#: \app\plugin.php:306
-msgid "Read more: %s. Default \"%s\"."
+#. translators: 1: link, 2: contain
+#: \app\plugin.php:275
+msgid "Read more: %1$s. Default \"%2$s\"."
 msgstr ""

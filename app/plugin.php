@@ -47,7 +47,7 @@ class Plugin
         if (defined('VRALLE_LAZYLOAD_VERSION')) {
             $this->version = VRALLE_LAZYLOAD_VERSION;
         } else {
-            $this->version = '0.8.2';
+            $this->version = '0.9.1';
         }
 
         $this->plugin_basename = $plugin_basename;
@@ -164,6 +164,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Traditional images', 'vralle-lazyload'),
                 'label'         => \sprintf(
+                    /* translators: %s: srcset */
                     \__('Lazy loading of images without the attribute "%s".', 'vralle-lazyload'),
                     'srcset'
                 ),
@@ -176,6 +177,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Responsive images', 'vralle-lazyload'),
                 'label'         => \sprintf(
+                    /* translators: %s: srcset */
                     \__('Lazy loading images with the attribute "%s".', 'vralle-lazyload'),
                     'srcset'
                 ),
@@ -207,6 +209,7 @@ class Plugin
                 'default'       => '0',
                 'title'         => 'Expand',
                 'label'         => \sprintf(
+                    /* translators: %s: expand */
                     \__('The "%s" option.', 'vralle-lazyload'),
                     'expand'
                 ),
@@ -222,6 +225,7 @@ class Plugin
                 'step'          => '1',
                 'title'         => 'loadMode',
                 'label'         => \sprintf(
+                    /* translators: %s: loadMode */
                     \__('The "%s" option.', 'vralle-lazyload'),
                     'loadMode'
                 ),
@@ -243,7 +247,8 @@ class Plugin
                 'default'       => null,
                 'title'         => 'parent-fit',
                 'label'         => \sprintf(
-                    \__('Load %s extension. Requires "%s".', 'vralle-lazyload'),
+                    /* translators: 1: parent-fit, 2: Sizes */
+                    \__('Load %1$s extension. Requires "%2$s".', 'vralle-lazyload'),
                     'parent-fit',
                     'Sizes'
                 ),
@@ -261,11 +266,13 @@ class Plugin
                 ),
                 'title'         => \__('object-fit', 'vralle-lazyload'),
                 'label'         => \sprintf(
+                    /* translators: %s: parent-fit */
                     \__('Select object-fit type. Requires "%s".', 'vralle-lazyload'),
                     'parent-fit'
                 ),
                 'description'   => \sprintf(
-                    \__('Read more: %s. Default "%s".', 'vralle-lazyload'),
+                    /* translators: 1: link, 2: contain */
+                    \__('Read more: %1$s. Default "%2$s".', 'vralle-lazyload'),
                     '<a href="https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/parent-fit">https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/parent-fit</a>',
                     'contain'
                 ),
