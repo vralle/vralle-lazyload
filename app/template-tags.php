@@ -1,29 +1,22 @@
 <?php
 /**
  * Custom template tags
- *
- * Eventually, some of the functionality here could be replaced by core features.
- *
- * @link       https://github.com/vralle/VRALLE.Lazyload
- * @since      0.6.0
- * @package    Vralle_Lazyload
- * @subpackage Vralle_Lazyload/app
+ * @package    vralle-lazyload
+ * @subpackage vralle-lazyload/app
  */
 
 /**
  * Get a image data
- *
- * @since  0.6.0
- * @param  integer       $attachment_id    Image attachment ID.
- * @param  string|array  $size Image size  Accepts any valid image size, or an array of width and height values in pixels (in that order).
+ * @param  integer      $attachment_id    Image attachment ID.
+ * @param  string|array $size Image size  Accepts any valid image size, or an array of width and height values in pixels (in that order).
  *                                         Default value: 'thumbnail'
- * @return  array        A List of image data
+ * @return  array       A List of image data
  */
 function vr_get_image_attr($attachment_id, $size = 'thumbnail')
 {
     $attr = array();
 
-    $img = wp_get_attachment_image_src($attachment_id, 'large');
+    $img = wp_get_attachment_image_src($attachment_id, $size);
     $attr['src'] = $img[0];
     $attr['width'] = $img[1];
     $attr['height'] = $img[2];

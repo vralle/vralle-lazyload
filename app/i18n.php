@@ -3,28 +3,27 @@ namespace Vralle\Lazyload\App;
 
 /**
  * Define the internationalization functionality
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
- *
- * @link       https://github.com/vralle/VRALLE.Lazyload
- * @since      0.1.0
- * @package    Vralle_Lazyload
- * @subpackage Vralle_Lazyload/app
+ * @package    vralle-lazyload
+ * @subpackage vralle-lazyload/app
  */
 class i18n
 {
     /**
+     * The name of a plugin bootstrap file
+     * @var string
+     */
+    private $plugin_basename;
+
+    public function __construct($plugin_basename)
+    {
+        $this->plugin_basename = $plugin_basename;
+    }
+
+    /**
      * Load the plugin text domain for translation.
-     *
-     * @since    0.1.0
      */
     public function load_plugin_textdomain()
     {
-        \load_plugin_textdomain(
-            'vralle-lazyload',
-            false,
-            \dirname(\dirname(\plugin_basename(__FILE__))) . '/languages/'
-        );
+        \load_plugin_textdomain('vralle-lazyload', false, $this->plugin_basename);
     }
 }

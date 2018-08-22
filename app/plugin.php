@@ -2,65 +2,45 @@
 namespace Vralle\Lazyload\App;
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       https://github.com/vralle/VRALLE.Lazyload
- * @since      0.1.0
- * @package    Vralle_Lazyload
- * @subpackage Vralle_Lazyload/app
+ * A class that defines core functionality of the plugin
+ * @package    vralle-lazyload
+ * @subpackage vralle-lazyload/app
  */
 class Plugin
 {
     /**
      * The unique identifier of this plugin.
-     *
-     * @since    0.1.0
-     * @access   protected
-     * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+     * @var string
      */
     protected $plugin_name;
 
     /**
-     * The name of a plugin bootstrap file
-     *
-     * @since    0.8.0
-     * @access   protected
-     * @var      string    $plugin_basename    The name of a plugin bootstrap file
+     * Path to the plugin bootstrap file relative to the plugins directory
+     * @var string
      */
     protected $plugin_basename;
 
     /**
      * The current version of the plugin.
-     *
-     * @since    0.1.0
-     * @access   protected
-     * @var      string    $version    The current version of the plugin.
+     * @var string
      */
     protected $version;
 
     /**
-     * The loader that's responsible for maintaining and registering all hooks that power
-     * the plugin.
-     *
-     * @since    0.1.0
-     * @access   protected
-     * @var      Loader    $loader    Maintains and registers all hooks for the plugin.
+     * The loader that's responsible for maintaining and registering all hooks that power the plugin.
+     * @var object
      */
     protected $loader;
 
-    protected $options;
+    /**
+     * The settings functionality of this plugin
+     * @var object
+     */
+    protected $config;
 
     /**
      * Define the core functionality of the plugin.
-     *
-     * Set the plugin name and the plugin version that can be used throughout the plugin.
-     * Load the dependencies, define the locale, and set the hooks for the admin area and
-     * the public-facing side of the site.
-     *
-     * @since    0.1.0
+     * @param string $plugin_basename Path to the plugin bootstrap file relative to the plugins directory.
      */
     public function __construct($plugin_basename)
     {
@@ -75,7 +55,7 @@ class Plugin
 
         $this->loadDependencies();
         $this->setLocale();
-        $this->setupSettings();
+        $this->configSetup();
         if (is_admin()) {
             $this->adminHooks();
         } else {
@@ -85,9 +65,6 @@ class Plugin
 
     /**
      * Load the required dependencies for this plugin.
-     *
-     * @since    0.8.0
-     * @access   private
      */
     private function loadDependencies()
     {
@@ -99,74 +76,59 @@ class Plugin
          */
         require_once $plugin_dir_path . 'app/loader.php';
 
-        require_once $plugin_dir_path . 'app/options.php';
-
         /**
-         * The class responsible for defining internationalization functionality
-         * of the plugin.
+         * The class responsible for defining internationalization functionality of the plugin.
          */
         require_once $plugin_dir_path . 'app/i18n.php';
 
         /**
-         * The class responsible for defining all actions that occur in the admin area.
+         * The class responsible for configuration and options of the plugin.
          */
+        require_once $plugin_dir_path . 'app/config.php';
+
         if (is_admin()) {
+            /**
+             * The class responsible for defining all actions that occur in the admin area.
+             */
             require_once $plugin_dir_path . 'app/admin.php';
+        } else {
+            /**
+             * The class responsible for defining all actions that occur in the public-facing
+             * side of the site.
+             */
+            require_once $plugin_dir_path . 'app/lazysizes.php';
+
+            /**
+             * Custom template tags
+             */
+            require_once $plugin_dir_path . 'app/template-tags.php';
         }
-
-        /**
-         * Retrieve the HTML tags regular expression for searching.
-         */
-        require_once $plugin_dir_path . 'app/util.php';
-
-        /**
-         * The class responsible for defining all actions that occur in the public-facing
-         * side of the site.
-         */
-        require_once $plugin_dir_path . 'app/lazysizes.php';
-
-        /**
-         * Custom template tags
-         */
-        require_once $plugin_dir_path . 'app/template-tags.php';
 
         $this->loader = new Loader();
     }
 
     /**
      * Define the locale for this plugin for internationalization.
-     *
-     * Uses the i18n class in order to set the domain and to register the hook
-     * with WordPress.
-     *
-     * @since    0.8.0
-     * @access   private
      */
     private function setLocale()
     {
-        $plugin_i18n = new i18n();
+        $plugin_i18n = new i18n($this->getPluginBasename());
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
-    private function setupSettings()
+    /**
+     * Define plugin configuration
+     */
+    private function configSetup()
     {
-        $plugin_settings = array(
+        $plugin_config = array(
             array(
                 'uid'           => 'wp_images',
                 'type'          => 'checkbox',
                 'default'       => '1',
                 'title'         => \__('Image attachments', 'vralle-lazyload'),
                 'label'         => \__('Lazy loading of images displayed by Wordpress methods.', 'vralle-lazyload'),
-                'description'   => \__('For example, the Post Thumbnails and Featured Images. Default "Yes".', 'vralle-lazyload'),
-                'section'       => 'images',
-            ),
-            array(
-                'uid'           => 'custom_header',
-                'type'          => 'checkbox',
-                'default'       => '1',
-                'title'         => \__('Custom Header', 'vralle-lazyload'),
-                'label'         => \__('Lazy loading of images in the Custom Header.', 'vralle-lazyload'),
-                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
+                'description'   => \__('For example, the Post Thumbnails, Featured Images and Logo in Custom Header. Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
             array(
@@ -188,11 +150,11 @@ class Plugin
                 'section'       => 'images',
             ),
             array(
-                'uid'           => 'content_iframes',
+                'uid'           => 'content_embed',
                 'type'          => 'checkbox',
                 'default'       => '1',
-                'title'         => \__('Iframes', 'vralle-lazyload'),
-                'label'         => \__('Lazy loading the iframes, embeds, objects, video', 'vralle-lazyload'),
+                'title'         => \__('Embedded', 'vralle-lazyload'),
+                'label'         => \__('Lazy loading the embedded, like iframe, embed, object and video', 'vralle-lazyload'),
                 'description'   => \__('Default "Yes".', 'vralle-lazyload'),
                 'section'       => 'images',
             ),
@@ -234,7 +196,7 @@ class Plugin
                 'type'          => 'text',
                 'default'       => '',
                 'title'         => \__('CSS Class', 'vralle-lazyload'),
-                'label'         => \__('CSS-classes of images that need to be excluded from lazy loading.', 'vralle-lazyload'),
+                'label'         => \__('The name of CSS-class for images that need to be excluded from lazy loading.', 'vralle-lazyload'),
                 'description'   => \__('Space separated', 'vralle-lazyload'),
                 'class'         => 'regular-text',
                 'section'       => 'exclude',
@@ -311,21 +273,15 @@ class Plugin
             ),
         );
 
-        $options = new Options($this->getPluginName(), $plugin_settings);
-
-        $this->options = $options;
+        $this->config = new Config($this->getPluginName(), $plugin_config);
     }
 
     /**
-     * Register all of the hooks related to the admin area functionality
-     * of the plugin.
-     *
-     * @since    0.8.0
-     * @access   private
+     * Register all of the hooks related to the admin area functionality of the plugin.
      */
     private function adminHooks()
     {
-        $admin = new Admin($this->getPluginName(), $this->getOptions());
+        $admin = new Admin($this->getPluginName(), $this->getConfig());
         $this->loader->add_action('admin_menu', $admin, 'addAdminPage');
         $this->loader->add_action('plugin_action_links_' . $this->plugin_basename, $admin, 'addSettingsLink');
         $this->loader->add_action('admin_menu', $admin, 'registerSetting');
@@ -334,17 +290,12 @@ class Plugin
     }
 
     /**
-     * Register all of the hooks related to the public-facing functionality
-     * of the plugin.
-     *
-     * @since    0.8.0
-     * @access   private
+     * Register all of the hooks related to the public-facing functionality of the plugin.
      */
     private function publicHooks()
     {
         $lazysizes = new Lazysizes($this->getPluginName(), $this->getVersion(), $this->getOptions());
         $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wpGetAttachmentImageAttributes', 99);
-        $this->loader->add_filter('get_header_image_tag', $lazysizes, 'getHeaderImageTag', 99);
         $this->loader->add_filter('the_content', $lazysizes, 'theContent', 99);
         $this->loader->add_filter('get_avatar', $lazysizes, 'getAvatar', 99);
         $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueueScripts', 1);
@@ -352,8 +303,6 @@ class Plugin
 
     /**
      * Run the loader to execute all of the hooks with WordPress.
-     *
-     * @since    0.1.0
      */
     public function run()
     {
@@ -361,11 +310,8 @@ class Plugin
     }
 
     /**
-     * The name of the plugin used to uniquely identify it within the context of
-     * WordPress and to define internationalization functionality.
-     *
-     * @since     0.8.0
-     * @return    string    The name of the plugin.
+     * Retrieve the name of the plugin
+     * @return string The name of the plugin.
      */
     public function getPluginName()
     {
@@ -374,17 +320,37 @@ class Plugin
 
     /**
      * Retrieve the version number of the plugin.
-     *
-     * @since     0.8.0
-     * @return    string    The version number of the plugin.
+     * @return string The version number of the plugin.
      */
     public function getVersion()
     {
         return $this->version;
     }
 
+    /**
+     * The reference to the class for configuration and options of the plugin.
+     * @return object Options
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Retrieve the options of the plugin.
+     * @return array the options of the plugin.
+     */
     public function getOptions()
     {
-        return $this->options;
+        return $this->config->getOptions();
+    }
+
+    /**
+     * Retrieve relative path to the plugin bootstrap file
+     * @return string path to the plugin bootstrap file relative to the plugins directory
+     */
+    public function getPluginBasename()
+    {
+        return $this->plugin_basename;
     }
 }

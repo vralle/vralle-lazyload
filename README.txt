@@ -3,21 +3,25 @@ Contributors: V.Ralle
 Tags: media, images, lazyload, performance, speed
 Requires at least: 4.9
 Requires PHP: 7.0
-Stable tag: 0.8.2
+Stable tag: 0.9.0
 Tested up to: 4.9.8
 
 Brings lazySizes.js to WordPress.
 
 == Description ==
+
 vralle.lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes and much more.
 
 == Installation ==
 
 1. Upload `vralle-lazyload` to the Wordpress plugins directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Check the settings on the plugin settings page
+1. Check out the settings page to fine-tune your settings
 
 == Changelog ==
+
+= 0.9.0
+  * Refactoring the plugin
 
 = 0.8.2 =
   * lazySizes v4.1.0

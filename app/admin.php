@@ -1,40 +1,38 @@
 <?php
-
 namespace Vralle\Lazyload\App;
 
 /**
  * Creating a custom settings page of the plugin.
- * @since 0.8.0
+ * @package    vralle-lazyload
+ * @subpackage vralle-lazyload/app
  */
 class Admin
 {
     /**
      * The ID of this plugin.
-     *
-     * @since    0.8.0
-     * @access   private
-     * @var      string    $plugin_name    The ID of this plugin.
+     * @var string
      */
     private $plugin_name;
 
     /**
-     * The options of this plugin
-     *
-     * @since    0.8.0
-     * @access   private
-     * @var      Options    $options    .
+     * The settings functionality of this plugin
+     * @var object
      */
-    private $options;
+    private $config;
 
-    public function __construct($plugin_name, $options)
+    /**
+     * Initialize the configuration.
+     * @param string $plugin_name The ID of this plugin
+     * @param object $config      The settings functionality of this plugin
+     */
+    public function __construct($plugin_name, $config)
     {
         $this->plugin_name = $plugin_name;
-        $this->options = $options;
+        $this->config = $config;
     }
 
     /**
      * Add the menu item and page
-     * @since 0.8.0
      */
     public function addAdminPage()
     {
@@ -59,24 +57,24 @@ class Admin
     }
 
     /**
-     * Add Settings Link to plugins page
-     * @since 0.8.0
-     *
-     * @param $links
-     * @return array
+     * Adds a link to the options page of the plugin
+     * @param array $actions An array of plugin action links
      */
-    public function addSettingsLink($links)
+    public function addSettingsLink($actions)
     {
-        $settings_url  = \menu_page_url($this->plugin_name, false);
-        $settings_link = "<a href='$settings_url'>" . \esc_html__('Settings', 'vralle-lazyload') . "</a>";
-        \array_unshift($links, $settings_link);
+        $options_page_url  = \menu_page_url($this->plugin_name, false);
+        $settings_link = sprintf(
+            '<a href="%s">%s</a>',
+            \esc_url($options_page_url),
+            \esc_html__('Settings', 'vralle-lazyload')
+        );
+        \array_unshift($actions, $settings_link);
 
-        return $links;
+        return $actions;
     }
 
     /**
-     * Render the plugin settings page
-     * @since 0.8.0
+     * Render options page of the plugin
      */
     public function renderAdminPage()
     {
@@ -85,26 +83,9 @@ class Admin
 
     /**
      * Register the plugin setting
-     * @since 0.8.0
      */
     public function registerSetting()
     {
-        /**
-         * Register a setting and its data.
-         * @param string $option_group A settings group name. Should correspond to a whitelisted option key name.
-         *  Default whitelisted option key names include "general," "discussion," and "reading," among others.
-         * @param string $option_name The name of an option to sanitize and save.
-         * @param array  $args {
-         *     Data used to describe the setting when registered.
-         *
-         *     @type string   $type              The type of data associated with this setting.
-         *                                       Valid values are 'string', 'boolean', 'integer', and 'number'.
-         *     @type string   $description       A description of the data attached to this setting.
-         *     @type callable $sanitize_callback A callback function that sanitizes the option's value.
-         *     @type bool     $show_in_rest      Whether data associated with this setting should be included in the REST API.
-         *     @type mixed    $default           Default value when calling `get_option()`.
-         * }
-         */
         \register_setting(
             // group name
             $this->plugin_name,
@@ -116,7 +97,6 @@ class Admin
 
     /**
      * Add the sections to the plugin settings page.
-     * @since 0.8.0
      */
     public function addSettingSections()
     {
@@ -159,9 +139,7 @@ class Admin
 
     /**
      * Setting Section collback
-     * @since 0.8.0
-     *
-     * @param   array   $arguments list of the section options
+     * @param array $arguments A list of the section options
      */
     public function sectionCallback($arguments)
     {
@@ -169,14 +147,10 @@ class Admin
 
     /**
      * Add new fields to sections of the plugin settings page
-     * @since 0.8.0
      */
     public function addSettingFields()
     {
-        $options = $this->options;
-        $settings = $options->getSettings();
-
-        foreach ($settings as $field) {
+        foreach ($this->config->getConfig() as $field) {
             \add_settings_field(
                 // Field ID
                 $field['uid'],
@@ -196,12 +170,11 @@ class Admin
 
     /**
      * Render a field of the plugin settings page
-     * @since 0.8.0
-     * @param  array $arguments list of the plugin options
+     * @param array $arguments list of the plugin options
      */
     public function fieldCallback($arguments)
     {
-        $options = $this->options->get();
+        $options = $this->config->getOptions();
 
         $output = '';
 

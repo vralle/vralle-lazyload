@@ -7,22 +7,22 @@ Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 * License: [MIT License](LICENSE.txt)
 
 Implemented:
-  - Image attachments support
-  - Content image support
-  - Support images in the Custom Header
-  - Avatar support
-  - Responsive images support
-  - iframe, embed, object, video tags support
+  - Lazy loading Wordpress attachments;
+  - Lazy loading of embedded images in the post content;
+  - Lazy loading the Avatar;
+  - Full support responsive images with srcset attribute;
+  - Lazy loading iframe, embed, object and video tags;
+  - Admin settings page;
   - Exclude images by CSS-class
-  - Options page
-  - Selecting additional lazysizes.js extensions
+  - Fine tuning lazySazes.js
+  - Additional lazySizes.js extensions
   - Template Tags for background
 
 ## Installation
 
-1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/afragen/github-updater/releases). We rely on this plugin for updating Vralle.Lazyload directly from this git repo.
-2. Install Vralle.Lazyload by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). Both github-updater and Vralle.Lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
-3. Access the Vralle.Lazyload menu option under Tools.
+1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/afragen/github-updater/releases). We rely on this plugin for updating vralle.lazyload directly from this git repo.
+2. Install vralle.lazyload by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). Both github-updater and vralle.lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
+3. Check out the settings page to fine-tune your settings.
 
 ## How to
 
@@ -86,6 +86,8 @@ Do not forget to add the required plugin.
 
 ## Changelog
 
+- 0.9.0
+  - Refactoring the plugin
 - 0.8.2:
   - lazySizes v4.1.0
   - Added parent-fit extension settings
@@ -108,12 +110,6 @@ Do not forget to add the required plugin.
   - Enhanced options
 - 0.5.0:
   - Initial
-
-## Development
-
-Want to contribute? Great!
-
-## Todos
 
 ## Copyright and license
 

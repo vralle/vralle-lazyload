@@ -1,16 +1,10 @@
 <?php
 /**
  * Provide a admin area view for the plugin
- *
- * This file is used to markup the admin-facing aspects of the plugin.
- *
- * @since      0.1.0
- *
- * @package    Vr_Lazyload
- * @subpackage Vr_Lazyload/app/views
+ * @package    vralle-lazyload
+ * @subpackage vralle-lazyload/app/views
  */
 ?>
-
 <div class="wrap">
     <h2><?php echo \get_admin_page_title(); ?></h2>
     <?php \settings_errors($this->plugin_name); ?>
