@@ -28,10 +28,10 @@ function vr_get_image_attr($attachment_id, $size = 'thumbnail')
     if (is_array($image_meta)) {
         $size_array = array(absint($attr['width']), absint($attr['height']));
         $srcset = wp_calculate_image_srcset($size_array, $attr['src'], $image_meta, $attachment_id);
-        $sizes = wp_calculate_image_sizes($size_array, $attr['src'], $image_meta, $attachment_id);
 
         if ($srcset) {
             $attr['srcset'] = $srcset;
+            $sizes = wp_calculate_image_sizes($size_array, $attr['src'], $image_meta, $attachment_id);
             if ($sizes || !empty($attr['sizes'])) {
                 $attr['sizes'] = $sizes;
             } else {

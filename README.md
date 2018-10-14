@@ -14,7 +14,7 @@ Implemented:
   - Lazy loading iframe, embed, object and video tags;
   - Admin settings page;
   - Exclude images by CSS-class
-  - Fine tuning lazySazes.js
+  - Fine tuning lazySizes.js
   - Additional lazySizes.js extensions
   - Template Tags for background
 
@@ -28,9 +28,13 @@ Implemented:
 
 ### Image that replaces the original
 ```
-add_filter('vralle_lazyload_image_placeholder', $my_image);
+add_filter('vralle_lazyload_image_placeholder', 'custom_placeholder');
+function custom_placeholder($placeholder) {
+    $placeholder = 'https://url.to.image';
+    return $placeholder;
+}
 ```
-`$my_image` - url or base64 image string,
+`$placeholder` - image url or base64 string,
 default: 1px*1px `data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`
 
 ### Exclude images
@@ -81,11 +85,12 @@ Example:
       </div><!-- .panel-image -->
   <?php endif; ?>
 ```
-How this works can be found in the file app\template-tags.php
+How this works can be found in the file `app\template-tags.php`
 Do not forget to add the required plugin.
 
 ## Changelog
-
+- 0.9.1
+ - Update dependencies. lazySizes v4.1.4
 - 0.9.0
   - Refactoring the plugin
 - 0.8.2:
