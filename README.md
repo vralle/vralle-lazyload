@@ -1,9 +1,13 @@
 # vralle.lazyload
 Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 
-* Tags: media, images, lazyload, performance, speed
-* Tested up to: 4.9.8
-* Stable tag: master
+Contributors: V.Ralle
+Tags: media, images, lazyload, performance, speed
+Requires at least: 4.4
+Tested up to: 5.0.2
+Requires PHP: 5.6
+Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
+License: MIT
 * License: [MIT License](LICENSE.txt)
 
 Implemented:
@@ -16,7 +20,7 @@ Implemented:
   - Exclude images by CSS-class
   - Fine tuning lazySizes.js
   - Additional lazySizes.js extensions
-  - Template Tags for background
+  - Template Tags for backgrounds
 
 ## Installation
 
@@ -89,9 +93,11 @@ How this works can be found in the file `app\template-tags.php`
 Do not forget to add the required plugin.
 
 ## Changelog
-- 0.9.1
- - Update dependencies. lazySizes v4.1.4
-- 0.9.0
+- 0.9.2:
+  - Update dependencies. lazySizes v4.1.5
+- 0.9.1:
+  - Update dependencies. lazySizes v4.1.4
+- 0.9.0:
   - Refactoring the plugin
 - 0.8.2:
   - lazySizes v4.1.0

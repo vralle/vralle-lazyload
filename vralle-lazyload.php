@@ -10,7 +10,7 @@ use Vralle\Lazyload\App\Plugin;
  * Plugin Name:       vralle.lazyload
  * Plugin URI:        https://github.com/vralle/vralle-lazyload
  * Description:       Brings lazySizes.js to WordPress
- * Version:           0.9.1
+ * Version:           0.9.2
  * Author:            V.Ralle
  * Author URI:        https://github.com/vralle
  * License:           MIT
@@ -18,6 +18,8 @@ use Vralle\Lazyload\App\Plugin;
  * Text Domain:       vralle-lazyload
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload
+ * Requires WP:       4.4
+ * Requires PHP:      5.6
  */
 
 // If this file is called directly, abort.
@@ -25,7 +27,7 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('VRALLE_LAZYLOAD_VERSION', '0.9.1');
+define('VRALLE_LAZYLOAD_VERSION', '0.9.2');
 
 /**
  * The core plugin class
