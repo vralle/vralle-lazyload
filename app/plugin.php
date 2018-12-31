@@ -47,7 +47,7 @@ class Plugin
         if (defined('VRALLE_LAZYLOAD_VERSION')) {
             $this->version = VRALLE_LAZYLOAD_VERSION;
         } else {
-            $this->version = '0.9.2';
+            $this->version = '0.9.3';
         }
 
         $this->plugin_basename = $plugin_basename;

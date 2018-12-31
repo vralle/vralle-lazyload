@@ -1,26 +1,26 @@
 # vralle.lazyload
 Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 
-Contributors: V.Ralle
-Tags: media, images, lazyload, performance, speed
-Requires at least: 4.4
-Tested up to: 5.0.2
-Requires PHP: 5.6
-Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
-License: MIT
+* Contributors: V.Ralle
+* Tags: media, images, lazyload, performance, speed
+* Requires at least: 4.4
+* Tested up to: 5.0.2
+* Requires PHP: 5.6
+* Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
 * License: [MIT License](LICENSE.txt)
 
 Implemented:
-  - Lazy loading Wordpress attachments;
-  - Lazy loading of embedded images in the post content;
-  - Lazy loading the Avatar;
-  - Full support responsive images with srcset attribute;
-  - Lazy loading iframe, embed, object and video tags;
-  - Admin settings page;
-  - Exclude images by CSS-class
-  - Fine tuning lazySizes.js
-  - Additional lazySizes.js extensions
-  - Template Tags for backgrounds
+* Lazy loading Wordpress attachments;
+* Lazy loading of embedded images in the post content;
+* Lazy loading the Avatar;
+* Full support responsive images with srcset attribute;
+* Lazy loading iframe, embed, object and video tags;
+* Admin settings page;
+* Exclude images by CSS-class
+* Fine tuning lazySizes.js
+* Additional lazySizes.js extensions
+* Support for responsive images in older browsers, like IE 10, 11
+* Template Tags for backgrounds
 
 ## Installation
 

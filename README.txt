@@ -14,16 +14,17 @@ Brings lazySizes.js to WordPress.
 vralle.lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes and much more.
 
 Implemented:
-  - Lazy loading Wordpress attachments;
-  - Lazy loading of embedded images in the post content;
-  - Lazy loading the Avatar;
-  - Full support responsive images with srcset attribute;
-  - Lazy loading iframe, embed, object and video tags;
-  - Admin settings page;
-  - Exclude images by CSS-class
-  - Fine tuning lazySizes.js
-  - Additional lazySizes.js extensions
-  - Template Tags for backgrounds
+* Lazy loading Wordpress attachments;
+* Lazy loading of embedded images in the post content;
+* Lazy loading the Avatar;
+* Full support responsive images with srcset attribute;
+* Lazy loading iframe, embed, object and video tags;
+* Admin settings page;
+* Exclude images by CSS-class
+* Fine tuning lazySizes.js
+* Additional lazySizes.js extensions
+* Support for responsive images in older browsers, like IE 10, 11
+* Template Tags for backgrounds
 
 == Installation ==
 1. Upload `vralle-lazyload` to the Wordpress plugins directory
