@@ -326,13 +326,14 @@ class Lazysizes
     public function enqueueScripts()
     {
         $debug_suffix = (\defined('SCRIPT_DEBUG') && \SCRIPT_DEBUG) ? '' : '.min';
-        $lazysizes_dir_url = \trailingslashit(\plugin_dir_url(\dirname(__FILE__)) . 'vendor/lazysizes');
+        $plugin_url = \plugins_url('', \dirname(__FILE__));
+        $ID_lazysizes = $this->plugin_name . '_lazysizes';
 
         \wp_register_script(
-            $this->plugin_name . '_lazysizes',
-            $lazysizes_dir_url . 'lazysizes' . $debug_suffix . '.js',
+            $ID_lazysizes,
+            $plugin_url . '/vendor/lazysizes/lazysizes' . $debug_suffix . '.js',
             array(),
-            $this->version,
+            '4.1.5',
             true
         );
 
@@ -344,9 +345,9 @@ class Lazysizes
             foreach ($plugins as $plugin) {
                 \wp_enqueue_script(
                     $this->plugin_name . '_ls.' . $plugin,
-                    $lazysizes_dir_url . 'plugins/' . $plugin . '/ls.' . $plugin . $debug_suffix . '.js',
-                    array($this->plugin_name . '_lazysizes'),
-                    $this->version,
+                    $plugin_url . '/vendor/lazysizes/plugins/' . $plugin . '/ls.' . $plugin . $debug_suffix . '.js',
+                    array($ID_lazysizes),
+                    '4.1.5',
                     true
                 );
             }
@@ -367,6 +368,26 @@ class Lazysizes
             $lazySizesConfig = 'window.lazySizesConfig = window.lazySizesConfig || {};' . $lazySizesConfig;
             \wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
         }
+    }
+
+    public function addPicturefill()
+    {
+        if (!isset($this->options['picturefill'])) {
+            return;
+        }
+        $src = \plugins_url('vendor/picturefill/dist/picturefill.min.js', \dirname(__FILE__));
+        echo <<<EOT
+<script>(function(d,s,id) {
+  if ('srcset' in d.createElement('img')) return;
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s);
+  js.id = id;
+  js.async = true;
+  js.src = "$src";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'picturefill'));</script>
+EOT;
     }
 
     /**

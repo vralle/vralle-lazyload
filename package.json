@@ -9,12 +9,15 @@
     "node": ">=6"
   },
   "scripts": {
-    "vendor": "shx cp node_modules/lazysizes/lazysizes.js vendor/lazysizes/  && shx cp node_modules/lazysizes/lazysizes.min.js vendor/lazysizes && shx cp -r node_modules/lazysizes/plugins/ vendor/lazysizes/",
-    "dist": "npm-run-all vendor",
+    "copy-lazysizes": "shx mkdir -p vendor/lazysizes/ && shx cp node_modules/lazysizes/*.js vendor/lazysizes/",
+    "copy-lazysizes-plugins": "shx mkdir -p vendor/lazysizes/plugins/ && shx cp -r node_modules/lazysizes/plugins/ vendor/lazysizes/",
+    "copy-picturefill": "shx mkdir -p vendor/picturefill/ && shx cp -r node_modules/picturefill/dist/ vendor/picturefill/",
+    "dist": "npm-run-all copy-*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "lazysizes": "^4.1.5"
+    "lazysizes": "^4.1.5",
+    "picturefill": "^3.0.3"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",

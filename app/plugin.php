@@ -159,6 +159,15 @@ class Plugin
                 'section'       => 'images',
             ),
             array(
+                'uid'           => 'picturefill',
+                'type'          => 'checkbox',
+                'default'       => '1',
+                'title'         => \__('Load picturefill.js', 'vralle-lazyload'),
+                'label'         => \__('Support for responsive images in older browsers, like IE 10, 11.', 'vralle-lazyload'),
+                'description'   => \__('Default "Yes".', 'vralle-lazyload'),
+                'section'       => 'responsive',
+            ),
+            array(
                 'uid'           => 'do_src',
                 'type'          => 'checkbox',
                 'default'       => '1',
@@ -209,7 +218,7 @@ class Plugin
                 'default'       => '0',
                 'title'         => 'Expand',
                 'label'         => \sprintf(
-                    /* translators: %s: expand */
+                    /* translators: %s: option name */
                     \__('The "%s" option.', 'vralle-lazyload'),
                     'expand'
                 ),
@@ -225,7 +234,7 @@ class Plugin
                 'step'          => '1',
                 'title'         => 'loadMode',
                 'label'         => \sprintf(
-                    /* translators: %s: loadMode */
+                    /* translators: %s: option name */
                     \__('The "%s" option.', 'vralle-lazyload'),
                     'loadMode'
                 ),
@@ -306,6 +315,7 @@ class Plugin
         $this->loader->add_filter('the_content', $lazysizes, 'theContent', 99);
         $this->loader->add_filter('get_avatar', $lazysizes, 'getAvatar', 99);
         $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueueScripts', 1);
+        $this->loader->add_action('wp_head', $lazysizes, 'addPicturefill');
     }
 
     /**
