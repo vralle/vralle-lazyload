@@ -17,7 +17,7 @@ use Vralle\Lazyload\App\Plugin;
  * License URI:       LICENSE.txt
  * Text Domain:       vralle-lazyload
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload
+ * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload.git
  * Requires WP:       4.4
  * Requires PHP:      5.6
  */
