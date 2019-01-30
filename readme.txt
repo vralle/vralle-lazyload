@@ -2,9 +2,9 @@
 Contributors: V.Ralle
 Tags: media, images, lazyload, performance, speed
 Requires at least: 4.4
-Tested up to: 5.0.2
+Tested up to: 5.0.3
 Requires PHP: 5.6
-Stable tag: 0.9.2
+Stable tag: 0.9.4
 License: MIT
 License URI: https://license.uri
 
@@ -32,6 +32,10 @@ Implemented:
 3. Check out the settings page to fine-tune your settings
 
 == Changelog ==
+- 0.9.4:
+  - Fix Github URI
+- 0.9.3:
+  - Add picturefill.js
 - 0.9.2:
   - Update dependencies. lazySizes v4.1.5
 - 0.9.1:
