@@ -17,27 +17,27 @@ function vr_get_image_attr($attachment_id, $size = 'thumbnail')
     $attr = array();
 
     $img = wp_get_attachment_image_src($attachment_id, $size);
-    $attr['src'] = $img[0];
-    $attr['width'] = $img[1];
-    $attr['height'] = $img[2];
-    $attr['bg-data'] = sprintf('data-bg="%s"', $img[0]);
+    if ($img) {
+        $attr['src'] = esc_url($img[0]);
+        $attr['width'] = absint($img[1]);
+        $attr['height'] = absint($img[2]);
+        $attr['srcset'] = null;
+        $attr['sizes'] = null;
 
-    // Generate 'srcset' and 'sizes'
-    $image_meta = wp_get_attachment_metadata($attachment_id);
+        // Generate 'srcset' and 'sizes'
+        $image_meta = wp_get_attachment_metadata($attachment_id);
 
-    if (is_array($image_meta)) {
-        $size_array = array(absint($attr['width']), absint($attr['height']));
-        $srcset = wp_calculate_image_srcset($size_array, $attr['src'], $image_meta, $attachment_id);
+        if (is_array($image_meta)) {
+            $size_array = array($attr['width'], $attr['height']);
+            $srcset = wp_calculate_image_srcset($size_array, $attr['src'], $image_meta, $attachment_id);
 
-        if ($srcset) {
-            $attr['srcset'] = $srcset;
-            $sizes = wp_calculate_image_sizes($size_array, $attr['src'], $image_meta, $attachment_id);
-            if ($sizes || !empty($attr['sizes'])) {
-                $attr['sizes'] = $sizes;
-            } else {
-                $attr['sizes'] = '';
+            if ($srcset) {
+                $attr['srcset'] = esc_attr($srcset);
+                $sizes = wp_calculate_image_sizes($size_array, $attr['src'], $image_meta, $attachment_id);
+                if ($sizes) {
+                    $attr['sizes'] = $sizes;
+                }
             }
-            $attr['bg-data'] = sprintf('data-bgset="%s" data-sizes="auto"', $srcset);
         }
     }
 
