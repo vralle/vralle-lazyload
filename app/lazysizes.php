@@ -38,7 +38,7 @@ class Lazysizes
     private function getLazyClass()
     {
         return \apply_filters(
-            'vralle_lazyload_lazy_class',
+            'vralle_lazyload_css_class',
             'lazyload'
         );
     }
