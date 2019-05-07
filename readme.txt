@@ -2,9 +2,9 @@
 Contributors: V.Ralle
 Tags: media, images, lazyload, performance, speed
 Requires at least: 4.4
-Tested up to: 5.0.3
+Tested up to: 5.2.0
 Requires PHP: 5.6
-Stable tag: 0.9.4
+Stable tag: 0.9.5
 License: MIT
 License URI: https://license.uri
 
@@ -32,6 +32,11 @@ Implemented:
 3. Check out the settings page to fine-tune your settings
 
 == Changelog ==
+- 0.9.5
+  - Refactoring the plugin
+  - Rename `vralle_lazyload_lazy_class` filter to `vralle_lazyload_css_class`
+  - Rename `exclude_class` option to `css_exception`
+  - lazySizes v4.1.8
 - 0.9.4:
   - Fix Github URI
 - 0.9.3:

@@ -4,7 +4,7 @@ Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 * Contributors: V.Ralle
 * Tags: media, images, lazyload, performance, speed
 * Requires at least: 4.4
-* Tested up to: 5.0.2
+* Tested up to: 5.2.0
 * Requires PHP: 5.6
 * Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
 * License: [MIT License](LICENSE.txt)
@@ -93,6 +93,15 @@ How this works can be found in the file `app\template-tags.php`
 Do not forget to add the required plugin.
 
 ## Changelog
+- 0.9.5
+  - Refactoring the plugin
+  - Rename `vralle_lazyload_lazy_class` filter to `vralle_lazyload_css_class`
+  - Rename `exclude_class` option to `css_exception`
+  - lazySizes v4.1.8
+- 0.9.4:
+  - Fix Github URI
+- 0.9.3:
+  - Add picturefill.js
 - 0.9.2:
   - Update dependencies. lazySizes v4.1.5
 - 0.9.1:
