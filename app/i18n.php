@@ -9,21 +9,14 @@ namespace Vralle\Lazyload\App;
 class i18n
 {
     /**
-     * The name of a plugin bootstrap file
-     * @var string
-     */
-    private $plugin_basename;
-
-    public function __construct($plugin_basename)
-    {
-        $this->plugin_basename = $plugin_basename;
-    }
-
-    /**
      * Load the plugin text domain for translation.
      */
-    public function load_plugin_textdomain()
+    public function loadPluginTextdomain()
     {
-        \load_plugin_textdomain('vralle-lazyload', false, $this->plugin_basename);
+        \load_plugin_textdomain(
+            'vralle-lazyload',
+            false,
+            dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
+        );
     }
 }
