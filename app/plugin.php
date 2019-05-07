@@ -21,12 +21,6 @@ class Plugin
     protected $plugin_basename;
 
     /**
-     * The current version of the plugin.
-     * @var string
-     */
-    protected $version;
-
-    /**
      * The loader that's responsible for maintaining and registering all hooks that power the plugin.
      * @var object
      */
@@ -44,12 +38,6 @@ class Plugin
      */
     public function __construct($plugin_basename)
     {
-        if (defined('VRALLE_LAZYLOAD_VERSION')) {
-            $this->version = VRALLE_LAZYLOAD_VERSION;
-        } else {
-            $this->version = '0.9.3';
-        }
-
         $this->plugin_basename = $plugin_basename;
         $this->plugin_name = 'vralle_lazyload';
 
@@ -333,15 +321,6 @@ class Plugin
     public function getPluginName()
     {
         return $this->plugin_name;
-    }
-
-    /**
-     * Retrieve the version number of the plugin.
-     * @return string The version number of the plugin.
-     */
-    public function getVersion()
-    {
-        return $this->version;
     }
 
     /**

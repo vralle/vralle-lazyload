@@ -14,12 +14,6 @@ class Lazysizes
     private $plugin_name;
 
     /**
-     * The version of this plugin.
-     * @var string
-     */
-    private $version;
-
-    /**
      * The options of this plugin
      * @var array
      */
@@ -31,10 +25,9 @@ class Lazysizes
      * @param string $version     The version of the plugin.
      * @param object $options     The options of the plugin
      */
-    public function __construct($plugin_name, $version, $options)
+    public function __construct($plugin_name, $options)
     {
         $this->plugin_name = $plugin_name;
-        $this->version = $version;
         $this->options = $options;
     }
 
