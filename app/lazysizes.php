@@ -2,6 +2,7 @@
 
 /**
  * The public-facing functionality of the plugin.
+ *
  * @package    vralle-lazyload
  * @subpackage vralle-lazyload/app
  */
@@ -21,6 +22,7 @@ class Lazysizes
 
     /**
      * Initialize the class and set its properties.
+     *
      * @param string $plugin_name The name of the plugin.
      * @param string $version     The version of the plugin.
      * @param object $options     The options of the plugin
@@ -33,6 +35,7 @@ class Lazysizes
 
     /**
      * Retrive the name of CSS-class for all elements which should be lazy loaded
+     *
      * @return string A name of CSS-class
      */
     private function getLazyClass()
@@ -45,7 +48,8 @@ class Lazysizes
 
     /**
      * Retrive the image, that will be displayed instead of the original
-     * @return string A link to image
+     *
+     * @return string A link to image or base64 image
      */
     private function getImgPlaceholder()
     {
@@ -57,57 +61,42 @@ class Lazysizes
 
     /**
      * Filter the list of attachment image attributes.
-     * @param  array $attr_arr list attributes for the image markup.
+     *
+     * @param  array $attrs List attributes for the image markup.
      * @return array List of attachment image attributes.
      */
-    public function wpGetAttachmentImageAttributes($attr_arr)
+    public function wpGetAttachmentImageAttributes($attrs)
     {
-        if (!isset($this->options['wp_images'])) {
-            return $attr_arr;
+        if (!isset($this->options['wp_images']) || $this->isExit()) {
+            return $attrs;
         }
 
-        if ($this->isExit()) {
-            return $attr_arr;
-        }
-
-        $new_attr = $this->attrHandler($attr_arr);
-
-        if ($new_attr) {
-            $attr_arr = $new_attr;
-        }
-
-        return $attr_arr;
+        return $this->attrHandler($attrs, 'img');
     }
 
     /**
      * Filter the avatar to retrieve.
+     *
      * @param  string $html output for the user's avatar.
      * @return string image element markup.
      */
     public function getAvatar($html)
     {
-        if (!isset($this->options['avatar'])) {
+        if (!isset($this->options['avatar']) || $this->isExit()) {
             return $html;
         }
-        if ($this->isExit()) {
-            return $html;
-        }
-        $html = $this->contentHandler($html);
 
-        return $html;
+        return $this->contentHandler($html, array('img'));
     }
 
     /**
      * Filter the post content.
+     *
      * @param  string $html Content of the current post.
      * @return string Content of the current post.
      */
     public function theContent($html)
     {
-        if ($this->isExit()) {
-            return $html;
-        }
-
         $tags = array();
 
         if (isset($this->options['content_images'])) {
@@ -121,49 +110,46 @@ class Lazysizes
             $tags[] = 'video';
         }
 
-        if (empty($tags)) {
+        if (empty($tags) || $this->isExit()) {
             return $html;
         }
 
-        $html = $this->contentHandler($html, $tags);
-
-        return $html;
+        return $this->contentHandler($html, $tags);
     }
 
     /**
-     * Looking for html tags and processing
+     * Search html tags and processing
+     *
      * @param  string $html Content.
-     * @param  array  $tags List tag names for looking.
+     * @param  array  $tags List of tag names
      * @return string Content
      */
-    private function contentHandler($html = '', $tags = array('img'))
+    private function contentHandler($html, $tags)
     {
-
         $pattern = $this->getTagRegex($tags);
 
         return \preg_replace_callback(
             "/$pattern/i",
             function ($m) {
                 $tag = $m[1];
-                $attrs = $m[2];
+                $attrs_in = $m[2];
                 /**
-                 * The wordpress handler is used. This may seem redundant, but it is reliable and verified
                  * @link https://developer.wordpress.org/reference/functions/shortcode_parse_atts/
                  */
-                $parced = \shortcode_parse_atts($attrs);
+                $attrs_in_arr = \shortcode_parse_atts($attrs_in);
 
-                $attr_arr = $this->attrHandler($parced, $tag);
+                $attrs_out_arr = $this->attrHandler($attrs_in_arr, $tag);
 
-                if ($attr_arr) {
-                    $attr = '';
-                    foreach ($attr_arr as $key => $value) {
+                if ($attrs_out_arr !== $attrs_in_arr) {
+                    $attrs_out = '';
+                    foreach ($attrs_out_arr as $key => $value) {
                         if (is_int($key)) {
-                            $attr .= ' ' . \esc_attr($value);
+                            $attrs_out .= ' ' . \esc_attr($value);
                         } else {
-                            $attr .= \sprintf(' %s="%s"', $key, \esc_attr($value));
+                            $attrs_out .= \sprintf(' %s="%s"', esc_attr($key), \esc_attr($value));
                         }
                     }
-                    $m[0] = \str_replace($attrs, $attr, $m[0]);
+                    $m[0] = \str_replace($attrs_in, $attrs_out, $m[0]);
                 }
 
                 return $m[0];
@@ -173,83 +159,91 @@ class Lazysizes
     }
 
     /**
-     * Image attribute handler
-     * @param  array    $attr_arr   List of image attributes and their values.
-     * @param  string   $tag        current tag
-     * @return mixed    Array List of image attributes and their values,
-     *                  where the necessary attributes for the loader are added
-     *                  or false, if exclude
+     * Image attributes handler
+     *
+     * @param  array    $attrs   List of image attributes and their values.
+     * @param  string   $tag     html tag name
+     * @return array    List of image attributes and their values
      */
-    private function attrHandler($attr_arr = array(), $tag = 'img')
+    private function attrHandler($attrs, $tag)
     {
-        $lazy_class = $this->getLazyClass();
+        $lazy_css_class = $this->getLazyClass();
         $img_placeholder = $this->getImgPlaceholder();
-        $classes_arr = array();
+        $css_exception = \array_map('trim', \explode(' ', $this->options['css_exception']));
+        $embed_tags = array(
+            'iframe',
+            'embed',
+            'object',
+            'video',
+        );
+        $is_embed = \in_array($tag, $embed_tags);
+        $css_classes = array();
         $have_src = false;
-        $exlude_class_arr = \array_map('trim', \explode(' ', $this->options['exclude_class']));
 
-        // Exit by CSS class
-        if (isset($attr_arr['class'])) {
-            $classes_arr = \explode(' ', $attr_arr['class']);
+        if (isset($attrs['class'])) {
+            $css_classes = \explode(' ', $attrs['class']);
 
-            if (!empty(\array_intersect($exlude_class_arr, $classes_arr))) {
-                return false;
+            // Exit if one of the exception classes is present
+            if (!empty(\array_intersect($css_exception, $css_classes))) {
+                return $attrs;
             }
 
-            if (in_array($lazy_class, $classes_arr)) {
-                return false;
+            // Exit if lazy loading class is present
+            if (in_array($lazy_css_class, $css_classes)) {
+                return $attrs;
             }
         }
 
-        if (isset($attr_arr['srcset'])) {
+        if (isset($attrs['srcset'])) {
             if (isset($this->options['do_srcset'])) {
-                $attr_arr['data-srcset'] = $attr_arr['srcset'];
-                $attr_arr['srcset'] = $img_placeholder;
+                $attrs['data-srcset'] = $attrs['srcset'];
+                $attrs['srcset'] = $img_placeholder;
                 $have_src = true;
 
                 if (isset($this->options['data-sizes'])) {
                     $attr_arr['data-sizes'] = 'auto';
-                    unset($attr_arr['sizes']);
+                    unset($attrs['sizes']);
                 }
             }
-        } elseif (isset($attr_arr['src'])) {
-            if (isset($this->options['do_src']) || 'iframe' === $tag) {
-                $attr_arr['data-src'] = $attr_arr['src'];
-                if ('iframe' === $tag) {
+        } elseif (isset($attrs['src'])) {
+            if (isset($this->options['do_src']) || $is_embed) {
+                $attrs['data-src'] = $attrs['src'];
+                if ($is_embed) {
                     // set valid src for iframe
-                    $attr_arr['src'] = 'about:blank';
+                    $attrs['src'] = 'about:blank';
                 } else {
-                    $attr_arr['src'] = $img_placeholder;
+                    $attrs['src'] = $img_placeholder;
                 }
                 // Cleanup Dry Tags
-                unset($attr_arr['sizes']);
+                unset($attrs['sizes']);
                 $have_src = true;
             }
         }
 
         // Do lazyloaded, only if the image have src or srcset
         if ($have_src) {
-            $classes_arr[] = $lazy_class;
-            $attr_arr['class'] = \implode(' ', $classes_arr);
+            $css_classes[] = $lazy_css_class;
+            $attrs['class'] = \implode(' ', $css_classes);
             if (0 != $this->options['data-expand']) {
-                $attr_arr['data-expand'] = $this->options['data-expand'];
+                $attrs['data-expand'] = $this->options['data-expand'];
             }
             if (isset($this->options['parent-fit'])) {
-                $attr_arr['data-parent-fit'] = $this->options['object-fit'];
+                $attrs['data-parent-fit'] = $this->options['object-fit'];
             }
         }
 
-        return $attr_arr;
+        return $attrs;
     }
 
     /**
-     * Retrieve the html tag regular expression. Overweight, but makes the search bullet-proof.
-     * @param  string $tagnames Optional.
+     * Retrieve the html tag regular expression
+     *
+     * @param  array $tags List of tag names
      * @return string The html tag search regular expression
      */
-    private function getTagRegex($tags = null)
+    private function getTagRegex($tags)
     {
-        $tags = \join('|', array_map('preg_quote', $tags));
+        $tags = \implode('|', array_map('preg_quote', $tags));
 
         return
         '<\s*'                              // Opening tag
@@ -265,33 +259,29 @@ class Lazysizes
     }
 
     /**
-     * State detection to skip processing if necessary
+     * State detection to skip processing
+     *
      * @return boolean
      */
     private function isExit()
     {
-        // Admin menu
-        if (\is_admin()) {
-            return true;
-        }
-
         // Feed
-        if (\is_feed()) {
+        if (is_feed()) {
             return true;
         }
 
         // Preview mode
-        if (\is_preview()) {
+        if (is_preview()) {
             return true;
         }
 
         // Print
-        if (1 === \intval(\get_query_var('print'))) {
+        if (1 === intval(get_query_var('print'))) {
             return true;
         }
 
         // Print
-        if (1 === \intval(\get_query_var('printpage'))) {
+        if (1 === intval(get_query_var('printpage'))) {
             return true;
         }
 
@@ -299,14 +289,14 @@ class Lazysizes
          * Exit filter
          * @var boolean
          */
-        if (!\apply_filters('do_vralle_lazyload', true)) {
+        if (!apply_filters('do_vralle_lazyload', true)) {
             return true;
         }
 
         /**
          * On an AMP version of the posts
          */
-        if (\defined('AMP_QUERY_VAR') && \function_exists('is_amp_endpoint') && \is_amp_endpoint()) {
+        if (defined('AMP_QUERY_VAR') && function_exists('is_amp_endpoint') && is_amp_endpoint()) {
             return true;
         }
 
@@ -318,7 +308,11 @@ class Lazysizes
      */
     public function enqueueScripts()
     {
-        $debug_suffix = (\defined('SCRIPT_DEBUG') && \SCRIPT_DEBUG) ? '' : '.min';
+        if ($this->isExit()) {
+            return;
+        }
+
+        $debug_suffix = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
         $plugin_url = \plugins_url('', \dirname(__FILE__));
         $ID_lazysizes = $this->plugin_name . '_lazysizes';
 
@@ -326,13 +320,13 @@ class Lazysizes
             $ID_lazysizes,
             $plugin_url . '/vendor/lazysizes/lazysizes' . $debug_suffix . '.js',
             array(),
-            '4.1.5',
+            '4.1.8',
             true
         );
 
         $plugins = $this->getPluginsList();
 
-        if (!$plugins) {
+        if (empty($plugins)) {
             \wp_enqueue_script($this->plugin_name . '_lazysizes');
         } else {
             foreach ($plugins as $plugin) {
@@ -340,7 +334,7 @@ class Lazysizes
                     $this->plugin_name . '_ls.' . $plugin,
                     $plugin_url . '/vendor/lazysizes/plugins/' . $plugin . '/ls.' . $plugin . $debug_suffix . '.js',
                     array($ID_lazysizes),
-                    '4.1.5',
+                    '4.1.8',
                     true
                 );
             }
@@ -357,7 +351,7 @@ class Lazysizes
         }
 
         // Config if only need
-        if (!empty($lazySizesConfig)) {
+        if ($lazySizesConfig !== '') {
             $lazySizesConfig = 'window.lazySizesConfig = window.lazySizesConfig || {};' . $lazySizesConfig;
             \wp_add_inline_script($this->plugin_name . '_lazysizes', $lazySizesConfig, 'before');
         }
@@ -365,9 +359,10 @@ class Lazysizes
 
     public function addPicturefill()
     {
-        if (!isset($this->options['picturefill'])) {
+        if (!isset($this->options['picturefill']) || $this->isExit()) {
             return;
         }
+
         $src = \plugins_url('vendor/picturefill/dist/picturefill.min.js', \dirname(__FILE__));
         echo <<<EOT
 <script>(function(d,s,id) {
@@ -385,7 +380,8 @@ EOT;
 
     /**
      * Create a list of lazysize.js plug-ins
-     * @return  mixed array List of plugins or false, if empty
+     *
+     * @return  array List of plugins
      */
     private function getPluginsList()
     {
@@ -400,9 +396,6 @@ EOT;
             }
         }
         $plugins = \apply_filters('lazysizes_plugins', $plugins);
-        if (!is_array($plugins) || empty($plugins)) {
-            return false;
-        }
 
         return $plugins;
     }
