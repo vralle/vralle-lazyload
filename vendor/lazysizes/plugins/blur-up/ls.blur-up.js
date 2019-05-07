@@ -17,7 +17,7 @@
 	'use strict';
 
 	var slice = [].slice;
-	var regBlurUp = /blur-up["']*\s*:\s*["']*(always|auto|unobtrusive)/;
+	var regBlurUp = /blur-up["']*\s*:\s*["']*(always|auto)/;
 	var regType = /image\/(jpeg|png|gif|svg\+xml)/;
 	var transSrc = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
@@ -29,12 +29,19 @@
 	};
 
 	var getLowSrc = function (picture, img) {
+		var matchingLowSrc;
 		var sources = picture ? slice.call(picture.querySelectorAll('source, img')) : [img];
-		var element = sources.find(function (src) {
-			return src.getAttribute('data-lowsrc') && matchesMedia(src);
+
+		sources.forEach(function (src) {
+			if (matchingLowSrc) {return;}
+			var lowSrc = src.getAttribute('data-lowsrc');
+
+			if (lowSrc && matchesMedia(src)) {
+				matchingLowSrc = lowSrc;
+			}
 		});
 
-		return element && element.getAttribute('data-lowsrc');
+		return matchingLowSrc;
 	};
 
 	var createBlurup = function(picture, img, src, blurUp){
@@ -136,30 +143,25 @@
 		img.addEventListener('load', onload);
 		img.addEventListener('error', onload);
 
-
-		if(blurUp == 'unobtrusive'){
-			setStateUp();
-		} else {
-			var parentUnveil = function (e) {
-				if(parent != e.target){
-					return;
-				}
-
-				lazySizes.aC(blurImg || img, 'ls-inview');
-
-				setStateUp();
-
-				parent.removeEventListener('lazybeforeunveil', parentUnveil);
-			};
-
-			if(!parent.getAttribute('data-expand')){
-				parent.setAttribute('data-expand', -1);
+		var parentUnveil = function (e) {
+			if(parent != e.target){
+				return;
 			}
 
-			parent.addEventListener('lazybeforeunveil', parentUnveil);
+			lazySizes.aC(blurImg || img, 'ls-inview');
 
-			lazySizes.aC(parent, lazySizes.cfg.lazyClass);
+			setStateUp();
+
+			parent.removeEventListener('lazybeforeunveil', parentUnveil);
+		};
+
+		if(!parent.getAttribute('data-expand')){
+			parent.setAttribute('data-expand', -1);
 		}
+
+		parent.addEventListener('lazybeforeunveil', parentUnveil);
+
+		lazySizes.aC(parent, lazySizes.cfg.lazyClass);
 
 	};
 
@@ -188,6 +190,6 @@
 
 		if(!match && !img.getAttribute('data-lowsrc')){return;}
 
-		detail.blurUp = match && match[1] || 'always';
+		detail.blurUp = match && match[1] || lazySizes.cfg.blurupMode || 'always';
 	});
 }));
