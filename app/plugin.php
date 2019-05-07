@@ -298,7 +298,7 @@ class Plugin
      */
     private function publicHooks()
     {
-        $lazysizes = new Lazysizes($this->getPluginName(), $this->getVersion(), $this->getOptions());
+        $lazysizes = new Lazysizes($this->getPluginName(), $this->getOptions());
         $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wpGetAttachmentImageAttributes', 99);
         $this->loader->add_filter('the_content', $lazysizes, 'theContent', 99);
         $this->loader->add_filter('get_avatar', $lazysizes, 'getAvatar', 99);
