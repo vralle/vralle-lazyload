@@ -41,7 +41,7 @@ class Config
         $saved_options = \get_option($plugin_name, $default_options);
         // Where the values are needed
         $required_options = array(
-            'exclude_class',
+            'css_exception',
             'data-expand',
             'loadmode',
             'object-fit',
@@ -51,7 +51,6 @@ class Config
             if (isset($saved_options[$key])) {
                 $options[$key] = $saved_options[$key];
             } elseif (in_array($key, $required_options)) {
-                // set the default value if no keys are found
                 $options[$key] = $value;
             }
         }

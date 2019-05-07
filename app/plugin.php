@@ -203,7 +203,7 @@ class Plugin
                 'section'       => 'responsive',
             ),
             array(
-                'uid'           => 'exclude_class',
+                'uid'           => 'css_exception',
                 'type'          => 'text',
                 'default'       => '',
                 'title'         => \__('CSS Class', 'vralle-lazyload'),
