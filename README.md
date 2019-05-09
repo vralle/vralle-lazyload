@@ -21,6 +21,7 @@ Implemented:
 * Additional lazySizes.js extensions
 * Support for responsive images in older browsers, like IE 10, 11
 * Template Tags for backgrounds
+* Handler skips AMP pages
 
 ## Installation
 
@@ -93,10 +94,13 @@ How this works can be found in the file `app\template-tags.php`
 Do not forget to add the required plugin.
 
 ## Changelog
+- 0.9.6
+  - Fixed a data-sizes attribute
 - 0.9.5
   - Refactoring the plugin
   - Rename `vralle_lazyload_lazy_class` filter to `vralle_lazyload_css_class`
   - Rename `exclude_class` option to `css_exception`
+  - AMP Support. Handler skips AMP pages
   - lazySizes v4.1.8
 - 0.9.4:
   - Fix Github URI
