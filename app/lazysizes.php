@@ -201,7 +201,7 @@ class Lazysizes
                 $have_src = true;
 
                 if (isset($this->options['data-sizes'])) {
-                    $attr_arr['data-sizes'] = 'auto';
+                    $attrs['data-sizes'] = 'auto';
                     unset($attrs['sizes']);
                 }
             }
