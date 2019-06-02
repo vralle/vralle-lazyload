@@ -16,10 +16,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "lazysizes": "^4.1.8",
     "picturefill": "^3.0.3"
   },
   "devDependencies": {
+    "lazysizes": "^5.1.0",
     "npm-run-all": "^4.1.5",
     "shx": "^0.3.2"
   }

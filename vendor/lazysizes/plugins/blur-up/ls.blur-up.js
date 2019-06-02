@@ -1,4 +1,5 @@
 (function(window, factory) {
+	if(!window) {return;}
 	var globalInstall = function(){
 		factory(window.lazySizes);
 		window.removeEventListener('lazyunveilread', globalInstall, true);
@@ -13,7 +14,8 @@
 	} else {
 		window.addEventListener('lazyunveilread', globalInstall, true);
 	}
-}(window, function(window, document, lazySizes) {
+}(typeof window != 'undefined' ?
+	window : 0, function(window, document, lazySizes) {
 	'use strict';
 
 	var slice = [].slice;
@@ -56,16 +58,21 @@
 
 			if(!src){return;}
 
-			var onloadBlurUp = function(){
+			var onloadBlurUp = function(e){
 				isBlurUpLoaded = true;
 
-				if(blurImg){
-					lazySizes.rAF(function () {
-						if(blurImg) {
-							lazySizes.aC(blurImg, 'ls-blur-up-loaded');
-						}
-					});
+				if (!blurImg) {
+					blurImg = e.target;
+				}
 
+				lazySizes.rAF(function () {
+					lazySizes.rC(img, 'ls-blur-up-is-loading');
+					if(blurImg) {
+						lazySizes.aC(blurImg, 'ls-blur-up-loaded');
+					}
+				});
+
+				if(blurImg){
 					blurImg.removeEventListener('load', onloadBlurUp);
 					blurImg.removeEventListener('error', onloadBlurUp);
 				}
@@ -80,8 +87,6 @@
 			blurImg.src = src;
 			blurImg.alt = '';
 			blurImg.setAttribute('aria-hidden', 'true');
-
-			blurImg.className += ' ls-inview';
 
 			parent.insertBefore(blurImg, (picture || img).nextSibling);
 
@@ -101,6 +106,7 @@
 		var remove = function () {
 			if(blurImg){
 				lazySizes.rAF(function() {
+					lazySizes.rC(img, 'ls-blur-up-is-loading');
 					try {
 						blurImg.parentNode.removeChild(blurImg);
 					} catch(er){}
@@ -127,11 +133,13 @@
 
 			if(blurImg){
 				lazySizes.rAF(function(){
-					lazySizes.aC(blurImg, 'ls-original-loaded');
+					if(blurImg) {
+						lazySizes.aC(blurImg, 'ls-original-loaded');
+					}
 				});
 			}
 
-			if(!isBlurUpLoaded || Date.now() - start < 66){
+			if(blurUp != 'always' && (!isBlurUpLoaded || Date.now() - start < 66)){
 				setStateUp(true);
 			} else {
 				setStateUp();
@@ -142,6 +150,8 @@
 
 		img.addEventListener('load', onload);
 		img.addEventListener('error', onload);
+
+		lazySizes.aC(img, 'ls-blur-up-is-loading');
 
 		var parentUnveil = function (e) {
 			if(parent != e.target){
