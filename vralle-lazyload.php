@@ -27,8 +27,6 @@ if (!defined('WPINC')) {
     die;
 }
 
-define('VRALLE_LAZYLOAD_VERSION', '0.9.3');
-
 /**
  * The core plugin class
  */
