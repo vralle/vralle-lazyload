@@ -275,6 +275,19 @@ class Plugin
                 ),
                 'section'       => 'extensions',
             ),
+            array(
+                'uid'           => 'aspectratio',
+                'type'          => 'checkbox',
+                'default'       => null,
+                'title'         => 'parent-fit',
+                'label'         => \sprintf(
+                    /* translators: %s: Extension name */
+                    \__('Load %s extension.', 'vralle-lazyload'),
+                    'aspectratio'
+                ),
+                'description'   => \__('This plugin helps to pre-occupy the space needed for an image by calculating the height from the image width or the width from the height (This means the width or height has to be calculable before the image is loaded). Default "No".', 'vralle-lazyload'),
+                'section'       => 'extensions',
+            ),
         );
 
         $this->config = new Config($this->getPluginName(), $plugin_config);

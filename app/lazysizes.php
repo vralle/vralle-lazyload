@@ -230,6 +230,10 @@ class Lazysizes
             if (isset($this->options['parent-fit'])) {
                 $attrs['data-parent-fit'] = $this->options['object-fit'];
             }
+            // Aspect ratio draft
+            if (isset($attrs['width']) && isset($attrs['height'])) {
+                $attrs['data-aspectratio'] = $attrs['width'] . '/' . $attrs['height'];
+            }
         }
 
         return $attrs;
@@ -388,6 +392,7 @@ EOT;
         // Extensions list from options for possible load
         $list_of_extensions = array(
             'parent-fit',
+            'aspectratio',
         );
         $plugins = array();
         foreach ($list_of_extensions as $extension) {
