@@ -368,7 +368,7 @@ class Lazysizes
         }
 
         $src = \plugins_url('vendor/picturefill/dist/picturefill.min.js', \dirname(__FILE__));
-        echo <<<EOT
+        $picturefill_loader = <<<EOT
 <script>(function(d,s,id) {
   if ('srcset' in d.createElement('img')) return;
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -376,10 +376,11 @@ class Lazysizes
   js = d.createElement(s);
   js.id = id;
   js.async = true;
-  js.src = "$src";
+  js.src = '$src';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'picturefill'));</script>
 EOT;
+        echo $picturefill_loader;
     }
 
     /**
