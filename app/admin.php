@@ -65,7 +65,7 @@ class Admin
         $options_page_url  = \menu_page_url($this->plugin_name, false);
         $settings_link = \sprintf(
             '<a href="%s">%s</a>',
-            $options_page_url,
+            \esc_url($options_page_url),
             \__('Settings', 'vralle-lazyload')
         );
         \array_unshift($actions, $settings_link);
@@ -182,12 +182,12 @@ class Admin
             case 'text':
                 $output .= \sprintf(
                     '<input name="%1$s[%2$s]" id="%1$s[%2$s]" class="%3$s" type="%4$s" placeholder="%5$s" value="%6$s" maxlength="120" />',
-                    $this->plugin_name,
-                    $arguments['uid'],
-                    isset($arguments['class']) ? $arguments['class'] : '',
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    isset($arguments['class']) ? \esc_attr($arguments['class']) : '',
                     $arguments['type'],
-                    isset($arguments['placeholder']) ? $arguments['placeholder'] : '',
-                    $options[$arguments['uid']]
+                    isset($arguments['placeholder']) ? \esc_attr($arguments['placeholder']) : '',
+                    \esc_attr($options[$arguments['uid']])
                 );
                 break;
             case 'number':
@@ -197,13 +197,13 @@ class Admin
 
                 $output .= \sprintf(
                     '<input name="%1$s[%2$s]" id="%1$s[%2$s]" type="number" placeholder="%3$s"%4$s%5$s step="%6$s" value="%7$s" maxlength="12" />',
-                    $this->plugin_name,
-                    $arguments['uid'],
-                    isset($arguments['placeholder']) ? $arguments['placeholder'] : '',
-                    isset($arguments['min']) ? ' min="' . $arguments['min'] . '"' : '',
-                    isset($arguments['max']) ? ' max="' . $arguments['max'] . '"': '',
-                    $arguments['step'],
-                    $options[$arguments['uid']]
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    isset($arguments['placeholder']) ? \esc_attr($arguments['placeholder']) : '',
+                    isset($arguments['min']) ? ' min="' . \esc_attr($arguments['min']) . '"' : '',
+                    isset($arguments['max']) ? ' max="' . \esc_attr($arguments['max']) . '"': '',
+                    \esc_attr($arguments['step']),
+                    \esc_attr($options[$arguments['uid']])
                 );
                 break;
             case 'checkbox':
@@ -213,8 +213,8 @@ class Admin
                 }
                 $output .= \sprintf(
                     '<input type="checkbox" id="%1$s[%2$s]" name="%1$s[%2$s]" value="1" %3$s%4$s>',
-                    $this->plugin_name,
-                    $arguments['uid'],
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
                     \checked(isset($options[$arguments['uid']]), true, false),
                     $disable
                 );
@@ -230,16 +230,16 @@ class Admin
                 }
                 $output .= \sprintf(
                     '<select name="%1$s[%2$s]" id="%1$s[%2$s]"%3$s>',
-                    $this->plugin_name,
-                    $arguments['uid'],
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
                     $disable
                 );
                 foreach ($arguments['options'] as $key => $text) {
                     $output .= \sprintf(
                         '<option value="%s"%s>%s</option>',
-                        $key,
+                        esc_attr($key),
                         \selected($key, $options[$arguments['uid']], false),
-                        $text
+                        \esc_html($text)
                     );
                 }
                 $output .= '</select>';
@@ -251,17 +251,17 @@ class Admin
             if ('select' == $arguments['type']) {
                 $output .= \sprintf(
                     ' <label for="%1$s[%2$s]">%3$s</label>',
-                    $this->plugin_name,
-                    $arguments['uid'],
-                    $arguments['label']
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
+                    \esc_html($arguments['label'])
                 );
             } else {
                 $output = \sprintf(
                     '<label for="%1$s[%2$s]">%3$s %4$s</label>',
-                    $this->plugin_name,
-                    $arguments['uid'],
+                    \esc_attr($this->plugin_name),
+                    \esc_attr($arguments['uid']),
                     $output,
-                    $arguments['label']
+                    \esc_html($arguments['label'])
                 );
             }
         }
@@ -269,14 +269,14 @@ class Admin
         if (isset($arguments['description'])) {
             $output .= \sprintf(
                 '<p class="description">%s</p>',
-                $arguments['description']
+                \wp_kses($arguments['description'], 'default')
             );
         }
 
         if (isset($arguments['label']) || isset($arguments['description'])) {
             $output = \sprintf(
                 '<fieldset><legend class="screen-reader-text"><span>%s</span></legend>%s</fieldset>',
-                $arguments['title'],
+                \esc_html($arguments['title']),
                 $output
             );
         }
