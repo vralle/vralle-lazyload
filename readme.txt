@@ -4,7 +4,7 @@ Tags: media, images, lazyload, performance, speed
 Requires at least: 4.4
 Tested up to: 5.2.0
 Requires PHP: 5.6
-Stable tag: 0.9.5
+Stable tag: 0.9.7
 License: MIT
 License URI: https://license.uri
 
@@ -33,6 +33,9 @@ Implemented:
 3. Check out the settings page to fine-tune your settings
 
 == Changelog ==
+- 0.9.7
+  - lazySizes v5.1.0
+  - Draft of aspectratio plugin support
 - 0.9.6
   - Fixed a data-sizes attribute
 - 0.9.5

@@ -60,13 +60,13 @@ function my_handler()
 ```
 
 ### Load lazySizes extensions
-```
+```php
 add_filter('lazysizes_plugins', $plugin_list);
 ```
 `$plugin_list` - array list of plugin names
 
 Example:
-```
+```php
 add_filter('lazysizes_plugins', 'my_lazysizes_plugins_list');
 function my_lazysizes_plugins_list($plugins)
 {
@@ -78,7 +78,7 @@ function my_lazysizes_plugins_list($plugins)
 ### Background images
 To work with background images, you can use the `vr_get_image_attr(thumbnail_id, size)`, but you need to edit the template code.
 Example:
-```
+```php
 <?php if (has_post_thumbnail()) : ?>
       <?php
       $thumbnail = vr_get_image_attr(get_post_thumbnail_id($post->ID), 'large');
@@ -93,7 +93,62 @@ Example:
 How this works can be found in the file `app\template-tags.php`
 Do not forget to add the required plugin.
 
+### Known issues
+#### Layout thrashing
+The layout may be distorted until the images are loaded. After each image is loaded, the page is recalculated, which is called [Layout thrashing](https://kellegous.com/j/2013/01/26/layout-performance/).
+Several solutions may help to avoid such behavior.
+For example, place an image in a container and determine the aspect ratio.
+```html
+<div class="img-container">
+  <div class="img-sizer">
+    <img
+      class="content-img lazyload"
+      src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+      data-srcset="http://lorempixel.com/400/200/people/1/ 400w, http://lorempixel.com/600/300/people/1/ 600w, http://lorempixel.com/800/400/people/1/ 800w"
+      data-sizes="auto"
+    />
+  </div>
+</div>
+```
+```css
+.img-container {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.img-sizer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 0;
+  padding: 0;
+  padding-bottom: 56.25%; // This aspect ratio of the Image (16:9)
+  margin: 0;
+  overflow: hidden;
+}
+.content-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+```
+
+The plugin cannot provide all layout options for images, therefore we recommend to provide support for lazy loading in the active theme.
+
+If you cannot change the layout, you can use lazysizes [aspectratio extension](https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/aspectratio).
+
+
 ## Changelog
+- 0.9.7
+  - lazySizes v5.1.0
+  - Draft of aspectratio plugin support
 - 0.9.6
   - Fixed a data-sizes attribute
 - 0.9.5
