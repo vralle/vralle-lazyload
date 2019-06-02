@@ -161,7 +161,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Traditional images', 'vralle-lazyload'),
                 'label'         => \sprintf(
-                    /* translators: %s: srcset */
+                    /* translators: %s: HTML Tag Attribute Name */
                     \__('Lazy loading of images without the attribute "%s".', 'vralle-lazyload'),
                     'srcset'
                 ),
@@ -174,7 +174,7 @@ class Plugin
                 'default'       => '1',
                 'title'         => \__('Responsive images', 'vralle-lazyload'),
                 'label'         => \sprintf(
-                    /* translators: %s: srcset */
+                    /* translators: %s: HTML Tag Attribute Name */
                     \__('Lazy loading images with the attribute "%s".', 'vralle-lazyload'),
                     'srcset'
                 ),
@@ -244,7 +244,7 @@ class Plugin
                 'default'       => null,
                 'title'         => 'parent-fit',
                 'label'         => \sprintf(
-                    /* translators: 1: parent-fit, 2: Sizes */
+                    /* translators: 1: Extension name, 2: HTML Tag Attribute Name */
                     \__('Load %1$s extension. Requires "%2$s".', 'vralle-lazyload'),
                     'parent-fit',
                     'Sizes'
@@ -263,7 +263,7 @@ class Plugin
                 ),
                 'title'         => \__('object-fit', 'vralle-lazyload'),
                 'label'         => \sprintf(
-                    /* translators: %s: parent-fit */
+                    /* translators: %s: Extension name */
                     \__('Select object-fit type. Requires "%s".', 'vralle-lazyload'),
                     'parent-fit'
                 ),
