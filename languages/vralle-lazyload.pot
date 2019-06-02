@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the vralle.lazyload plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: vralle.lazyload 0.9.5\n"
+"Project-Id-Version: vralle.lazyload 0.9.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-05-08T00:28:05+03:00\n"
+"POT-Creation-Date: 2019-06-02T21:37:30+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: vralle-lazyload\n"
@@ -116,12 +116,12 @@ msgstr ""
 msgid "Traditional images"
 msgstr ""
 
-#. translators: %s: srcset
+#. translators: %s: HTML Tag Attribute Name
 #: app/plugin.php:165
 msgid "Lazy loading of images without the attribute \"%s\"."
 msgstr ""
 
-#. translators: %s: srcset
+#. translators: %s: HTML Tag Attribute Name
 #: app/plugin.php:178
 msgid "Lazy loading images with the attribute \"%s\"."
 msgstr ""
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Whether lazysizes should load all elements after the window onload event. Note: lazySizes will then still download those not-in-view images inside of a lazy queue, so that other downloads after onload are not blocked. Default \"No\"."
 msgstr ""
 
-#. translators: 1: parent-fit, 2: Sizes
+#. translators: 1: Extension name, 2: HTML Tag Attribute Name
 #: app/plugin.php:248
 msgid "Load %1$s extension. Requires \"%2$s\"."
 msgstr ""
@@ -181,7 +181,7 @@ msgstr ""
 msgid "object-fit"
 msgstr ""
 
-#. translators: %s: parent-fit
+#. translators: %s: Extension name
 #: app/plugin.php:267
 msgid "Select object-fit type. Requires \"%s\"."
 msgstr ""
@@ -189,4 +189,13 @@ msgstr ""
 #. translators: 1: link, 2: contain
 #: app/plugin.php:272
 msgid "Read more: %1$s. Default \"%2$s\"."
+msgstr ""
+
+#. translators: %s: Extension name
+#: app/plugin.php:285
+msgid "Load %s extension."
+msgstr ""
+
+#: app/plugin.php:288
+msgid "This plugin helps to pre-occupy the space needed for an image by calculating the height from the image width or the width from the height (This means the width or height has to be calculable before the image is loaded). Default \"No\"."
 msgstr ""
