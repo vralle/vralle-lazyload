@@ -59,6 +59,16 @@ class Lazysizes
         );
     }
 
+    private function getEmbedTags()
+    {
+        return array(
+            'iframe',
+            'embed',
+            'object',
+            'video',
+        );
+    }
+
     /**
      * Filter the list of attachment image attributes.
      *
@@ -104,10 +114,7 @@ class Lazysizes
         }
 
         if (isset($this->options['content_embed'])) {
-            $tags[] = 'iframe';
-            $tags[] = 'embed';
-            $tags[] = 'object';
-            $tags[] = 'video';
+            $tags = \array_merge($tags, $this->getEmbedTags());
         }
 
         if (empty($tags) || $this->isExit()) {
@@ -170,12 +177,7 @@ class Lazysizes
         $lazy_css_class = $this->getLazyClass();
         $img_placeholder = $this->getImgPlaceholder();
         $css_exception = \array_map('trim', \explode(' ', $this->options['css_exception']));
-        $embed_tags = array(
-            'iframe',
-            'embed',
-            'object',
-            'video',
-        );
+        $embed_tags = $this->getEmbedTags();
         $is_embed = \in_array($tag, $embed_tags);
         $css_classes = array();
         $have_src = false;
