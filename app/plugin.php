@@ -279,7 +279,7 @@ class Plugin
                 'uid'           => 'aspectratio',
                 'type'          => 'checkbox',
                 'default'       => null,
-                'title'         => 'parent-fit',
+                'title'         => 'aspectratio',
                 'label'         => \sprintf(
                     /* translators: %s: Extension name */
                     \__('Load %s extension.', 'vralle-lazyload'),
@@ -314,6 +314,7 @@ class Plugin
         $lazysizes = new Lazysizes($this->getPluginName(), $this->getOptions());
         $this->loader->add_filter('wp_get_attachment_image_attributes', $lazysizes, 'wpGetAttachmentImageAttributes', 99);
         $this->loader->add_filter('the_content', $lazysizes, 'theContent', 99);
+        $this->loader->add_filter('post_thumbnail_html', $lazysizes, 'postThumbnailHtml', 99);
         $this->loader->add_filter('get_avatar', $lazysizes, 'getAvatar', 99);
         $this->loader->add_action('wp_enqueue_scripts', $lazysizes, 'enqueueScripts', 1);
         $this->loader->add_action('wp_head', $lazysizes, 'addPicturefill');

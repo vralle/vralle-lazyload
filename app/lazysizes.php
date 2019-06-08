@@ -125,6 +125,25 @@ class Lazysizes
     }
 
     /**
+     * Aspect ratio support for post_thumbnail
+     * Necessary to process the post thumbnail HTML.
+     *
+     * @param string    $html               The post thumbnail HTML.
+     */
+    public function postThumbnailHtml($html)
+    {
+        if (!isset($this->options['wp_images']) || $this->isExit()) {
+            return $html;
+        }
+
+        if (isset($this->options['aspectratio'])) {
+            $html = $this->contentHandler($html, array('img'));
+        }
+
+        return $html;
+    }
+
+    /**
      * Search html tags and processing
      *
      * @param  string $html Content.
@@ -192,6 +211,13 @@ class Lazysizes
 
             // Exit if lazy loading class is present
             if (in_array($lazy_css_class, $css_classes)) {
+                // But check aspectratio attribute
+                if (isset($this->options['aspectratio'])) {
+                    if (!isset($attrs['data-aspectratio'])) {
+                        $attrs = $this->setAspectRatio($attrs);
+                    }
+                }
+
                 return $attrs;
             }
         }
@@ -232,9 +258,9 @@ class Lazysizes
             if (isset($this->options['parent-fit'])) {
                 $attrs['data-parent-fit'] = $this->options['object-fit'];
             }
-            // Aspect ratio draft
-            if (isset($attrs['width']) && isset($attrs['height'])) {
-                $attrs['data-aspectratio'] = $attrs['width'] . '/' . $attrs['height'];
+            // Set Aspect ratio
+            if (isset($this->options['aspectratio'])) {
+                $attrs = $this->setAspectRatio($attrs);
             }
         }
 
@@ -307,6 +333,15 @@ class Lazysizes
         }
 
         return false;
+    }
+
+    private function setAspectRatio($attrs)
+    {
+        if (isset($attrs['width']) && isset($attrs['height']) && !!$attrs['height']) {
+            $attrs['data-aspectratio'] = $attrs['width'] . '/' . $attrs['height'];
+        }
+
+        return $attrs;
     }
 
     /**
@@ -394,8 +429,8 @@ EOT;
     {
         // Extensions list from options for possible load
         $list_of_extensions = array(
-            'parent-fit',
             'aspectratio',
+            'parent-fit',
         );
         $plugins = array();
         foreach ($list_of_extensions as $extension) {
