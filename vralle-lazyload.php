@@ -13,8 +13,8 @@ use Vralle\Lazyload\App\Plugin;
  * Version:           0.9.7
  * Author:            V.Ralle
  * Author URI:        https://github.com/vralle
- * License:           MIT
- * License URI:       LICENSE.txt
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       vralle-lazyload
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload.git

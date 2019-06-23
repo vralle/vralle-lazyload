@@ -5,8 +5,8 @@ Requires at least: 4.4
 Tested up to: 5.2.0
 Requires PHP: 5.6
 Stable tag: 0.9.7
-License: MIT
-License URI: https://license.uri
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Brings lazySizes.js to WordPress.
 

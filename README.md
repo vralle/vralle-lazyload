@@ -7,7 +7,7 @@ Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 * Tested up to: 5.2.0
 * Requires PHP: 5.6
 * Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
-* License: [MIT License](LICENSE.txt)
+* License: [GPL 2.0 or later](LICENSE.txt)
 
 Implemented:
 * Lazy loading Wordpress attachments;
@@ -192,6 +192,6 @@ If you cannot change the layout, you can use lazysizes [aspectratio extension](h
 
 ## Copyright and license
 
-Copyright 2017-2018 the Authors. This project is licensed under the terms of the [MIT License](LICENSE.txt).
+Copyright 2017-2018 the Authors. This project is licensed under the terms of the [GPL 2.0 or later](LICENSE.txt).
 
 **Free Software, Hell Yeah!**
