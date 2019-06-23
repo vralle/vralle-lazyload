@@ -86,6 +86,20 @@ class Lazysizes {
 	}
 
 	/**
+	 * Filter the content of the Text widget.
+	 *
+	 * @param  string $html output for the user's avatar.
+	 * @return string image element markup.
+	 */
+	public function widgetText( $html ) {
+		if ( ! isset( $this->options['widget_text'] ) || $this->isExit() ) {
+			return $html;
+		}
+
+		return $this->contentHandler( $html, array( 'img' ) );
+	}
+
+	/**
 	 * Filter the avatar to retrieve
 	 *
 	 * @param  string $html output for the user's avatar.

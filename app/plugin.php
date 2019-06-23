@@ -130,6 +130,15 @@ class Plugin {
 				'section'     => 'images',
 			),
 			array(
+				'uid'         => 'widget_texts',
+				'type'        => 'checkbox',
+				'default'     => '1',
+				'title'       => \__( 'Widget content', 'vralle-lazyload' ),
+				'label'       => \__( 'Lazy loading of images in the Text widget.', 'vralle-lazyload' ),
+				'description' => \__( 'Default "Yes".', 'vralle-lazyload' ),
+				'section'     => 'images',
+			),
+			array(
 				'uid'         => 'avatar',
 				'type'        => 'checkbox',
 				'default'     => '1',
@@ -313,6 +322,7 @@ class Plugin {
 		$lazysizes = new Lazysizes( $this->getPluginName(), $this->getOptions() );
 		$this->loader->add_filter( 'wp_get_attachment_image_attributes', $lazysizes, 'wpGetAttachmentImageAttributes', 99 );
 		$this->loader->add_filter( 'the_content', $lazysizes, 'theContent', 99 );
+		$this->loader->add_filter( 'widget_text', $lazysizes, 'widgetText', 99 );
 		$this->loader->add_filter( 'get_avatar', $lazysizes, 'getAvatar', 99 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $lazysizes, 'enqueueScripts', 1 );
 		$this->loader->add_action( 'wp_head', $lazysizes, 'addPicturefill' );
