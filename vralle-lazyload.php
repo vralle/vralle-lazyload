@@ -1,8 +1,7 @@
 <?php
-use Vralle\Lazyload\App\Plugin;
-
 /**
  * The plugin bootstrap file
+ *
  * @link              https://github.com/vralle/vralle-lazyload
  * @package           vralle-lazyload
  *
@@ -22,22 +21,23 @@ use Vralle\Lazyload\App\Plugin;
  * Requires PHP:      5.6
  */
 
+use Vralle\Lazyload\App\Plugin;
+
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
-    die;
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
 /**
  * The core plugin class
  */
-require_once plugin_dir_path(__FILE__) . 'app/plugin.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/plugin.php';
 
 /**
  * Begins execution of the plugin.
  */
-function run_vralle_lazyload()
-{
-    $plugin = new Plugin(plugin_basename(__FILE__));
-    $plugin->run();
+function run_vralle_lazyload() {
+	$plugin = new Plugin( plugin_basename( __FILE__ ) );
+	$plugin->run();
 }
 run_vralle_lazyload();

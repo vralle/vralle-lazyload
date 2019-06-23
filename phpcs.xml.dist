@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="vralle.lazyload Coding Standards">
+	<description>Sniffs for WordPress plugins</description>
+	<!-- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset -->
+
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+	</rule>
+	<rule ref="WordPress-Docs" />
+	<config name="text_domain" value="vralle-lazyload"/>
+
+
+	<arg name="extensions" value="php"/>
+
+	<!-- Allow invoking just `phpcs` on command line without assuming STDIN for file input. -->
+	<file>.</file>
+	<!-- Exclude the Node Modules directory. -->
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+</ruleset>
