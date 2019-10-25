@@ -1,38 +1,51 @@
 === vralle.lazyload ===
 Contributors: V.Ralle
 Tags: media, images, lazyload, performance, speed
-Requires at least: 4.4
-Tested up to: 5.2.0
+Requires at least: 4.7
+Tested up to: 5.3.0
 Requires PHP: 5.6
-Stable tag: 0.9.7
+Stable tag: 0.9.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Brings lazySizes.js to WordPress.
 
 == Description ==
-vralle.lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images picture/srcset), iframes and much more.
+vralle.lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images), iframes and much more.
+
+This is not only a lazy loading plugin, but also an image tag parser for WordPress. The plugin uses fast and safe image attribute processing. Supports responsive images.
+
+Why?
+* Very fast and secure code parsing
+* Flexible for developers
+* Easy to use
 
 Implemented:
-* Lazy loading Wordpress attachments;
-* Lazy loading of embedded images in the post content;
-* Lazy loading the Avatar;
-* Full support responsive images with srcset attribute;
-* Lazy loading iframe, embed, object and video tags;
+* Lazy loading images;
+* Lazy loading Avatars;
+* Supports responsive images with srcset attribute;
+* Lazy loading iframe;
 * Admin settings page;
-* Exclude images by CSS-class
-* Fine tuning lazySizes.js
+* Exclude images by CSS-class or filter;
 * Additional lazySizes.js extensions
-* Support for responsive images in older browsers, like IE 10, 11
-* Template Tags for backgrounds
-* Handler skips AMP pages
+* Supports native lazy load (lazysizes.js plugin);
+* Support for responsive images in older browsers, like IE 10, 11 (picturefill.js)
+* AMP-ready
 
 == Installation ==
 1. Upload `vralle-lazyload` to the Wordpress plugins directory
 2. Activate the plugin through the \'Plugins\' menu in WordPress
-3. Check out the settings page to fine-tune your settings
+3. Check out the settings page
 
 == Changelog ==
+- 0.9.9
+ - The plugin code is rewritten.
+ - lazySizes v5.1.2
+- 0.9.8
+ - Extended aspectratio support
+ - The Text Widget Support
+ - Moving license from MIT to GPLv2+
+ - Moving PHP Coding Standards from PSR-2 to WordPress
 - 0.9.7
   - lazySizes v5.1.0
   - Draft of aspectratio plugin support

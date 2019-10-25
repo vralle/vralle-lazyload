@@ -1,0 +1,49 @@
+
+.vll-form-section {
+  max-width: 1140px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+}
+
+.vll-form-section-title {
+  margin: 0.75em 0 0 0;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  font-weight: bold;
+  color: #343a49;
+}
+
+.vll-form-section-subtitle {
+  padding-bottom: 0.3em;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #d2d3d6;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #626e7b;
+}
+
+.vll-settings-form label {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.5;
+  color: #2e3243;
+}
+
+.vll-settings-form input[type="checkbox"] {
+  height: 24px;
+  width: 24px;
+}
+
+.vll-settings-form input[type="checkbox"]:checked::before {
+  width: 29px;
+  height: 29px;
+  font-size: 29px; /* WP < 5.3 */
+}
+
+.wp-admin .vll-settings-form select {
+  min-height: 30px;
+}

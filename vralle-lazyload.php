@@ -9,7 +9,7 @@
  * Plugin Name:       vralle.lazyload
  * Plugin URI:        https://github.com/vralle/vralle-lazyload
  * Description:       Brings lazySizes.js to WordPress
- * Version:           0.9.7
+ * Version:           0.9.9
  * Author:            V.Ralle
  * Author URI:        https://github.com/vralle
  * License:           GPLv2 or later
@@ -17,27 +17,72 @@
  * Text Domain:       vralle-lazyload
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload.git
- * Requires WP:       4.4
+ * Requires WP:       4.9
  * Requires PHP:      5.6
+ **/
+
+/*
+**************************************************************************
+vralle.lazyload is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+any later version.
+vralle.lazyload is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along
+with vralle.lazyload. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+**************************************************************************
  */
 
-use Vralle\Lazyload\App\Plugin;
+namespace VRalleLazyLoad;
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+use function add_action;
+use function define;
+use function dirname;
+use function plugin_basename;
+
+define( 'VLL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+require_once dirname( __FILE__ ) . '/includes/config.php';
+require_once dirname( __FILE__ ) . '/includes/settings-api.php';
+require_once dirname( __FILE__ ) . '/public/attrs.php';
+require_once dirname( __FILE__ ) . '/public/content.php';
+require_once dirname( __FILE__ ) . '/public/bootstrap.php';
+require_once dirname( __FILE__ ) . '/admin/class-settings-api.php';
+require_once dirname( __FILE__ ) . '/admin/class-admin.php';
+
+/**
+ * Returns the single instance of Settings_API, creating one if needed.
+ *
+ * @return Settings_API
+ */
+function settings_api() {
+	return Settings_API::instance();
 }
 
 /**
- * The core plugin class
+ * Returns the single instance of Admin, creating one if needed.
+ *
+ * @return Admin
  */
-require_once plugin_dir_path( __FILE__ ) . 'app/plugin.php';
+function admin() {
+	return Admin::instance();
+}
 
 /**
- * Begins execution of the plugin.
+ * Define internationalization
  */
-function run_vralle_lazyload() {
-	$plugin = new Plugin( plugin_basename( __FILE__ ) );
-	$plugin->run();
+function load_texdomaine() {
+	load_plugin_textdomain(
+		'vralle-lazyload',
+		false,
+		dirname( __FILE__ ) . '/languages/'
+	);
 }
-run_vralle_lazyload();
+
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\bootstrap' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\settings_api' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\admin' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_texdomaine' );

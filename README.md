@@ -1,97 +1,37 @@
 # vralle.lazyload
 Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
+This is not only a lazy loading plugin, but also an image tag parser for WordPress. The plugin uses fast and safe image attribute processing. Supports responsive images.
 
 * Contributors: V.Ralle
 * Tags: media, images, lazyload, performance, speed
-* Requires at least: 4.4
-* Tested up to: 5.2.0
+* Requires at least: 4.7
+* Tested up to: 5.3.0
 * Requires PHP: 5.6
 * Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
 * License: [GPL 2.0 or later](LICENSE.txt)
 
+Why?
+* Very fast and secure code parsing
+* Flexible for developers
+* Easy to use
+
 Implemented:
-* Lazy loading Wordpress attachments;
-* Lazy loading of embedded images in the post content;
-* Lazy loading the Avatar;
-* Full support responsive images with srcset attribute;
-* Lazy loading iframe, embed, object and video tags;
+* Lazy loading images;
+* Lazy loading Avatars;
+* Supports responsive images with srcset attribute;
+* Lazy loading iframe;
 * Admin settings page;
-* Exclude images by CSS-class
-* Fine tuning lazySizes.js
+* Exclude images by CSS-class or filter;
 * Additional lazySizes.js extensions
-* Support for responsive images in older browsers, like IE 10, 11
-* Template Tags for backgrounds
-* Handler skips AMP pages
+* Supports native lazy load (lazysizes.js plugin);
+* Support for responsive images in older browsers, like IE 10, 11 (picturefill.js)
+* AMP-ready
 
 ## Installation
 
 1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/afragen/github-updater/releases). We rely on this plugin for updating vralle.lazyload directly from this git repo.
 2. Install vralle.lazyload by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). Both github-updater and vralle.lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
 3. Check out the settings page to fine-tune your settings.
-
-## How to
-
-### Image that replaces the original
-```
-add_filter('vralle_lazyload_image_placeholder', 'custom_placeholder');
-function custom_placeholder($placeholder) {
-    $placeholder = 'https://url.to.image';
-    return $placeholder;
-}
-```
-`$placeholder` - image url or base64 string,
-default: 1px*1px `data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`
-
-### Exclude images
-
-By CSS-class - the plugin options page.
-
-And/or filter `do_vralle_lazyload`:
-```
-add_filter('do_vralle_lazyload', 'my_handler');
-function my_handler()
-{
-  if (is_category(1)) {
-    return false;
-  }
-
-  return true;
-}
-```
-
-### Load lazySizes extensions
-```php
-add_filter('lazysizes_plugins', $plugin_list);
-```
-`$plugin_list` - array list of plugin names
-
-Example:
-```php
-add_filter('lazysizes_plugins', 'my_lazysizes_plugins_list');
-function my_lazysizes_plugins_list($plugins)
-{
-    $plugins[] = 'bgset';
-    return $plugins;
-}
-```
-
-### Background images
-To work with background images, you can use the `vr_get_image_attr(thumbnail_id, size)`, but you need to edit the template code.
-Example:
-```php
-<?php if (has_post_thumbnail()) : ?>
-      <?php
-      $thumbnail = vr_get_image_attr(get_post_thumbnail_id($post->ID), 'large');
-      // Calculate aspect ratio: h / w * 100%.
-      $ratio = $thumbnail['height'] / $thumbnail['width'] * 100;
-      ?>
-      <div class="panel-image lazyload" <?php echo $thumbnail['bg-data']; ?>>
-          <div class="panel-image-prop" style="padding-top: <?php echo esc_attr($ratio); ?>%"></div>
-      </div><!-- .panel-image -->
-  <?php endif; ?>
-```
-How this works can be found in the file `app\template-tags.php`
-Do not forget to add the required plugin.
 
 ### Known issues
 #### Layout thrashing
@@ -124,7 +64,7 @@ For example, place an image in a container and determine the aspect ratio.
   width: 100%;
   height: 0;
   padding: 0;
-  padding-bottom: 56.25%; // This aspect ratio of the Image (16:9)
+  padding-bottom: 56.25%; // Aspect ratio (16:9)
   margin: 0;
   overflow: hidden;
 }
@@ -142,10 +82,17 @@ For example, place an image in a container and determine the aspect ratio.
 
 The plugin cannot provide all layout options for images, therefore we recommend to provide support for lazy loading in the active theme.
 
-If you cannot change the layout, you can use lazysizes [aspectratio extension](https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/aspectratio).
-
+If you cannot change the layout, you can use [aspectratio extension](https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/aspectratio).
 
 ## Changelog
+- 0.9.9
+  - The plugin code is rewritten. Need feedback.
+  - lazySizes v5.1.2
+- 0.9.8
+ - Extended aspectratio support
+ - The Text Widget Support
+ - Moving license from MIT to GPLv2+
+ - Moving PHP Coding Standards from PSR-2 to WordPress
 - 0.9.7
   - lazySizes v5.1.0
   - Draft of aspectratio plugin support
