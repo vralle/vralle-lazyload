@@ -46,7 +46,7 @@ use function plugin_basename;
 define( 'VLL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 require_once dirname( __FILE__ ) . '/includes/config.php';
-require_once dirname( __FILE__ ) . '/includes/settings-api.php';
+require_once dirname( __FILE__ ) . '/includes/settings-helpers.php';
 require_once dirname( __FILE__ ) . '/public/attrs.php';
 require_once dirname( __FILE__ ) . '/public/content.php';
 require_once dirname( __FILE__ ) . '/public/bootstrap.php';
