@@ -185,7 +185,7 @@ class Settings_API {
 				require dirname( __FILE__ ) . '/views/fields/checkbox.php';
 				break;
 			case 'number':
-				require dirname( __FILE__ ) . '/views/fields/nubmer.php';
+				require dirname( __FILE__ ) . '/views/fields/number.php';
 				break;
 			case 'select':
 				require dirname( __FILE__ ) . '/views/fields/select.php';
