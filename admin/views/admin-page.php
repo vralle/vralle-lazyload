@@ -3,7 +3,6 @@
  * The plugin settings page output
  *
  * @package    vralle-lazyload
- * @subpackage /includes/views
  */
 
 ?>

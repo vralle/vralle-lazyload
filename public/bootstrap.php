@@ -2,8 +2,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @package    vralle-lazyload
- * @subpackage vralle-lazyload/app
+ * @package vralle-lazyload
  */
 
 namespace VRalleLazyLoad;
