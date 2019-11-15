@@ -5,6 +5,11 @@
  * @package vralle-lazyload
  */
 
+namespace VRalleLazyLoad;
+
+use function defined;
+use function delete_option;
+
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
@@ -13,4 +18,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 /**
  * Delete the options of the plugin
  */
-delete_option( 'vralle_lazyload' );
+
+$settings_name = get_settings_name();
+delete_option( $settings_name );
