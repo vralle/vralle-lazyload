@@ -171,57 +171,6 @@ function widget_content( $html ) {
 }
 
 /**
- * State detection to skip processing
- *
- * @return boolean
- */
-function is_exit() {
-	/**
-	 * Exit filter
-	 *
-	 * @param boolean
-	 */
-	if ( ! apply_filters( 'do_vralle_lazyload', true ) ) {
-		return true;
-	}
-
-	if ( is_admin() ) {
-		return true;
-	}
-
-	// Feed.
-	if ( is_feed() ) {
-		return true;
-	}
-
-	// On an AMP version of the posts.
-	if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-		return true;
-	}
-
-	// Preview mode.
-	if ( is_preview() ) {
-		return true;
-	}
-
-	if ( is_customize_preview() ) {
-		return true;
-	}
-
-	// Print.
-	if ( 1 === intval( get_query_var( 'print' ) ) ) {
-		return true;
-	}
-
-	// Print.
-	if ( 1 === intval( get_query_var( 'printpage' ) ) ) {
-		return true;
-	}
-
-	return false;
-}
-
-/**
  * Retrieve the names of the possible HTML tags to embed
  *
  * @return array A list of tag names.
