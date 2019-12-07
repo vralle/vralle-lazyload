@@ -243,9 +243,9 @@ function enqueue_scripts() {
 				true
 			);
 		}
-	} else {
-		wp_enqueue_script( $lazysizes_id );
 	}
+
+	wp_enqueue_script( $lazysizes_id );
 }
 
 /**
