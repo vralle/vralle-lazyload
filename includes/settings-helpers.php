@@ -92,7 +92,7 @@ function get_settings() {
  * @return mixed Value set for the option.
  */
 function get_option( $name ) {
-	$settings = get_settings();
+	$settings = get_settings(); // phpcs:ignore WordPress.WP.DeprecatedFunctions.get_settingsFound
 	$option   = isset( $settings[ $name ] ) ? $settings[ $name ] : null;
 
 	return $option;

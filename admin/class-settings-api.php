@@ -177,7 +177,7 @@ class Settings_API {
 	 */
 	public function field_callback( $args ) {
 		$settings_name = get_settings_name();
-		$settings      = get_settings();
+		$settings      = get_settings(); // phpcs:ignore WordPress.WP.DeprecatedFunctions.get_settingsFound
 		$id            = $args['id'];
 
 		switch ( $args['type'] ) {
