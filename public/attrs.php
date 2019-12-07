@@ -28,10 +28,6 @@ use function str_replace;
  * @return array A list of tag attributes and their values.
  */
 function attr_handler( $attrs, $tag_name, $id, $size ) {
-	// Exit for Gaussholder.
-	if ( array_key_exists( 'data-gaussholder', $attrs ) ) {
-		return $attrs;
-	}
 	// Exit if ready to lazyload.
 	if ( array_key_exists( 'data-srcset', $attrs ) || array_key_exists( 'data-src', $attrs ) ) {
 		// set aspectratio for attachment attributes.
