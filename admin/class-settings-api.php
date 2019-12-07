@@ -8,6 +8,7 @@
 namespace VRalleLazyLoad;
 
 use function add_action;
+use function add_settings_error;
 use function add_settings_field;
 use function add_settings_section;
 use function array_map;

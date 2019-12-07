@@ -7,7 +7,6 @@
 
 namespace VRalleLazyLoad;
 
-use const VLL_PLUGIN_BASENAME;
 use function __;
 use function add_action;
 use function add_options_page;

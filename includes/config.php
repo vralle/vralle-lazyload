@@ -7,6 +7,11 @@
 
 namespace VRalleLazyLoad;
 
+use function __;
+use function array_merge;
+use function apply_filters;
+use function sprintf;
+
 /**
  * Configuration of the plugin setting sections
  *
