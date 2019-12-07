@@ -85,10 +85,10 @@ function attr_handler( $attrs, $tag_name, $id, $size ) {
 	 * Filters the tag attributes
 	 *
 	 * @param array    $attrs HTML tag attributes.
-	 * @param string   $tag   HTML tag name.
-	 * @param null|int $id    Attachment ID if present or null.
-	 * @param mixed    $size  Size of image. Image size or array of width and
-	 *                        height values. Null if not preset.
+	 * @param string   $tag_name   HTML tag name.
+	 * @param null|int $id         Attachment ID if present or null.
+	 * @param mixed    $size       Size of image. Image size or array of width and
+	 *                             height values. Null if not preset.
 	 */
 	$attrs = apply_filters( 'vll_tag_attributes', $attrs, $tag_name, $id, $size );
 

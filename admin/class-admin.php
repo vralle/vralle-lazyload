@@ -34,7 +34,7 @@ class Admin {
 	/**
 	 * The single instance of this plugin.
 	 *
-	 * @see    RegenerateThumbnails()
+	 * @see    Admin()
 	 *
 	 * @access private
 	 * @var    Admin
