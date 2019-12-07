@@ -4,7 +4,7 @@ This is not only a lazy loading plugin, but also an image tag parser for WordPre
 
 * Contributors: V.Ralle
 * Tags: media, images, lazyload, performance, speed
-* Requires at least: 4.7
+* Requires at least: 4.9
 * Tested up to: 5.3.0
 * Requires PHP: 5.6
 * Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
@@ -33,8 +33,8 @@ Implemented:
 2. Install vralle.lazyload by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). Both github-updater and vralle.lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
 3. Check out the settings page to fine-tune your settings.
 
-### Known issues
-#### Layout thrashing
+## Known issues
+### Layout thrashing
 The layout may be distorted until the images are loaded. After each image is loaded, the page is recalculated, which is called [Layout thrashing](https://kellegous.com/j/2013/01/26/layout-performance/).
 Several solutions may help to avoid such behavior.
 For example, place an image in a container and determine the aspect ratio.
@@ -139,6 +139,11 @@ If you cannot change the layout, you can use [aspectratio extension](https://git
 
 ## Copyright and license
 
-Copyright 2017-2018 the Authors. This project is licensed under the terms of the [GPL 2.0 or later](LICENSE.txt).
+Copyright 2017-2018 the Authors.
+
+This project is licensed under the terms of the [GPL 2.0 or later](LICENSE.txt).
+
+LazySizes licensed under the [MIT license](https://github.com/aFarkas/lazysizes/blob/gh-pages/LICENSE).
+
 
 **Free Software, Hell Yeah!**

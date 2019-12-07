@@ -1,7 +1,7 @@
 === vralle.lazyload ===
-Contributors: V.Ralle
+Contributors: vit-1
 Tags: media, images, lazyload, performance, speed
-Requires at least: 4.7
+Requires at least: 4.9
 Tested up to: 5.3.0
 Requires PHP: 5.6
 Stable tag: 0.9.9

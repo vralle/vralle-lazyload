@@ -2,7 +2,7 @@
 /**
  * The plugin settings page output
  *
- * @package    vralle-lazyload
+ * @package vralle-lazyload
  */
 
 ?>
