@@ -9,7 +9,7 @@
  * Plugin Name:       vralle.lazyload
  * Plugin URI:        https://github.com/vralle/vralle-lazyload
  * Description:       Brings lazySizes.js to WordPress
- * Version:           0.9.9
+ * Version:           1.0.0
  * Author:            V.Ralle
  * Author URI:        https://github.com/vralle
  * License:           GPLv2 or later

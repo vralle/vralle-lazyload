@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the vralle.lazyload plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: vralle.lazyload 0.9.9\n"
+"Project-Id-Version: vralle.lazyload 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-10-26T00:06:50+03:00\n"
+"POT-Creation-Date: 2019-12-07T15:56:52+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.3.0\n"
 "X-Domain: vralle-lazyload\n"
@@ -34,144 +34,144 @@ msgstr ""
 msgid "https://github.com/vralle"
 msgstr ""
 
-#: admin/class-admin.php:160
+#: admin/class-admin.php:156
 msgid "Settings"
 msgstr ""
 
-#: admin/views/admin-page.php:16
+#: admin/views/admin-page.php:15
 msgid "Main settings"
 msgstr ""
 
-#: admin/views/admin-page.php:17
+#: admin/views/admin-page.php:16
 msgid "You must choose where you want to use lazy loading of images."
 msgstr ""
 
-#: admin/views/admin-page.php:24
+#: admin/views/admin-page.php:23
 msgid "Responsive images"
 msgstr ""
 
-#: admin/views/admin-page.php:31
+#: admin/views/admin-page.php:30
 msgid "Image placeholder"
 msgstr ""
 
-#: admin/views/admin-page.php:38
+#: admin/views/admin-page.php:37
 msgid "Lazyload Plugins"
 msgstr ""
 
-#: includes/config.php:64
+#: includes/config.php:69
 msgid "Attachments"
 msgstr ""
 
-#: includes/config.php:65
+#: includes/config.php:70
 msgid "Lazy loading attachments."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:68
+#: includes/config.php:73
 msgid "For example, the Post Thumbnails, Featured Images and Logo in Custom Header. Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:69
-#: includes/config.php:82
-#: includes/config.php:95
-#: includes/config.php:108
-#: includes/config.php:121
-#: includes/config.php:157
-#: includes/config.php:170
+#: includes/config.php:74
+#: includes/config.php:87
+#: includes/config.php:100
+#: includes/config.php:113
+#: includes/config.php:126
+#: includes/config.php:162
+#: includes/config.php:175
 msgid "Yes"
 msgstr ""
 
-#: includes/config.php:77
+#: includes/config.php:82
 msgid "Post content"
 msgstr ""
 
-#: includes/config.php:78
+#: includes/config.php:83
 msgid "Lazy loading images in post content."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:81
-#: includes/config.php:94
-#: includes/config.php:107
-#: includes/config.php:120
-#: includes/config.php:156
+#: includes/config.php:86
+#: includes/config.php:99
+#: includes/config.php:112
+#: includes/config.php:125
+#: includes/config.php:161
 msgid "Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:90
+#: includes/config.php:95
 msgid "Widget content"
 msgstr ""
 
-#: includes/config.php:91
+#: includes/config.php:96
 msgid "Lazy loading of images in Text Widget and Custom HTML Widget."
 msgstr ""
 
-#: includes/config.php:103
+#: includes/config.php:108
 msgid "Avatar"
 msgstr ""
 
-#: includes/config.php:104
+#: includes/config.php:109
 msgid "Lazy loading the Avatars."
 msgstr ""
 
-#: includes/config.php:116
+#: includes/config.php:121
 msgid "Embed"
 msgstr ""
 
-#: includes/config.php:117
+#: includes/config.php:122
 msgid "Lazy loading the embed, like iframe"
 msgstr ""
 
-#: includes/config.php:130
+#: includes/config.php:135
 msgid "Exclude"
 msgstr ""
 
-#: includes/config.php:131
+#: includes/config.php:136
 msgid "The name of CSS-class for images that need to be excluded from lazy loading."
 msgstr ""
 
-#: includes/config.php:132
+#: includes/config.php:137
 msgid "Space separated"
 msgstr ""
 
-#: includes/config.php:152
+#: includes/config.php:157
 msgid "Load picturefill.js"
 msgstr ""
 
-#: includes/config.php:153
+#: includes/config.php:158
 msgid "Support for responsive images in older browsers, like IE 10, 11."
 msgstr ""
 
-#: includes/config.php:166
+#: includes/config.php:171
 msgid "Calculate sizes automatically."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:169
+#: includes/config.php:174
 msgid "This will replace the data of sizes attribute. Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:190
+#: includes/config.php:195
 msgid "Placeholder type"
 msgstr ""
 
 #. translators: %s: Extension name
-#: includes/config.php:217
-#: includes/config.php:234
+#: includes/config.php:222
+#: includes/config.php:239
 msgid "Load %s extension."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:222
+#: includes/config.php:227
 msgid "This plugin helps to pre-occupy the space needed for an image by calculating the height from the image width or the width from the height (This means the width or height has to be calculable before the image is loaded). Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:223
-#: includes/config.php:240
+#: includes/config.php:228
+#: includes/config.php:245
 msgid "No"
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:239
+#: includes/config.php:244
 msgid "This extension automatically transforms img.lazyload/iframe.lazyload elements in browsers that support native lazy loading. Default \"%s\"."
 msgstr ""

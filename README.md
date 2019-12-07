@@ -85,6 +85,8 @@ The plugin cannot provide all layout options for images, therefore we recommend 
 If you cannot change the layout, you can use [aspectratio extension](https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/aspectratio).
 
 ## Changelog
+- 1.0.0
+  - Stable release
 - 0.9.9
   - The plugin code is rewritten. Need feedback.
   - lazySizes v5.1.2
