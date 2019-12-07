@@ -76,7 +76,7 @@ function attr_handler( $attrs, $tag_name, $id, $size ) {
 		$attrs = set_aspectratio( $attrs );
 		$attrs = set_native_loading( $attrs );
 		// Setup CSS-classes.
-		$class_names[] = get_lazy_loading_class();
+		$class_names[] = get_lazy_loading_class( $tag_name, $id, $size );
 	}
 
 	$attrs['class'] = implode( ' ', array_map( 'sanitize_html_class', $class_names ) );
@@ -98,15 +98,23 @@ function attr_handler( $attrs, $tag_name, $id, $size ) {
 /**
  * Retrieve the CSS class name used as a lazy loading trigger
  *
+ * @param string   $tag_name   HTML tag name.
+ * @param null|int $id         Attachment ID if present or null.
+ * @param mixed    $size       Size of image. Image size or array of width and
+ *                             height values. Null if not preset.
  * @return string The CSS class name.
  */
-function get_lazy_loading_class() {
+function get_lazy_loading_class( $tag_name, $id, $size ) {
 	/**
 	 * Filters the CSS class name
 	 *
 	 * @param string CSS Class Name.
+	 * @param string   $tag_name   HTML tag name.
+	 * @param null|int $id         Attachment ID if present or null.
+	 * @param mixed    $size       Size of image. Image size or array of width and
+	 *                             height values. Null if not preset.
 	 */
-	return apply_filters( 'vll_lazy_loading_class', 'lazyload' );
+	return apply_filters( 'vll_lazy_loading_class', 'lazyload', $tag_name, $id, $size );
 }
 
 /**
