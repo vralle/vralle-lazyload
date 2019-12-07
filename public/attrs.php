@@ -204,9 +204,11 @@ function set_sizes( $attrs ) {
  * @return array A list of tag attributes.
  */
 function set_aspectratio( $attrs ) {
-	if ( get_option( 'aspectratio' ) ) {
-		if ( isset( $attrs['width'] ) && isset( $attrs['height'] ) && ! ! $attrs['height'] ) {
-			$attrs['data-aspectratio'] = (int) $attrs['width'] . '/' . (int) $attrs['height'];
+	if ( ! isset( $attrs['data-aspectratio'] ) && get_option( 'aspectratio' ) ) {
+		$width  = isset( $attrs['width'] ) ? absint( $attrs['width'] ) : null;
+		$height = isset( $attrs['height'] ) ? absint( $attrs['height'] ) : null;
+		if ( $width && 0 !== $height ) {
+			$attrs['data-aspectratio'] = $width . '/' . $height;
 		}
 	}
 
@@ -220,7 +222,7 @@ function set_aspectratio( $attrs ) {
  * @return array A list of tag attributes.
  */
 function set_native_loading( $attrs ) {
-	if ( get_option( 'native-loading' ) ) {
+	if ( ! isset( $attrs['loading'] ) && get_option( 'native-loading' ) ) {
 		$attrs['loading'] = 'lazy';
 	}
 
