@@ -13,15 +13,12 @@ use function add_options_page;
 use function apply_filters;
 use function array_unshift;
 use function checked;
-use function defined;
-use function dirname;
 use function esc_attr;
 use function esc_html;
 use function esc_url;
 use function filemtime;
 use function get_admin_page_title;
 use function menu_page_url;
-use function plugins_url;
 use function selected;
 use function sprintf;
 use function wp_enqueue_style;
@@ -122,7 +119,7 @@ class Admin {
 		$error_slug     = get_settings_error_slug();
 		$settings_group = get_settings_group();
 		$settings_page  = get_settings_page_slug();
-		require dirname( __FILE__ ) . '/views/admin-page.php';
+		require VLL_PLUGIN_DIR . 'admin/views/admin-page.php';
 	}
 
 	/**
@@ -139,9 +136,9 @@ class Admin {
 
 		wp_enqueue_style(
 			'vll-settings-page',
-			plugins_url( '/css/vll-settings-page.css', __FILE__ ),
+			VLL_PLUGIN_URL . 'admin/css/vll-settings-page.css',
 			array(),
-			( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? filemtime( dirname( __FILE__ ) . '/css/vll-settings-page.css' ) : ''
+			filemtime( VLL_PLUGIN_DIR . 'admin/css/vll-settings-page.css' )
 		);
 	}
 

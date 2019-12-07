@@ -219,7 +219,7 @@ function enqueue_scripts() {
 	}
 
 	$debug_suffix      = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	$lazysized_dir_url = plugins_url( '/vendor/lazysizes/', dirname( __FILE__ ) );
+	$lazysized_dir_url = VLL_PLUGIN_URL . 'vendor/lazysizes/';
 	$lazysizes_id      = get_settings_name();
 
 	wp_register_script(
@@ -279,7 +279,7 @@ function add_picturefill() {
 		return;
 	}
 
-	$src = plugins_url( 'vendor/picturefill/dist/picturefill.min.js', dirname( __FILE__ ) );
+	$src = VLL_PLUGIN_URL . 'vendor/picturefill/dist/picturefill.min.js';
 
 	?>
 <script>(function(d,s,id) {

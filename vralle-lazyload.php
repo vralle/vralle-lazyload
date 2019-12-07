@@ -40,18 +40,21 @@ namespace VRalleLazyLoad;
 
 use function add_action;
 use function define;
-use function dirname;
 use function plugin_basename;
+use function plugin_dir_path;
+use function plugin_dir_url;
 
 define( 'VLL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'VLL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'VLL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-require_once dirname( __FILE__ ) . '/includes/config.php';
-require_once dirname( __FILE__ ) . '/includes/settings-helpers.php';
-require_once dirname( __FILE__ ) . '/public/attrs.php';
-require_once dirname( __FILE__ ) . '/public/content.php';
-require_once dirname( __FILE__ ) . '/public/bootstrap.php';
-require_once dirname( __FILE__ ) . '/admin/class-settings-api.php';
-require_once dirname( __FILE__ ) . '/admin/class-admin.php';
+require_once VLL_PLUGIN_DIR . 'includes/config.php';
+require_once VLL_PLUGIN_DIR . 'includes/settings-helpers.php';
+require_once VLL_PLUGIN_DIR . 'public/attrs.php';
+require_once VLL_PLUGIN_DIR . 'public/content.php';
+require_once VLL_PLUGIN_DIR . 'public/bootstrap.php';
+require_once VLL_PLUGIN_DIR . 'admin/class-settings-api.php';
+require_once VLL_PLUGIN_DIR . 'admin/class-admin.php';
 
 /**
  * Returns the single instance of Settings_API, creating one if needed.
@@ -78,7 +81,7 @@ function load_texdomaine() {
 	load_plugin_textdomain(
 		'vralle-lazyload',
 		false,
-		dirname( __FILE__ ) . '/languages/'
+		VLL_PLUGIN_DIR . 'languages'
 	);
 }
 
