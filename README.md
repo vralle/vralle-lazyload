@@ -27,6 +27,12 @@ Implemented:
 * Support for responsive images in older browsers, like IE 10, 11 (picturefill.js)
 * AMP-ready
 
+## How do I use it?
+
+Select the settings on the plugin page.
+
+You can also install [vralle.lqip](https://github.com/vralle/vralle-lqip) that adds Low Quality Image Placeholder. vralle.lqip also demonstrates how to use the API of vralle.lazyload.
+
 ## Installation
 
 1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/afragen/github-updater/releases). We rely on this plugin for updating vralle.lazyload directly from this git repo.
