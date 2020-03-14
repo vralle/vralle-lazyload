@@ -5,7 +5,7 @@ This is not only a lazy loading plugin, but also an image tag parser for WordPre
 * Contributors: V.Ralle
 * Tags: media, images, lazyload, performance, speed
 * Requires at least: 4.9
-* Tested up to: 5.3.0
+* Tested up to: 5.4.0
 * Requires PHP: 5.6
 * Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
 * License: [GPL 2.0 or later](LICENSE.txt)
@@ -91,6 +91,9 @@ The plugin cannot provide all layout options for images, therefore we recommend 
 If you cannot change the layout, you can use [aspectratio extension](https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/aspectratio).
 
 ## Changelog
+- 1.0.1
+ - lazySizes v5.2.0
+ - Tested with WP 5.4.0
 - 1.0.0
   - Stable release
 - 0.9.9
