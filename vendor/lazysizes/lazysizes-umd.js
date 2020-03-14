@@ -7,7 +7,7 @@
 	} else {
 		window.lazySizes = lazySizes;
 	}
-}(window, function l(window, document) {
+}(window, function l(window, document, Date) { // Pass in the windoe Date function also for SSR because the Date class can be lost
 	'use strict';
 	/*jshint eqnull:true */
 
@@ -58,15 +58,17 @@
 
 	var docElem = document.documentElement;
 
-	var Date = window.Date;
-
 	var supportPicture = window.HTMLPictureElement;
 
 	var _addEventListener = 'addEventListener';
 
 	var _getAttribute = 'getAttribute';
 
-	var addEventListener = window[_addEventListener];
+	/**
+	 * Update to bind to window because 'this' becomes null during SSR
+	 * builds.
+	 */
+	var addEventListener = window[_addEventListener].bind(window);
 
 	var setTimeout = window.setTimeout;
 
@@ -604,6 +606,22 @@
 				addEventListener('scroll', throttledCheckElements, true);
 
 				addEventListener('resize', throttledCheckElements, true);
+
+				addEventListener('pageshow', function (e) {
+					if (e.persisted) {
+						var loadingElements = document.querySelectorAll('.' + lazySizesCfg.loadingClass);
+
+						if (loadingElements.length && loadingElements.forEach) {
+							requestAnimationFrame(function () {
+								loadingElements.forEach( function (img) {
+									if (img.complete) {
+										unveilElement(img);
+									}
+								});
+							});
+						}
+					}
+				});
 
 				if(window.MutationObserver){
 					new MutationObserver( throttledCheckElements ).observe( docElem, {childList: true, subtree: true, attributes: true} );
