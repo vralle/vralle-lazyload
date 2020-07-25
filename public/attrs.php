@@ -46,7 +46,7 @@ function attr_handler( $attrs, $tag_name, $id, $size ) {
 			$id = search_id_in_classes( $class_names );
 		}
 		if ( ! $size ) {
-			$id = search_size_in_classes( $class_names );
+			$size = search_size_in_classes( $class_names );
 		}
 	}
 
