@@ -2,7 +2,7 @@
 Contributors: vit-1
 Tags: media, images, lazyload, performance, speed
 Requires at least: 4.9
-Tested up to: 5.4.0
+Tested up to: 5.5.0
 Requires PHP: 5.6
 Stable tag: 1.0.1
 License: GPLv2 or later
@@ -11,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Brings lazySizes.js to WordPress.
 
 == Description ==
-vralle.lazyload uses lazysizes.js - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images), iframes and much more.
+vralle.lazyload uses lazysizes.js  - a fast (jank-free), SEO-friendly and self-initializing lazyloader for images (including responsive images), iframes and much more.
 
 This is not only a lazy loading plugin, but also an image tag parser for WordPress. The plugin uses fast and safe image attribute processing. Supports responsive images.
 
@@ -38,19 +38,23 @@ Implemented:
 3. Check out the settings page
 
 == Changelog ==
+- 1.0.2
+  - WP 5.5 compatibility: Control native lazy loading by plugin settings.
+  - Move Project requirements to Composer.
+  - Move dependencies from `vendor` directory to `dist` for Composer compatibility
 - 1.0.1
- - lazySizes v5.2.0
- - Tested with WP 5.4.0
+  - lazySizes v5.2.0
+  - Tested with WP 5.4.0
 - 1.0.0
- - Stable release
+  - Stable release
 - 0.9.9
- - The plugin code is rewritten.
- - lazySizes v5.1.2
+  - The plugin code is rewritten.
+  - lazySizes v5.1.2
 - 0.9.8
- - Extended aspectratio support
- - The Text Widget Support
- - Moving license from MIT to GPLv2+
- - Moving PHP Coding Standards from PSR-2 to WordPress
+  - Extended aspectratio support
+  - The Text Widget Support
+  - Moving license from MIT to GPLv2+
+  - Moving PHP Coding Standards from PSR-2 to WordPress
 - 0.9.7
   - lazySizes v5.1.0
   - Draft of aspectratio plugin support
@@ -76,7 +80,7 @@ Implemented:
   - lazySizes v4.1.0
   - Added parent-fit extension settings
   - iframe, embed, object, video tags added to the handler
-  - Expansion of security - more escaping for admin page and options
+  - Expansion of security  - more escaping for admin page and options
   - Performance optimization
   - Internationalization fix
 - 0.8.0:

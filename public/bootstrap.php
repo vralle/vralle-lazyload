@@ -319,7 +319,7 @@ function get_plugins_list() {
 	/**
 	 * Filter a list of lazysizes plugins
 	 *
-	 * @param array $plugin a list of lazysizes plugins
+	 * @param array $plugins a list of lazysizes plugins
 	 */
 	return apply_filters( 'vll_lazysizes_plugins', $plugins );
 }

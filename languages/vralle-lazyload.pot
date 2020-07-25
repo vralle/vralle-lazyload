@@ -1,17 +1,17 @@
-# Copyright (C) 2019 V.Ralle
+# Copyright (C) 2020 V.Ralle
 # This file is distributed under the same license as the vralle.lazyload plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: vralle.lazyload 1.0.0\n"
+"Project-Id-Version: vralle.lazyload 1.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-12-07T15:56:52+03:00\n"
+"POT-Creation-Date: 2020-07-25T22:10:02+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.3.0\n"
+"X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: vralle-lazyload\n"
 
 #. Plugin Name of the plugin
