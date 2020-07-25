@@ -219,7 +219,7 @@ function enqueue_scripts() {
 	}
 
 	$debug_suffix      = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	$lazysized_dir_url = VLL_PLUGIN_URL . 'vendor/lazysizes/';
+	$lazysized_dir_url = VLL_PLUGIN_URL . 'dist/lazysizes/';
 	$lazysizes_id      = get_settings_name();
 
 	wp_register_script(
@@ -279,7 +279,7 @@ function add_picturefill() {
 		return;
 	}
 
-	$src = VLL_PLUGIN_URL . 'vendor/picturefill/dist/picturefill.min.js';
+	$src = VLL_PLUGIN_URL . 'dist/picturefill/picturefill.min.js';
 
 	?>
 <script>(function(d,s,id) {

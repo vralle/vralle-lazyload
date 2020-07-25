@@ -9,9 +9,9 @@
     "node": ">=6"
   },
   "scripts": {
-    "copy-lazysizes": "shx mkdir -p vendor/lazysizes/ && shx cp node_modules/lazysizes/*.js vendor/lazysizes/",
-    "copy-lazysizes-plugins": "shx mkdir -p vendor/lazysizes/plugins/ && shx cp -r node_modules/lazysizes/plugins/ vendor/lazysizes/",
-    "copy-picturefill": "shx mkdir -p vendor/picturefill/ && shx cp -r node_modules/picturefill/dist/ vendor/picturefill/",
+    "copy-lazysizes": "shx mkdir -p dist/lazysizes/ && shx cp node_modules/lazysizes/*.js dist/lazysizes/",
+    "copy-lazysizes-plugins": "shx mkdir -p dist/lazysizes/plugins/ && shx cp -r node_modules/lazysizes/plugins/ dist/lazysizes/",
+    "copy-picturefill": "shx mkdir -p dist/picturefill/ && shx cp -r node_modules/picturefill/dist/. dist/picturefill/",
     "dist": "npm-run-all copy-*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
