@@ -224,7 +224,7 @@ function enqueue_scripts() {
 
 	wp_register_script(
 		$lazysizes_id,
-		$lazysized_dir_url . 'lazysizes' . $debug_suffix . '.js',
+		$lazysized_dir_url . 'lazysizes-umd' . $debug_suffix . '.js',
 		array(),
 		'5.1.2',
 		true
