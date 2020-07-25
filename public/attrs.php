@@ -218,8 +218,10 @@ function set_aspectratio( $attrs ) {
  * @return array A list of tag attributes.
  */
 function set_native_loading( $attrs ) {
-	if ( ! isset( $attrs['loading'] ) && get_option( 'native-loading' ) ) {
+	if ( get_option( 'native-loading' ) ) {
 		$attrs['loading'] = 'lazy';
+	} else {
+		unset( $attrs['loading'] );
 	}
 
 	return $attrs;
