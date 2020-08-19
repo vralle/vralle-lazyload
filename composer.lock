@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72fbd002a96e1945f7cd0ce16912339d",
+    "content-hash": "09e025c02068e472a3dd5ad1bf0315dd",
     "packages": [],
     "packages-dev": [
         {
@@ -75,16 +75,16 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v4.3.1",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "beb8e035628f9c7f699c93ddf3e16b3fe87cf46f"
+                "reference": "ed50566a3a71f5fc0b2374ba56f4370252771204"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/beb8e035628f9c7f699c93ddf3e16b3fe87cf46f",
-                "reference": "beb8e035628f9c7f699c93ddf3e16b3fe87cf46f",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/ed50566a3a71f5fc0b2374ba56f4370252771204",
+                "reference": "ed50566a3a71f5fc0b2374ba56f4370252771204",
                 "shasum": ""
             },
             "require": {
@@ -111,20 +111,20 @@
                 "woocommerce",
                 "wordpress"
             ],
-            "time": "2020-07-21T11:10:25+00:00"
+            "time": "2020-08-19T07:05:32+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v5.4.2",
+            "version": "v5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "38b0963698ca5858658a5b09198062411f22932a"
+                "reference": "7ea14fc5e4242255f6b48295fdda0512053f0dc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/38b0963698ca5858658a5b09198062411f22932a",
-                "reference": "38b0963698ca5858658a5b09198062411f22932a",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/7ea14fc5e4242255f6b48295fdda0512053f0dc1",
+                "reference": "7ea14fc5e4242255f6b48295fdda0512053f0dc1",
                 "shasum": ""
             },
             "replace": {
@@ -151,7 +151,7 @@
                 "static analysis",
                 "wordpress"
             ],
-            "time": "2020-06-11T14:56:54+00:00"
+            "time": "2020-08-18T04:31:49+00:00"
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
@@ -203,16 +203,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.5",
+            "version": "3.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "73e2e7f57d958e7228fce50dc0c61f58f017f9f6"
+                "reference": "e97627871a7eab2f70e59166072a6b767d5834e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/73e2e7f57d958e7228fce50dc0c61f58f017f9f6",
-                "reference": "73e2e7f57d958e7228fce50dc0c61f58f017f9f6",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/e97627871a7eab2f70e59166072a6b767d5834e0",
+                "reference": "e97627871a7eab2f70e59166072a6b767d5834e0",
                 "shasum": ""
             },
             "require": {
@@ -250,7 +250,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2020-04-17T01:09:41+00:00"
+            "time": "2020-08-10T04:50:15+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -304,6 +304,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": {
+        "php": ">=5.6"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
