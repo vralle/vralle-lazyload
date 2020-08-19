@@ -1,7 +1,7 @@
 {
-  "name": "vralle/vralle-by",
-  "description": "Wordpress Theme",
-  "type": "wordpress-theme",
+  "name": "vralle/vralle-lazyload",
+  "description": "Brings lazySizes.js to WordPress",
+  "type": "wordpress-plugin",
   "license": "GPL-3.0-or-later",
   "authors": [
     {
@@ -9,6 +9,9 @@
       "email": "email4vit@gmail.com"
     }
   ],
+  "require": {
+    "php": ">=5.6"
+  },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
     "wp-coding-standards/wpcs": "^2.2",
