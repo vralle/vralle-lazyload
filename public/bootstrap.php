@@ -42,7 +42,7 @@ function bootstrap() {
  * Retrieve the list of attachment image attributes
  *
  * @param array        $attrs      Attributes for the image markup.
- * @param WP_Post      $attachment Image attachment post.
+ * @param \WP_Post     $attachment Image attachment post.
  * @param string|array $size       Requested size. Image size or array of width and height values.
  * @return array A list of filtered attachment image attributes.
  */
@@ -96,7 +96,7 @@ function filter_get_image_tag( $html, $id, $alt, $title, $align, $size ) {
  *
  * @param string       $html          The post thumbnail HTML.
  * @param int          $post_id       The post ID.
- * @param string       $attachment_id The post thumbnail ID.
+ * @param int          $attachment_id The post thumbnail ID.
  * @param string|array $size          The post thumbnail size. Image size or array of width and height
  *                                    values (in that order). Default 'post-thumbnail'.
  * @return string Content with filtered <img> tag.
