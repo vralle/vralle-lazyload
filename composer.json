@@ -2,20 +2,21 @@
   "name": "vralle/vralle-lazyload",
   "description": "Brings lazySizes.js to WordPress",
   "type": "wordpress-plugin",
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
-      "name": "vralle",
-      "email": "email4vit@gmail.com"
+      "name": "Vitaliy Ralle",
+      "email": "email4vit@gmail.com",
+      "role": "Developer"
     }
   ],
+  "homepage": "https://github.com/vralle/vralle-lazyload",
   "require": {
     "php": ">=5.6"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
     "wp-coding-standards/wpcs": "^2.2",
-    "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "php-stubs/woocommerce-stubs": "^4.1"
+    "sirbrillig/phpcs-variable-analysis": "^2.8"
   }
 }
