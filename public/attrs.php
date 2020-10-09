@@ -53,13 +53,13 @@ function attr_handler( $attrs, $tag_name, $id, $size ) {
 	$have_src    = false;
 	$placeholder = get_placeholder( $tag_name, $id, $size );
 
-	if ( isset( $attrs['srcset'] ) && ! empty( $attrs['srcset'] ) ) {
+	if ( ! empty( $attrs['srcset'] ) ) {
 		$attrs['data-srcset'] = $attrs['srcset'];
 		$attrs['srcset']      = $placeholder;
 		$have_src             = true;
 
 		$attrs = set_sizes( $attrs );
-	} elseif ( isset( $attrs['src'] ) && ! empty( $attrs['src'] ) ) {
+	} elseif ( ! empty( $attrs['src'] ) ) {
 		$attrs['data-src'] = $attrs['src'];
 		$attrs['src']      = $placeholder;
 		$have_src          = true;
