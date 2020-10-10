@@ -19,7 +19,7 @@
  * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload.git
  * Requires WP:       4.9
  * Requires PHP:      5.6
- **/
+ */
 
 namespace VRalleLazyLoad;
 
@@ -62,7 +62,7 @@ function admin() {
 /**
  * Define internationalization
  */
-function load_texdomaine() {
+function load_texdomain() {
 	load_plugin_textdomain(
 		'vralle-lazyload',
 		false,
@@ -73,4 +73,4 @@ function load_texdomaine() {
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\bootstrap' );
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\settings_api' );
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\admin' );
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_texdomaine' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_texdomain' );
