@@ -1,51 +1,45 @@
 # vralle.lazyload
-
 Brings [lazySizes.js](https://github.com/aFarkas/lazysizes) to WordPress.
 This is not only a lazy loading plugin, but also an image tag parser for WordPress. The plugin uses fast and safe image attribute processing. Supports responsive images.
 
 -   Contributors: V.Ralle
 -   Tags: media, images, lazyload, performance, speed
 -   Requires at least: 4.9
--   Tested up to: 5.5.0
--   Requires PHP: 5.6
+-   Tested up to: 5.7.0
+-   Requires PHP: 7.1
 -   Stable tag: [master](https://github.com/vralle/vralle-lazyload/releases/latest)
 -   License: [GPL 2.0 or later](LICENSE.txt)
 
 Why?
-
 -   Very fast and secure code parsing
 -   Flexible for developers
 -   Easy to use
 
 Implemented:
-
 -   Lazy loading images;
--   Lazy loading Avatars;
+-   Supports avatars;
 -   Supports responsive images with srcset attribute;
 -   Lazy loading iframe;
 -   Admin settings page;
--   Exclude images by CSS-class or filter;
--   Additional lazySizes.js extensions
--   Supports native lazy load (lazysizes.js plugin);
--   Support for responsive images in older browsers, like IE 10, 11 (picturefill.js)
--   AMP-ready
-
-## How do I use it?
-
-Select the settings on the plugin page.
-
-You can also install [vralle.lqip](https://github.com/vralle/vralle-lqip) that adds Low Quality Image Placeholder. vralle.lqip also demonstrates how to use the API of vralle.lazyload.
-
+-   Additional lazySizes.js extensions;
+-   Supports native lazy loading of images (lazysizes.js plugin);
+-   Support for responsive images in older browsers, like IE 10, 11 (picturefill.js);
+-   Compatible with AMP plugin (amp-wp);
 ## Installation
-
+### Manual installation
+1. Upload the entire `vralle-lazyload` folder to the `/wp-content/plugins/` directory.
+2. Visit **Plugins**.
+3. Activate the vralle.lazyload plugin.
+### Automatic update
 1. Install [github-updater](https://github.com/afragen/github-updater) by downloading the latest zip [here](https://github.com/afragen/github-updater/releases). We rely on this plugin for updating vralle.lazyload directly from this git repo.
 1. Install vralle.lazyload by downloading the latest zip [here](https://github.com/vralle/vralle-lazyload/releases). Both github-updater and vralle.lazyload will now download their own updates automatically, so you will never need to go through that tedious zip downloading again.
 1. Check out the settings page to fine-tune your settings.
+## How do I use it?
+Select options on the plugin settings page.
 
+You can also install [vralle.lqip](https://github.com/vralle/vralle-lqip) that adds Low Quality Image Placeholder. vralle.lqip also demonstrates how to use the API of vralle.lazyload.
 ## Known issues
-
 ### Layout thrashing
-
 The layout may be distorted until the images are loaded. After each image is loaded, the page is recalculated, which is called [Layout thrashing](https://kellegous.com/j/2013/01/26/layout-performance/).
 Several solutions may help to avoid such behavior.
 For example, place an image in a container and determine the aspect ratio.
@@ -97,8 +91,97 @@ The plugin cannot provide all layout options for images, therefore we recommend 
 
 If you cannot change the layout, you can use [aspectratio extension](https://github.com/aFarkas/lazysizes/tree/gh-pages/plugins/aspectratio).
 
+## Hooks
+```php
+/**
+ * Filters the plugin settings configuration
+ *
+ * @param array $config The plugin settings configuration.
+ */
+apply_filters( 'vll_plugin_config', $config );
+```
+```php
+/**
+ * Filters capabilities of the plugin settings page.
+ */
+apply_filters( 'vll_settings_capability', 'manage_options' );
+```
+```php
+/**
+ * Filters cancellation of all plugin handlers
+ *
+ * @param boolean
+ */
+apply_filters( 'do_vralle_lazyload', true )
+```
+```php
+/**
+ * Filters whether to add the lazy load attributes to the specified tag
+ *
+ * @param bool     $lazyload Determines whether to add lazy load attributes.
+ * @param array    $attrs    A list of tag attributes.
+ * @param string   $tag_name HTML tag name.
+ * @param null|int $id       Attachment ID or null.
+ * @param mixed    $size     Size of image. Size name or array of width and
+ *                           height values. Null if not preset.
+ */
+apply_filters( 'vll_lazyload_element', true, $attrs, $tag_name, $id, $size );
+```
+```php
+/**
+ * Filters the placeholder
+ *
+ * @param string   $placeholder Image placeholder.
+ * @param string   $tag         HTML tag name.
+ * @param null|int $id          Attachment ID or null.
+ * @param mixed    $size        Image size. Size name or array of width and height values.
+ *                              Null if not present.
+ */
+apply_filters( 'vll_placeholder', $placeholder, $tag_name, $id, $size );
+```
+Default placeholder: `data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`
+```php
+/**
+ * Filters the CSS class name for lazy loading elements
+ *
+ * @param string   $class_name CSS Class Name.
+ * @param string   $tag_name   HTML tag name.
+ * @param null|int $id         Attachment ID or null.
+ * @param mixed    $size       Size of image. Size name or array of width and
+ *                             height values. Null if not present.
+ */
+apply_filters( 'vll_lazy_loading_class', 'lazyload', $tag_name, $id, $size );
+```
+```php
+/**
+ * Filters html tag attributes
+ *
+ * @param array    $attrs    HTML tag attributes.
+ * @param string   $tag_name HTML tag name.
+ * @param null|int $id       Attachment ID if present or null.
+ * @param mixed    $size     Size of image. Size name or array of width and
+ *                           height values. Null if not preset.
+ */
+apply_filters( 'vll_tag_attributes', $attrs, $tag_name, $id, $size );
+```
+```php
+/**
+ * Filters the list of lazysizes.js plugins to load
+ *
+ * @param array $load List of plugin names.
+ */
+apply_filters( 'vll_lazysizes_plugins', $load );
+```
+All possible plugins are located in the plugin directory: `vralle-lazyload/dist/lazysizes/plugins`
 ## Changelog
-
+-   1.1.0
+    -   Code transition to OOP
+    -   Performance improvement
+    -   Fixed bug on uninstall the plugin
+	-   Added support for Core blocks
+	-   Added 'vll_lazyload_element' hook
+    -   Requires PHP: v7.1+
+    -   Lazisizes.js v5.3.0
 -   1.0.2
     -   WP 5.5 compatibility: Control native lazy loading by plugin settings.
     -   Move Project requirements to Composer.
@@ -108,61 +191,9 @@ If you cannot change the layout, you can use [aspectratio extension](https://git
     -   Tested with WP 5.4.0
 -   1.0.0
     -   Stable release
--   0.9.9
-    -   The plugin code is rewritten. Need feedback.
-    -   lazySizes v5.1.2
--   0.9.8
-    -   Extended aspectratio support
-    -   The Text Widget Support
-    -   Moving license from MIT to GPLv2+
-    -   Moving PHP Coding Standards from PSR-2 to WordPress
--   0.9.7
-    -   lazySizes v5.1.0
-    -   Draft of aspectratio plugin support
--   0.9.6
-    -   Fixed a data-sizes attribute
--   0.9.5
-    -   Refactoring the plugin
-    -   Rename `vralle_lazyload_lazy_class` filter to `vralle_lazyload_css_class`
-    -   Rename `exclude_class` option to `css_exception`
-    -   AMP Support. Handler skips AMP pages
-    -   lazySizes v4.1.8
--   0.9.4:
-    -   Fix Github URI
--   0.9.3:
-    -   Add picturefill.js
--   0.9.2:
-    -   Update dependencies. lazySizes v4.1.5
--   0.9.1:
-    -   Update dependencies. lazySizes v4.1.4
--   0.9.0:
-    -   Refactoring the plugin
--   0.8.2:
-    -   lazySizes v4.1.0
-    -   Added parent-fit extension settings
-    -   iframe, embed, object, video tags added to the handler
-    -   Expansion of security - more escaping for admin page and options
-    -   Performance optimization
-    -   Internationalization fix
--   0.8.0:
-    -   lazySizes v4.0.2
-    -   updated options page
-    -   loading extensions through a filter only
-    -   Now PSR-2
--   0.7.0:
-    -   Move vendor from git to npm. lazySizes v4.0.1
-    -   Added .pot
--   0.6.0:
-    -   Added content images support
-    -   Added avatar support
-    -   Added template tag for background images
-    -   Enhanced options
--   0.5.0:
-    -   Initial
 
 ## Copyright and license
-
-Copyright 2017-2020 the Authors.
+Copyright 2017-2021 the Authors.
 
 This project is licensed under the terms of the [GPL 2.0 or later](LICENSE.txt).
 

@@ -2,9 +2,9 @@
 Contributors: vit-1
 Tags: media, images, lazyload, performance, speed
 Requires at least: 4.9
-Tested up to: 5.5.0
-Requires PHP: 5.6
-Stable tag: 1.0.1
+Tested up to: 5.7.0
+Requires PHP: 7.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,10 +34,16 @@ Implemented:
 
 == Installation ==
 1. Upload `vralle-lazyload` to the Wordpress plugins directory
-2. Activate the plugin through the \'Plugins\' menu in WordPress
-3. Check out the settings page
+1. Activate the plugin through the \'Plugins\' menu in WordPress
+1. Check out the settings page
 
 == Changelog ==
+- 1.1.0
+  - Code transition from functions to class methods
+  - Performance improvement
+  - Fixed bug on uninstall the plugin
+  - Requires PHP: v7.1+
+  - Lazisizes.js v5.3.0
 - 1.0.2
   - WP 5.5 compatibility: Control native lazy loading by plugin settings.
   - Move Project requirements to Composer.

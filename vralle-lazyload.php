@@ -9,7 +9,7 @@
  * Plugin Name:       vralle.lazyload
  * Plugin URI:        https://github.com/vralle/vralle-lazyload
  * Description:       Brings lazySizes.js to WordPress
- * Version:           1.0.2
+ * Version:           1.1.0
  * Author:            V.Ralle
  * Author URI:        https://github.com/vralle
  * License:           GPLv2 or later
@@ -18,59 +18,79 @@
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/vralle/vralle-lazyload.git
  * Requires WP:       4.9
- * Requires PHP:      5.6
+ * Requires PHP:      7.1
  */
 
 namespace VRalleLazyLoad;
 
-use function add_action;
-use function define;
-use function plugin_basename;
-use function plugin_dir_path;
-use function plugin_dir_url;
+\defined( 'ABSPATH' ) || exit;
+
+use function \add_action;
+use function \define;
+use function \plugin_basename;
+use function \plugin_dir_path;
+use function \plugin_dir_url;
 
 define( 'VLL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'VLL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VLL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-
-require_once VLL_PLUGIN_DIR . 'includes/config.php';
-require_once VLL_PLUGIN_DIR . 'includes/settings-helpers.php';
-require_once VLL_PLUGIN_DIR . 'public/attrs.php';
-require_once VLL_PLUGIN_DIR . 'public/content.php';
-require_once VLL_PLUGIN_DIR . 'public/bootstrap.php';
-require_once VLL_PLUGIN_DIR . 'admin/class-settings-api.php';
-require_once VLL_PLUGIN_DIR . 'admin/class-admin.php';
+define( 'VLL_PLUGIN_VERSION', '1.1.0' );
 
 /**
- * Returns the single instance of Settings_API, creating one if needed.
+ * Load the plugin dependencies and settings
  *
- * @return Settings_API
+ * @return void
  */
-function settings_api() {
-	return Settings_API::instance();
+function load_plugin() {
+	require_once __DIR__ . '/includes/class-base-settings.php';
+	require_once __DIR__ . '/includes/class-lazyload.php';
+	require_once __DIR__ . '/includes/class-frontend.php';
+
+	BaseSettings::init();
 }
 
 /**
- * Returns the single instance of Admin, creating one if needed.
+ * Init the plugin to frontend
  *
- * @return Admin
+ * @return void
  */
-function admin() {
-	return Admin::instance();
+function lazyload() {
+	Frontend::init();
 }
 
 /**
- * Define internationalization
+ * Init the plugin to admin area
+ *
+ * @return void
  */
-function load_texdomain() {
-	load_plugin_textdomain(
-		'vralle-lazyload',
-		false,
-		VLL_PLUGIN_DIR . 'languages'
-	);
+function admin_ui() {
+	if ( is_admin() ) {
+		require_once __DIR__ . '/includes/class-admin-ui.php';
+		Admin_UI::init();
+	}
 }
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\bootstrap' );
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\settings_api' );
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\admin' );
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_texdomain' );
+
+/**
+ * Init the plugin parts latter
+ *
+ * @return void
+ */
+function init() {
+	load_plugin();
+	add_action( 'wp', __NAMESPACE__ . '\\lazyload' );
+	add_action( 'init', __NAMESPACE__ . '\\admin_ui' );
+}
+
+init();
+
+/**
+ * Remove the plugin option on uninstall.
+ *
+ * @return void
+ */
+function uninstall() {
+	delete_option( 'vralle-lazyload' );
+}
+
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );

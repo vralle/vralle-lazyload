@@ -1,15 +1,15 @@
-# Copyright (C) 2020 V.Ralle
+# Copyright (C) 2021 V.Ralle
 # This file is distributed under the same license as the vralle.lazyload plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: vralle.lazyload 1.0.2\n"
+"Project-Id-Version: vralle.lazyload 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vralle-lazyload\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-25T22:10:02+03:00\n"
+"POT-Creation-Date: 2021-03-23T03:21:19+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: vralle-lazyload\n"
@@ -34,144 +34,148 @@ msgstr ""
 msgid "https://github.com/vralle"
 msgstr ""
 
-#: admin/class-admin.php:156
+#: includes/class-admin-ui.php:315
 msgid "Settings"
 msgstr ""
 
-#: admin/views/admin-page.php:15
+#: includes/class-base-settings.php:191
 msgid "Main settings"
 msgstr ""
 
-#: admin/views/admin-page.php:16
-msgid "You must choose where you want to use lazy loading of images."
-msgstr ""
-
-#: admin/views/admin-page.php:23
-msgid "Responsive images"
-msgstr ""
-
-#: admin/views/admin-page.php:30
-msgid "Image placeholder"
-msgstr ""
-
-#: admin/views/admin-page.php:37
-msgid "Lazyload Plugins"
-msgstr ""
-
-#: includes/config.php:69
+#: includes/class-base-settings.php:197
 msgid "Attachments"
 msgstr ""
 
-#: includes/config.php:70
+#: includes/class-base-settings.php:198
 msgid "Lazy loading attachments."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:73
+#: includes/class-base-settings.php:201
 msgid "For example, the Post Thumbnails, Featured Images and Logo in Custom Header. Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:74
-#: includes/config.php:87
-#: includes/config.php:100
-#: includes/config.php:113
-#: includes/config.php:126
-#: includes/config.php:162
-#: includes/config.php:175
+#: includes/class-base-settings.php:202
+#: includes/class-base-settings.php:217
+#: includes/class-base-settings.php:232
+#: includes/class-base-settings.php:247
+#: includes/class-base-settings.php:262
+#: includes/class-base-settings.php:305
+#: includes/class-base-settings.php:320
 msgid "Yes"
 msgstr ""
 
-#: includes/config.php:82
+#: includes/class-base-settings.php:212
 msgid "Post content"
 msgstr ""
 
-#: includes/config.php:83
+#: includes/class-base-settings.php:213
 msgid "Lazy loading images in post content."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:86
-#: includes/config.php:99
-#: includes/config.php:112
-#: includes/config.php:125
-#: includes/config.php:161
+#: includes/class-base-settings.php:216
+#: includes/class-base-settings.php:231
+#: includes/class-base-settings.php:246
+#: includes/class-base-settings.php:261
+#: includes/class-base-settings.php:304
 msgid "Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:95
+#: includes/class-base-settings.php:227
 msgid "Widget content"
 msgstr ""
 
-#: includes/config.php:96
+#: includes/class-base-settings.php:228
 msgid "Lazy loading of images in Text Widget and Custom HTML Widget."
 msgstr ""
 
-#: includes/config.php:108
+#: includes/class-base-settings.php:242
 msgid "Avatar"
 msgstr ""
 
-#: includes/config.php:109
+#: includes/class-base-settings.php:243
 msgid "Lazy loading the Avatars."
 msgstr ""
 
-#: includes/config.php:121
+#: includes/class-base-settings.php:257
 msgid "Embed"
 msgstr ""
 
-#: includes/config.php:122
+#: includes/class-base-settings.php:258
 msgid "Lazy loading the embed, like iframe"
 msgstr ""
 
-#: includes/config.php:135
-msgid "Exclude"
+#: includes/class-base-settings.php:272
+msgid "Exclude by class names"
 msgstr ""
 
-#: includes/config.php:136
+#: includes/class-base-settings.php:273
 msgid "The name of CSS-class for images that need to be excluded from lazy loading."
 msgstr ""
 
-#: includes/config.php:137
+#: includes/class-base-settings.php:274
 msgid "Space separated"
 msgstr ""
 
-#: includes/config.php:157
+#: includes/class-base-settings.php:294
+msgid "Responsive images"
+msgstr ""
+
+#: includes/class-base-settings.php:300
 msgid "Load picturefill.js"
 msgstr ""
 
-#: includes/config.php:158
+#: includes/class-base-settings.php:301
 msgid "Support for responsive images in older browsers, like IE 10, 11."
 msgstr ""
 
-#: includes/config.php:171
+#: includes/class-base-settings.php:316
 msgid "Calculate sizes automatically."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:174
+#: includes/class-base-settings.php:319
 msgid "This will replace the data of sizes attribute. Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:195
+#: includes/class-base-settings.php:340
+msgid "Image placeholder"
+msgstr ""
+
+#: includes/class-base-settings.php:346
 msgid "Placeholder type"
 msgstr ""
 
+#: includes/class-base-settings.php:351
+msgid "Transparent"
+msgstr ""
+
+#: includes/class-base-settings.php:352
+msgid "Spinner"
+msgstr ""
+
+#: includes/class-base-settings.php:370
+msgid "Lazysizes.js plugins"
+msgstr ""
+
 #. translators: %s: Extension name
-#: includes/config.php:222
-#: includes/config.php:239
+#: includes/class-base-settings.php:379
+#: includes/class-base-settings.php:398
 msgid "Load %s extension."
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:227
+#: includes/class-base-settings.php:384
 msgid "This plugin helps to pre-occupy the space needed for an image by calculating the height from the image width or the width from the height (This means the width or height has to be calculable before the image is loaded). Default \"%s\"."
 msgstr ""
 
-#: includes/config.php:228
-#: includes/config.php:245
+#: includes/class-base-settings.php:385
+#: includes/class-base-settings.php:404
 msgid "No"
 msgstr ""
 
 #. translators: %s: Default option value
-#: includes/config.php:244
+#: includes/class-base-settings.php:403
 msgid "This extension automatically transforms img.lazyload/iframe.lazyload elements in browsers that support native lazy loading. Default \"%s\"."
 msgstr ""

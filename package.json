@@ -1,6 +1,6 @@
 {
   "name": "vralle-lazyload",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Brings lazySizes.js to WordPress",
   "private": true,
   "author": "vralle",
@@ -9,18 +9,19 @@
     "node": ">=6"
   },
   "scripts": {
-    "copy-lazysizes": "shx mkdir -p dist/lazysizes/ && shx cp node_modules/lazysizes/*.js dist/lazysizes/",
-    "copy-lazysizes-plugins": "shx mkdir -p dist/lazysizes/plugins/ && shx cp -r node_modules/lazysizes/plugins/ dist/lazysizes/",
-    "copy-picturefill": "shx mkdir -p dist/picturefill/ && shx cp -r node_modules/picturefill/dist/. dist/picturefill/",
-    "dist": "npm-run-all copy-*",
+    "clean": "shx rm -rf dist",
+    "copy-lazysizes": "shx mkdir -p dist/lazysizes/ && shx cp node_modules/lazysizes/*.{js,md} dist/lazysizes",
+    "copy-lazysizes-plugins": "shx mkdir -p dist/lazysizes/plugins/ && shx cp -r node_modules/lazysizes/plugins/. dist/lazysizes/plugins",
+    "copy-picturefill": "shx mkdir -p dist/picturefill/ && shx cp -r node_modules/picturefill/dist/. dist/picturefill",
+    "dist": "npm-run-all clean copy-*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "lazysizes": "^5.2.2",
+    "lazysizes": "^5.3.0",
     "picturefill": "^3.0.3"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",
-    "shx": "^0.3.2"
+    "shx": "^0.3.3"
   }
 }
